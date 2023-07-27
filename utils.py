@@ -1,6 +1,6 @@
 # 출처: https://www.seoul.go.kr/seoul/autonomy_sub.do
 
-SECRET_KEY = 'Day_Pl_2023'
+SECRET_KEY = "2023_Day'Pl"
 
 
 area_dict = {

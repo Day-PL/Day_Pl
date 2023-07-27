@@ -12,3 +12,5 @@ build/
 
 instance/
 .db
+
+utils.py
