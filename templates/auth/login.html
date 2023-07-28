@@ -1,0 +1,9 @@
+{% extends 'components/layout.html' %}
+
+{% block title %}로그인{% endblock %}
+
+{% block contents %}
+    <img class="social_login_img" src="{{ url_for('static', filename='IMG/google_login_button.png') }}" alt="">
+    <img class="social_login_img" src="{{ url_for('static', filename='IMG/kakao_login_button.png') }}" alt="">
+    <img class="social_login_img" src="{{ url_for('static', filename='IMG/naver_login_button.png') }}" alt="">
+{% endblock %}
