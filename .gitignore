@@ -2,15 +2,13 @@
 *.pyc
 __pycache__/
 
-.csv
-.xlsx
+# build/
 
-src/
+# .csv
+# .xlsx
+# src/
+# 114/
 
-build/
-114/
-
-instance/
-.db
-
-utils.py
+# instance/
+# .db
+# utils.py
