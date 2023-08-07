@@ -29,7 +29,7 @@
 
 <body>
 	<header>
-		{% if current_user.is_authenticated %}
+		{% if user.is_authenticated %}
 				{% include 'components/after_login.html' %}
 		{% else %}
 				{% include 'components/before_login.html' %}

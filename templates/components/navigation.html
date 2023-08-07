@@ -9,7 +9,7 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{{ url_for('populars.populars') }}">인기 플랜</a>
         </li>
-				{% if current_user.is_authenticated %}
+				{% if user.is_authenticated %}
 					<li class="nav-item">
 						<a class="nav-link" href="{{ url_for('saves.saves') }}">나의 기록</a>
 					</li>
