@@ -4,4 +4,4 @@ bp = Blueprint('preferences', __name__, url_prefix='/preferences')
 
 @bp.route('/')
 def preferences():
-    return render_template('preference.html')
+    return render_template('preferences.html')
