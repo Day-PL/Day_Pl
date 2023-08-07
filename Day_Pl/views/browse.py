@@ -1,4 +1,5 @@
 from flask import Blueprint, request, render_template
+from flask_login import current_user
 
 bp = Blueprint('browse', __name__, url_prefix='/browse')
 
@@ -8,4 +9,4 @@ bp = Blueprint('browse', __name__, url_prefix='/browse')
 
 @bp.route("/")
 def browse():
-    return render_template("browse.html")
+    return render_template("browse.html", current_user = current_user)

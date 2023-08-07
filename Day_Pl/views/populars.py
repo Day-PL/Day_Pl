@@ -4,4 +4,4 @@ bp = Blueprint('populars', __name__, url_prefix='/populars')
 
 @bp.route('/')
 def populars():
-    return render_template('popular.html')
+    return render_template('populars.html')

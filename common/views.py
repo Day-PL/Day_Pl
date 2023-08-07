@@ -1,15 +1,8 @@
-from flask import Blueprint, request, render_template, url_for, redirect
-from flask_login import login_user
-from models.user_model import User
-from flask_login import LoginManager, UserMixin
+from django.shortcuts import render
 
-bp = Blueprint('users', __name__, url_prefix='/users')
+#! Create your views here.
+#! 고쳐야 대!!!
 
-@bp.route('/')
-def users():
-    return '유저 홈'
-
-@bp.route('/login', methods=["GET", "POST"])
 def login():
     if request.method == 'POST':
         id = request.form["id"]
@@ -27,10 +20,15 @@ def login():
     return render_template('auth/login.html')
 
 # 로그인 매니저 생성
-# login_manager = LoginManager(app)
 login_manager = LoginManager()
 login_manager.login_view = "login" # 로그인 페이지 URI 명시
 
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(user_id)
+
+@bp.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('browse.browse'))

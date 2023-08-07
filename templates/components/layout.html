@@ -28,14 +28,17 @@
 </head>
 
 <body>
-    <header>
-        {% include 'components/navigation.html' %}
-    </header>
-    {% block contents %}
-    
-    {% endblock %}
-    <footer>
-        {% include 'components/navigation.html' %}
-    </footer>    
+	<header>
+		{% if current_user.is_authenticated %}
+				{% include 'components/after_login.html' %}
+		{% else %}
+				{% include 'components/before_login.html' %}
+		{% endif %}
+		{% include 'components/navigation.html' %}
+	</header>
+	{% block contents %}
+	{% endblock %}
+	<footer>
+	</footer>    
 </body>
 </html>
