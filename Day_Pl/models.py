@@ -1,11 +1,15 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# Create your models here.
+class PlaceType(models.Model):
+    name = models.CharField(max_length=32, null=False)
+
 class Place(models.Model):
     uuid = models.CharField(max_length=128, blank=False)
     name = models.CharField(max_length=64, blank=False)
-    type = models.CharField(max_length=64, blank=True) #!
+    type_id = models.ForeignKey(PlaceType, on_delete=models.SET_NULL, null=True)
+    rating = models.FloatField(null=True)
+    review_total = models.IntegerField(null=True)
     address_si = models.CharField(max_length=32, blank=False)
     address_gu = models.CharField(max_length=32, blank=False)
     address_dong = models.CharField(max_length=32, blank=False)
@@ -27,38 +31,43 @@ class Place(models.Model):
     sat_close_time = models.DateTimeField(null=True)
     sun_open_time = models.DateTimeField(null=True)
     sun_close_time = models.DateTimeField(null=True)
-    expect_time = models.CharField(max_length=32, null=True)
-    link = models.CharField(max_length=128, null=True)
+    duration = models.CharField(max_length=32, null=True)
+    url = models.CharField(max_length=128, null=True)
+    like_users = models.ManyToManyField(User, related_name='place_like_users')
+    created_at = models.DateTimeField(auto_now_add=True, null=False)
 
-class UserCourse(models.Model):
+class Plan(models.Model):
     uuid = models.CharField(max_length=128, blank=False)
-    upload_time = models.DateTimeField(auto_now_add=True)
-    user_id = models.ForeignKey(User) #? on_delete=models.CASCADE
-    course_name = models.CharField(max_length=64, default = f'{upload_time}의 기록')
-    course1_id = models.ForeignKey(Place) #! on_delete=models.CASCADE : 장소 지워지면 코스가 지워져야 하는게 맞는 것 같다 -> on_delete=models.CASCADE이면 이 키만 지워지는 건지 전체가 다 지워지는 건지 확인해야 함
-    course2_id = models.ForeignKey(Place)
-    course3_id = models.ForeignKey(Place)
-    course4_id = models.ForeignKey(Place)
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(null=True)
+    user_id = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    title = models.CharField(max_length=64, default = f'{created_at}의 플랜')
+    place1_id = models.ForeignKey(Place, on_delete=models.CASCADE, related_name="place1")
+    place2_id = models.ForeignKey(Place, on_delete=models.CASCADE, related_name="place2")
+    place3_id = models.ForeignKey(Place, on_delete=models.CASCADE, related_name="place3")
+    place4_id = models.ForeignKey(Place, on_delete=models.CASCADE, related_name="place4")
     except_time1 = models.IntegerField(null=True)
     except_time2 = models.IntegerField(null=True)
     except_time3 = models.IntegerField(null=True)
     hashtag_area = models.CharField(max_length=32, blank=True)
     hashtag_type = models.CharField(max_length=32, blank=True)
     hashtag_pick = models.CharField(max_length=32, blank=True)
-    like_count = models.ManyToManyField(User, related_name='user_course_like_count') #! 네이밍 다시 생각 (너무 길다)
-    memo = models.TextField() #! 네이밍 다시 생각 (너무 길다)
+    like_users = models.ManyToManyField(User, related_name='plan_like_users')
+    memo = models.TextField()
+    public = models.BooleanField(null=False, default=False)
+    removed = models.BooleanField(null=False,default=False)
+    removed_at = models.BooleanField(null=True)
 
     
-class UserCourseLike(models.Model):
-    uuid = models.CharField(max_length=128, blank=False)
+class UserPlanView(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    course_id = models.ForeignKey(UserCourse, on_delete=models.CASCADE)
+    plan_id = models.ForeignKey(Plan, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True, null=False)
 
-
-class UserPlaceLike(models.Model):
-    uuid = models.CharField(max_length=128, blank=False)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    place_id = models.ForeignKey(Place, on_delete=models.CASCADE)
+# class UserPlaceLike(models.Model):
+#     uuid = models.CharField(max_length=128, blank=False)
+#     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+#     place_id = models.ForeignKey(Place, on_delete=models.CASCADE)
 
 class UserPreference(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
