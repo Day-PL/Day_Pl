@@ -1,2 +1,271 @@
 {% extends 'components/layout.html' %}
 {% load static %}
+
+{% block title %}선호도 조사{% endblock %}
+
+{% block contents %}
+	<h3>선호도 조사</h3>
+	<form method="post" action="{% url 'Day_Pl:preferences' %}">
+		{% csrf_token %}
+
+		<label>야외</label>
+		<div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+			{% if amusement_park %}
+				<input type="checkbox" class="btn-check" name="amusement_park" id="amusement_park" autocomplete="off" checked>
+			{% else %}
+				<input type="checkbox" class="btn-check" name="amusement_park" id="amusement_park" autocomplete="off">
+			{% endif %}
+			<label class="btn btn-outline-primary" for="amusement_park">놀이공원</label>
+
+			{% if zoo %}
+				<input type="checkbox" class="btn-check" name="zoo" id="zoo" autocomplete="off" checked>
+			{% else %}
+				<input type="checkbox" class="btn-check" name="zoo" id="zoo" autocomplete="off">
+			{% endif %}
+			<label class="btn btn-outline-primary" for="zoo">동물원</label>
+		
+			{% if plant %}
+				<input type="checkbox" class="btn-check" name="plant" id="plant" autocomplete="off" checked>
+			{% else %}
+				<input type="checkbox" class="btn-check" name="plant" id="plant" autocomplete="off">
+			{% endif %}
+			<label class="btn btn-outline-primary" for="plant">수목원/식물원</label>
+		</div>
+
+		<br><br>
+
+		<label>운동</label>
+		<div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+			{% if walk %}
+				<input type="checkbox" class="btn-check" name="walk" id="walk" autocomplete="off" checked>
+			{% else %}
+				<input type="checkbox" class="btn-check" name="walk" id="walk" autocomplete="off">
+			{% endif %}
+			<label class="btn btn-outline-primary" for="walk">산책</label>
+		
+			{% if bike %}
+				<input type="checkbox" class="btn-check" name="bike" id="bike" autocomplete="off" checked>
+			{% else %}
+			<input type="checkbox" class="btn-check" name="bike" id="bike" autocomplete="off">
+			{% endif %}
+			<label class="btn btn-outline-primary" for="bike">자전거</label>
+		
+			{% if skate %}
+				<input type="checkbox" class="btn-check" name="skate" id="skate" autocomplete="off" checked>
+			{% else %}
+				<input type="checkbox" class="btn-check" name="skate" id="skate" autocomplete="off">
+			{% endif %}
+			<label class="btn btn-outline-primary" for="skate">스케이트</label>
+
+			{% if hike %}
+				<input type="checkbox" class="btn-check" name="hike" id="hike" autocomplete="off" checked>
+			{% else %}
+				<input type="checkbox" class="btn-check" name="hike" id="hike" autocomplete="off" >
+			{% endif %}
+			<label class="btn btn-outline-primary" for="hike">등산</label>
+		</div>
+
+		<br><br>
+
+		<label>실내</label>
+		<div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+			{% if aquarium %}
+				<input type="checkbox" class="btn-check" name="aquarium" id="aquarium" autocomplete="off" checked>
+			{% else %}
+				<input type="checkbox" class="btn-check" name="aquarium" id="aquarium" autocomplete="off">
+			{% endif %}
+			<label class="btn btn-outline-primary" for="aquarium">아쿠아리움</label>
+		
+			{% if spa %}
+				<input type="checkbox" class="btn-check" name="spa" id="spa" autocomplete="off" checked>
+			{% else %}
+				<input type="checkbox" class="btn-check" name="spa" id="spa" autocomplete="off" >
+			{% endif %}
+			<label class="btn btn-outline-primary" for="spa">스파</label>
+		
+			{% if shopping %}
+				<input type="checkbox" class="btn-check" name="shopping" id="shopping" autocomplete="off" checked>
+			{% else %}
+				<input type="checkbox" class="btn-check" name="shopping" id="shopping" autocomplete="off">
+			{% endif %}
+			<label class="btn btn-outline-primary" for="shopping">쇼핑몰</label>
+
+			{% if movie %}
+				<input type="checkbox" class="btn-check" name="movie" id="movie" autocomplete="off" checked>
+			{% else %}
+				<input type="checkbox" class="btn-check" name="movie" id="movie" autocomplete="off">
+			{% endif %}
+			<label class="btn btn-outline-primary" for="movie">영화</label>
+
+			{% if cafe %}
+				<input type="checkbox" class="btn-check" name="cafe" id="cafe" autocomplete="off" checked>
+			{% else %}
+				<input type="checkbox" class="btn-check" name="cafe" id="cafe" autocomplete="off" >
+			{% endif %}
+			<label class="btn btn-outline-primary" for="cafe">카페</label>
+		</div>
+
+		<br><br>
+
+		<label>이색 카페</label>
+		<div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+			{% if cartoon%}
+				<input type="checkbox" class="btn-check" name="cartoon" id="cartoon" autocomplete="off" checked>
+			{% else %}
+				<input type="checkbox" class="btn-check" name="cartoon" id="cartoon" autocomplete="off">
+			{% endif %}
+			<label class="btn btn-outline-primary" for="cartoon">만화카페</label>
+		
+			{% if dog%}
+				<input type="checkbox" class="btn-check" name="dog" id="dog" autocomplete="off" checked>
+			{% else %}
+				<input type="checkbox" class="btn-check" name="dog" id="dog" autocomplete="off">
+			{% endif %}
+			<label class="btn btn-outline-primary" for="dog">애견카페</label>
+		
+			{% if cat%}
+				<input type="checkbox" class="btn-check" name="cat" id="cat" autocomplete="off" checked>
+			{% else %}
+				<input type="checkbox" class="btn-check" name="cat" id="cat" autocomplete="off">
+			{% endif %}
+			<label class="btn btn-outline-primary" for="cat">고양이카페</label>
+		</div>
+
+		<br><br>
+
+		<label>원데이클래스</label>
+		<div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+			{% if cooking%}
+				<input type="checkbox" class="btn-check" name="cooking" id="cooking" autocomplete="off" checked>
+			{% else %}
+				<input type="checkbox" class="btn-check" name="cooking" id="cooking" autocomplete="off">
+			{% endif %}
+			<label class="btn btn-outline-primary" for="cooking">쿠킹</label>
+		
+			{% if perfume%}
+				<input type="checkbox" class="btn-check" name="perfume" id="perfume" autocomplete="off" checked>
+			{% else %}
+				<input type="checkbox" class="btn-check" name="perfume" id="perfume" autocomplete="off">
+			{% endif %}
+			<label class="btn btn-outline-primary" for="perfume">향수</label>
+		
+			{% if ceramic%}
+				<input type="checkbox" class="btn-check" name="ceramic" id="ceramic" autocomplete="off" checked>
+			{% else %}
+				<input type="checkbox" class="btn-check" name="ceramic" id="ceramic" autocomplete="off">
+			{% endif %}
+			<label class="btn btn-outline-primary" for="ceramic">도자기</label>
+
+			{% if ring %}
+				<input type="checkbox" class="btn-check" name="ring" id="ring" autocomplete="off" checked>
+			{% else %}
+				<input type="checkbox" class="btn-check" name="ring" id="ring" autocomplete="off">
+			{% endif %}
+			<label class="btn btn-outline-primary" for="ring">반지</label>
+
+			{% if alcohol %}
+				<input type="checkbox" class="btn-check" name="alcohol" id="alcohol" autocomplete="off" checked>
+			{% else %}
+				<input type="checkbox" class="btn-check" name="alcohol" id="alcohol" autocomplete="off">
+			{% endif %}
+			<label class="btn btn-outline-primary" for="alcohol">술주조</label>
+
+			{% if drawing %}
+				<input type="checkbox" class="btn-check" name="drawing" id="drawing" autocomplete="off" checked>
+			{% else %}
+				<input type="checkbox" class="btn-check" name="drawing" id="drawing" autocomplete="off">
+			{% endif %}
+			<label class="btn btn-outline-primary" for="drawing">그림</label>
+
+			{% if dance %}
+				<input type="checkbox" class="btn-check" name="dance" id="dance" autocomplete="off" checked>
+			{% else %}
+				<input type="checkbox" class="btn-check" name="dance" id="dance" autocomplete="off">
+			{% endif %}
+			<label class="btn btn-outline-primary" for="dance">댄스</label>
+
+			{% if flower %}
+				<input type="checkbox" class="btn-check" name="flower" id="flower" autocomplete="off" checked>
+			{% else %}
+				<input type="checkbox" class="btn-check" name="flower" id="flower" autocomplete="off">
+			{% endif %}
+			<label class="btn btn-outline-primary" for="flower">플라워</label>
+		</div>
+
+		<br><br>
+
+		<label>오락/유흥</label>
+		<div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+			{% if boardgame%}
+				<input type="checkbox" class="btn-check" name="boardgame" id="boardgame" autocomplete="off" checked>
+			{% else %}
+				<input type="checkbox" class="btn-check" name="boardgame" id="boardgame" autocomplete="off" >
+			{% endif %}
+			<label class="btn btn-outline-primary" for="boardgame">보드게임</label>
+		
+			{% if escaperoom %}
+				<input type="checkbox" class="btn-check" name="escaperoom" id="escaperoom" autocomplete="off" checked>
+			{% else %}
+			 	<input type="checkbox" class="btn-check" name="escaperoom" id="escaperoom" autocomplete="off">
+			{% endif %}
+			<label class="btn btn-outline-primary" for="escaperoom">방탈출</label>
+		
+			{% if gameroom %}
+				<input type="checkbox" class="btn-check" name="gameroom" id="gameroom" autocomplete="off" checked>
+			{% else %}
+				<input type="checkbox" class="btn-check" name="gameroom" id="gameroom" autocomplete="off">
+			{% endif %}
+			<label class="btn btn-outline-primary" for="gameroom">오락실</label>
+
+			{% if screen_baseball %}
+				<input type="checkbox" class="btn-check" name="screen_baseball" id="screen_baseball" autocomplete="off" checked>
+			{% else %}
+				<input type="checkbox" class="btn-check" name="screen_baseball" id="screen_baseball" autocomplete="off">
+			{% endif %}
+			<label class="btn btn-outline-primary" for="screen_baseball">스크린야구</label>
+
+			{% if bawling %}
+				<input type="checkbox" class="btn-check" name="bawling" id="bawling" autocomplete="off" checked>
+			{% else %}
+				<input type="checkbox" class="btn-check" name="bawling" id="bawling" autocomplete="off">
+			{% endif %}
+			<label class="btn btn-outline-primary" for="bawling">볼링</label>
+		</div>
+
+		<br><br>
+
+		<label>문화생활</label>
+		<div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+			{% if musical %}
+				<input type="checkbox" class="btn-check" name="musical" id="musical" autocomplete="off" checked>
+			{% else %}
+				<input type="checkbox" class="btn-check" name="musical" id="musical" autocomplete="off">
+			{% endif %}
+			<label class="btn btn-outline-primary" for="musical">뮤지컬</label>
+		
+			{% if play %}
+				<input type="checkbox" class="btn-check" name="play" id="play" autocomplete="off" checked>
+			{% else %}
+				<input type="checkbox" class="btn-check" name="play" id="play" autocomplete="off">
+			{% endif %}
+			<label class="btn btn-outline-primary" for="play">연극</label>
+		
+			{% if concert %}
+				<input type="checkbox" class="btn-check" name="concert" id="concert" autocomplete="off" checked>
+			{% else %}
+				<input type="checkbox" class="btn-check" name="concert" id="concert" autocomplete="off">
+			{% endif %}
+			<label class="btn btn-outline-primary" for="concert">콘서트</label>
+
+			{% if exhibition %}
+				<input type="checkbox" class="btn-check" name="exhibition" id="exhibition" autocomplete="off" checked>
+			{% else %}
+				<input type="checkbox" class="btn-check" name="exhibition" id="exhibition" autocomplete="off">
+			{% endif %}
+			<label class="btn btn-outline-primary" for="exhibition">전시회</label>
+		</div>
+
+		<br><br>
+
+		<input type="submit">
+	</form>
