@@ -5,7 +5,12 @@ from django.contrib.auth.models import User
 # Create your models here.
 class Profile(models.Model):
     user       = models.OneToOneField(User, on_delete=models.CASCADE)
+<<<<<<< HEAD
     uuid       = models.UUIDField(unique=True, blank=False, default=uuid.uuid4)
+=======
+    uuid       = models.CharField(max_length=64, blank=False)
+    # nickname   = models.CharField(max_length=64, blank=False) #! 추가 예정
+>>>>>>> 802d991 (comment : nickname 추가해야 한다)
     fullname   = models.CharField(max_length=64, blank=False)
     # nickname   = models.CharField(max_length=64, blank=True)
     gender     = models.CharField(max_length=64, blank=False)  
