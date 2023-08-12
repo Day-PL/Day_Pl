@@ -3,8 +3,9 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user       = models.OneToOneField(User, on_delete=models.CASCADE)
     uuid       = models.CharField(max_length=64, blank=False)
+    # nickname   = models.CharField(max_length=64, blank=False) #! 추가 예정
     fullname   = models.CharField(max_length=64, blank=False)
     gender     = models.CharField(max_length=64, blank=False)  
     birthdate  = models.DateField(max_length=64, blank=False)
