@@ -4,4 +4,4 @@ from .models import *
 admin.site.register(PlaceType)
 admin.site.register(Place)
 admin.site.register(Plan)
-admin.site.register(UserPreference)
+admin.site.register(Preference)
