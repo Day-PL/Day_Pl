@@ -7,7 +7,6 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from common.forms import UserForm, ProfileForm
 from datetime import datetime
-from Day_Pl.models import Preference # TODO: 이름 바꾸어야 함
 from .models import Profile
 
 def signup(request):
@@ -15,24 +14,6 @@ def signup(request):
     if request.method == 'POST':
         user_form = UserForm(request.POST)
         profile_form = ProfileForm(request.POST)
-        # TODO: 아이디와 이메일 주소가 중복되지 않았는지 다시 한 번 확인되었을 때만 넘어가고
-        #       아니면 return
-        # TODO: 프론트에서 request 보내주어야 함
-        # username = user_form.cleaned_data.get('username')
-        # mail = profile_form.cleaned_data.get('mail')
-        # if User.objects.filter(username=username).exists():
-        #     response = {
-        #     'status': 'fail',
-        #     'message': '이미 사용 중인 아이디입니다.'
-        # }
-        #     return JsonResponse(response)
-        
-        # if Profile.objects.filter(mail=mail).exists():
-        #     response = {
-        #     'status': 'fail',
-        #     'message': '이미 사용 중인 이메일입니다.'
-        # }
-        #     return JsonResponse(response)
 
         if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save()
@@ -98,4 +79,20 @@ def check_mail(request):
                 'status': 'success',
                 'message': '사용 가능한 이메일입니다.'
             }
+    return JsonResponse(response)
+
+def check_nickname(request):
+    data = json.loads(request.body)
+    nickname = data.get('nickname')
+    
+    if Profile.objects.filter(nickname=nickname).exists():
+        response = {
+            'status': 'fail',
+            'message': '이미 사용 중인 닉네입니다.'
+        }
+    else:
+        response = {
+            'status': 'success',
+            'message': '사용 가능한 닉네임입니다.'
+        }
     return JsonResponse(response)
