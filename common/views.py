@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from common.forms import UserForm, ProfileForm
 from datetime import datetime
-from Day_Pl.models import UserPreference # TODO: 이름 바꾸어야 함
+from Day_Pl.models import Preference # TODO: 이름 바꾸어야 함
 from .models import Profile
 
 def signup(request):
@@ -25,7 +25,7 @@ def signup(request):
             print('profile 저장됨')
 
             # Preference 초기화
-            UserPreference.objects.create(user_id=user)
+            Preference.objects.create(user_id=user)
             return redirect('Day_Pl:browse')
         else:
             print(user_form.errors)
