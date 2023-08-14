@@ -38,9 +38,9 @@
       <label class="form-check-label" for="flexRadioDefault2"> 여성 </label>
     </div>
     <label for="birthdate">생년월일:</label>
-    <input type="date" id="birthdate" name="birthdate" max="{{ current_date }}" value="{{ profile_form.birthdat.value|default_if_none='' }}" />
+    <input type="date" id="birthdate" name="birthdate" max="{{ current_date }}" value="{{ profile_form.birthdate.value | default_if_none:'' }}" />
     <div class="form-floating">
-      <input type="email" name="mail" class="form-control mail" placeholder="이메일" maxlength="100" value="{{ profile_form.mail.value|default_if_none:'' }}" required />
+      <input type="email" name="mail" class="form-control mail" placeholder="이메일" maxlength="100" value="{{ profile_form.mail.value | default_if_none:'' }}" required />
       <label for="floatingInput">이메일</label>
       <button type="button" class="btn btn-primary btn-sm" onclick="checkMailDuplicate()">중복확인</button>
       <p class="mail-result"></p>
@@ -51,7 +51,7 @@
     </div> -->
     <p class="mail-result"></p>
     <div class="form-floating">
-      <input type="tel" name="phone" id="phone" class="form-control" placeholder="휴대전화번호" maxlength="13" value="{{ profile_form.phone.value|default_if_none:'' }}" required />
+      <input type="tel" name="phone" id="phone" class="form-control" placeholder="휴대전화번호" maxlength="13" value="{{ profile_form.phone.value | default_if_none:'' }}" required />
       <label for="floatingInput">휴대전화번호</label>
       <p class="phone-result"></p>
     </div>

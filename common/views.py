@@ -24,8 +24,6 @@ def signup(request):
             profile.save()
             print('profile 저장됨')
 
-            # Preference 초기화
-            Preference.objects.create(user_id=user)
             return redirect('Day_Pl:browse')
         else:
             print(user_form.errors)

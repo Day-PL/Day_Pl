@@ -35,7 +35,7 @@ const pwd2Input = document.querySelector('#password2');
 const pwdResult = document.querySelector('.pwd-result');
 
 function checkPwdValidate() {
-  const passwordReg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  const passwordReg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$!%*?&])[A-Za-z\d@#$!%*?&]{8,}$/;
   if (!passwordReg.test(pwd1Input.value)) {
     pwdResult.textContent = '8자 이상의 영문 대문자, 소문자, 숫자, 특수문자를 사용해 주세요.';
     pwdResult.style.color = 'red';
