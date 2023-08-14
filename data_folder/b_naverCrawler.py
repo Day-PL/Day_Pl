@@ -6,7 +6,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 import time
 import csv
-from a_constant import area_kor_to_eng, type_kor_to_eng, NULL
+from a_constant import area_kor_to_eng, type_searchname_to_typecode, NULL
 from a_scroll import scroll_down
 
 
@@ -204,7 +204,7 @@ def naver_crawler(area_kor, place_type_kor="가볼만한곳"):
 
     crawler.quit()
 
-    with open(f"./csv/{area_kor_to_eng[area_kor]}_{type_kor_to_eng[place_type_kor]}.csv", "w", encoding="UTF-8") as file:
+    with open(f"./csv/{area_kor_to_eng[area_kor]}_{type_searchname_to_typecode[place_type_kor]}.csv", "w", encoding="UTF-8") as file:
         csvWriter = csv.DictWriter(file, fieldnames=values)
         csvWriter.writeheader()
         csvWriter.writerows(crawl_data)
