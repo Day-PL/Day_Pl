@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 from django.contrib.auth.models import User
 import uuid
@@ -15,4 +16,7 @@ class Profile(models.Model):
     rq_terms   = models.BooleanField(default=0)
     op_terms   = models.BooleanField(default=0)
     image      = models.ImageField(upload_to='photos/', null=True, default='static/img/profile_img.png')
-    sign_date  = models.DateTimeField(auto_now_add=True)  
+    sign_date  = models.DateTimeField(auto_now_add=True) 
+    
+    def __str__(self):
+        return self.user.username

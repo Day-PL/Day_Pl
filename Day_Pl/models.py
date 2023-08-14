@@ -19,13 +19,13 @@ class Place(models.Model):
     contact = models.CharField(max_length=16, blank=False)
     period_start = models.DateTimeField(null=True)
     period_end = models.DateTimeField(null=True)
-    expected_time = models.IntegerField()
+    expected_time = models.IntegerField(null=True)
     url = models.CharField(max_length=128, null=True)
     like_users = models.ManyToManyField(User, related_name='place_like_users')
     created_at = models.DateTimeField(null=True) #! 크롤링한 시간을 넣어줄 것이다
 
 class Plan(models.Model):
-    uuid = models.UUIDField(max_length=128, blank=False, default=uuid.uuid4)
+    uuid = models.UUIDField(max_length=128, default=uuid.uuid4)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(null=True)
     user_id = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
@@ -53,7 +53,7 @@ class Preference(models.Model):
 
 class PlanPlace(models.Model):
     plan = models.ForeignKey(Plan, on_delete=models.CASCADE)
-    place = models.ForeignKey(Place, on_delete=models.CASCADE)
+    place = models.ForeignKey(Place, on_delete=models.CASCADE, default=1)
     order = models.IntegerField()
 
 # class UserPlaceLike(models.Model):
