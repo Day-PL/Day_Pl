@@ -11,7 +11,7 @@ class UserForm(UserCreationForm):
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('fullname', 'gender', 'birthdate', 'phone', 'mail', 'rq_terms', 'op_terms', 'image')
+        fields = ('fullname', 'nickname', 'gender', 'birthdate', 'phone', 'mail', 'rq_terms', 'op_terms', 'image')
         # TODO: 닉네임 추후 추가
 
     def clean_phone(self):

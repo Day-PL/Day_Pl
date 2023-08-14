@@ -17,9 +17,11 @@ function checkUsernameDuplicate() {
       if (data.status === 'fail') {
         resultElement.innerText = data.message;
         resultElement.style.color = 'red';
+        username.removeAttribute('readonly')
       } else if (data.status === 'error') {
         resultElement.innerText = data.message;
         resultElement.style.color = 'red';
+        username.removeAttribute('readonly')
       } else {
         resultElement.innerText = data.message;
         resultElement.style.color = 'green';
@@ -59,6 +61,36 @@ function checkPwdsMatch() {
 }
 
 pwd2Input.addEventListener('input', checkPwdsMatch);
+
+const nicknameInput = document.querySelector('#nickname');
+
+function checkNicknameDuplicate() {
+
+  fetch('check-nickname/', {
+    method: 'POST',
+    headers: {
+      'X-CSRFToken': csrfToken,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ nickname: nicknameInput.value }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      const resultElement = document.querySelector('.nickname-result');
+      if (data.status === 'fail') {
+        resultElement.innerText = data.message;
+        resultElement.style.color = 'red';
+        nickname.removeAttribute('readonly')
+      } else {
+        resultElement.innerText = data.message;
+        resultElement.style.color = 'green';
+        nickname.setAttribute('readonly', 'true');
+      }
+    })
+    .catch((error) => console.error('Error:', error));
+}
+
+nicknameInput.addEventListener('blur', checkNicknameDuplicate)
 
 function checkMailDuplicate() {
   const mailInput = document.querySelector('.mail');
@@ -131,4 +163,5 @@ function checkPhoneValidate() {
 
 phoneInput.addEventListener('blur', checkPhoneValidate);
 
+// TODO: 닉네임 중복 확인
 // TODO: 아이디와 이메일 주소가 readonly일 때만 회원가입 버튼 활성화

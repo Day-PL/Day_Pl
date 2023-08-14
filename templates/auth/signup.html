@@ -24,10 +24,11 @@
       <input type="text" name="fullname" class="form-control" placeholder="이름" value="{{ profile_form.fullname.value|default_if_none:'' }}" required />
       <label for="floatingInput">이름</label>
     </div>
-    <!-- <div class="form-floating mb-3">
-      <input type="text" name="nickname" class="form-control" placeholder="닉네임" value="{{ profile_form.nickname.value|default_if_none:'' }}" required />
-      <label for="floatingInput">(선택) 닉네임</label>
-    </div> -->
+    <div class="form-floating mb-3">
+      <input type="text" name="nickname" id="nickname" class="form-control" placeholder="닉네임" value="{{ profile_form.nickname.value|default_if_none:'' }}" required />
+      <label for="floatingInput">닉네임</label>
+    </div>
+    <p class="nickname-result"></p>
     <span>성별</span>
     <div class="form-check">
       <input class="form-check-input" type="radio" name="gender" id="flexRadioDefault1" value="male" />
@@ -38,11 +39,7 @@
       <label class="form-check-label" for="flexRadioDefault2"> 여성 </label>
     </div>
     <label for="birthdate">생년월일:</label>
-<<<<<<< Updated upstream
     <input type="date" id="birthdate" name="birthdate" max="{{ current_date }}" value="{{ profile_form.birthdate.value | default_if_none:'' }}" />
-=======
-    <input type="date" id="birthdate" name="birthdate" max="{{ current_date }}" value="{{ profile_form.birthdate.value|default_if_none:'' }}" />
->>>>>>> Stashed changes
     <div class="form-floating">
       <input type="email" name="mail" class="form-control mail" placeholder="이메일" maxlength="100" value="{{ profile_form.mail.value | default_if_none:'' }}" required />
       <label for="floatingInput">이메일</label>
