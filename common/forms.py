@@ -17,3 +17,10 @@ class ProfileForm(forms.ModelForm):
     def clean_phone(self):
         phone = self.cleaned_data['phone']
         return phone.replace('-', '')
+    
+    # def clean_nickname(self):
+    #     nickname = self.cleaned_data['nickname']
+    #     if nickname == '':
+    #         nickname = # 랜덤데이터 생성
+    #         return nickname
+    #     return nickname
