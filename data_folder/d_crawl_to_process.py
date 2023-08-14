@@ -1,4 +1,4 @@
-from a_constant import area_kor_to_eng, type_kor_to_eng
+from a_constant import area_kor_to_eng, type_searchname_to_typecode
 from a_fileTransform import csv_to_xlsx
 from b_naverCrawler import naver_crawler
 from c_dataProcesor import processed_data_to_csv
@@ -16,7 +16,7 @@ class Data_Crawl_and_Process:
         for area_kor, area_eng in area_kor_to_eng.items():
             if area_eng == "":
                 continue
-            for place_type_kor, place_type_eng in type_kor_to_eng.items():
+            for place_type_kor, place_type_eng in type_searchname_to_typecode.items():
                 try:
                     #! 크롤링하여 csv로 저장
                     naver_crawler(area_kor, place_type_kor)
@@ -44,7 +44,7 @@ class Data_Crawl_and_Process:
     
     def get_one_area(self, area_kor):
         area_eng = area_kor_to_eng[area_kor]
-        for place_type_kor, place_type_eng in type_kor_to_eng.items():
+        for place_type_kor, place_type_eng in type_searchname_to_typecode.items():
             try:
                 naver_crawler(area_kor, place_type_kor)
                 csv_to_xlsx(f"./csv/{area_eng}_{place_type_eng}.csv", 
@@ -66,7 +66,7 @@ class Data_Crawl_and_Process:
 
     def get_one(self, area_kor, place_type_kor):
         area_eng = area_kor_to_eng[area_kor]
-        place_type_eng = type_kor_to_eng[place_type_kor]
+        place_type_eng = type_searchname_to_typecode[place_type_kor]
         try:
             naver_crawler(area_kor, place_type_kor)
             csv_to_xlsx(f"./csv/{area_eng}_{place_type_eng}.csv", 
