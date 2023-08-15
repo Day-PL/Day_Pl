@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "common",
     "Day_Pl",
+    "data_process",
 ]
 
 MIDDLEWARE = [

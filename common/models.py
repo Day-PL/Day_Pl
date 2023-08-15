@@ -6,7 +6,7 @@ import uuid
 # Create your models here.
 class Profile(models.Model):
     user       = models.OneToOneField(User, on_delete=models.CASCADE)
-    uuid       = models.UUIDField(unique=True, default=uuid.uuid4)
+    uuid       = models.UUIDField(unique=True, max_length=64, default=uuid.uuid4)
     nickname   = models.CharField(max_length=64, blank=False)
     fullname   = models.CharField(max_length=64, blank=False)
     gender     = models.CharField(max_length=64, blank=False)  
