@@ -2,13 +2,11 @@ import os
 import csv
 import requests
 from bs4 import BeautifulSoup
-from datetime import date
 from secret import KOPIS_REST_API_KEY
 
 page = 1
 total = 10
-today = date.today().strftime("%Y%m%y")
-response = requests.get(f'http://www.kopis.or.kr/openApi/restful/pblprfr?service={KOPIS_REST_API_KEY}&eddate={today}&rows={total}&cpage={page}&prfstate=02&signgucode=11')
+response = requests.get(f'http://www.kopis.or.kr/openApi/restful/pblprfr?service={KOPIS_REST_API_KEY}&rows={total}&cpage={page}&prfstate=02&signgucode=11')
 # 진행 중인 공연 : prfstate=02
 # 서울특별시 공연만 : signgucode=11
 
