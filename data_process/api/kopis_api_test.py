@@ -2,7 +2,7 @@ import os
 import csv
 import requests
 from bs4 import BeautifulSoup
-from secret import KOPIS_REST_API_KEY
+from ..secret import KOPIS_REST_API_KEY
 
 page = 1
 total = 10
