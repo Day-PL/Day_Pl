@@ -6,8 +6,21 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 import time
 import csv
-from a_constant import area_kor_to_eng, type_searchname_to_typecode, NULL
-from a_scroll import scroll_down
+from ..constant import area_kor_to_eng, type_searchname_to_typecode, NULL
+
+
+# ? 페이지의 맨 밑까지 스크롤 (맥 + 34인치 모니터 기준/ 한페이지에 55개 상점 정보)
+def scroll_down(crawler):
+    for _ in range(10):
+        body = crawler.find_element(By.CSS_SELECTOR, "body")
+        body.send_keys(Keys.PAGE_DOWN)
+        body.send_keys(Keys.PAGE_DOWN)
+        body.send_keys(Keys.PAGE_DOWN)
+        body.send_keys(Keys.PAGE_DOWN)
+        body.send_keys(Keys.PAGE_DOWN)
+        body.send_keys(Keys.PAGE_DOWN)
+        time.sleep(1)
+    return
 
 
 #! 내 방 네트워크 환경에서 맥북 에어를 이용하여 합정 5페이지 크롤링에 걸린 시간: 12분
@@ -70,6 +83,7 @@ def naver_crawler(area_kor, place_type_kor="가볼만한곳"):
             shops = crawler.find_elements(By.CLASS_NAME, "Ki6eC.YPAJV") #! 애견카페, 고양이카페, 보드게임카페, 방탈출카페, 놀이공원, 동뮬원, 수목원/식물원, 스케이트장, 아쿠아리움, 스크린 야구, 
 
         print(f'총 {len(shops)}개의 장소 찾음')
+
 
         # ! 가게들 정보 크롤링 시작
         for shop in shops:
@@ -147,7 +161,7 @@ def naver_crawler(area_kor, place_type_kor="가볼만한곳"):
                 review_sum = NULL
             print(f'리뷰수: {review_sum}')
             crawler.implicitly_wait(2)
-            # time.sleep(0.5)
+            time.sleep(0.5)
 
             #! 가게 주소
             try:
@@ -157,54 +171,33 @@ def naver_crawler(area_kor, place_type_kor="가볼만한곳"):
             print(f'주소: {address}')
             crawler.implicitly_wait(2)
 
-            #! 가게 영업시간
-            # try:
-            #     # ? 가게 요일별 영업시간
-            #     time_crawler = crawler.find_element(By.CLASS_NAME, "gKP9i.RMgN0")
-
-            #     elements = time_crawler.find_elements(By.CLASS_NAME, "w9QyJ")
-
-            #     days_time_info = [element.text for element in elements]
-            #     time_info = []
-            #     for day_info in days_time_info:
-            #         day_info = day_info.replace("\n", "=").replace("=접기", "").split("=")
-            #         time_info.append(day_info)
-
-            #     if len(time_info) == 1:
-            #         print(f"{name}의 영업시간 정보 못 가져옴")
-            # except:
-            #     time_info = NULL
-            # print(f'{name} 영업시간: {time_info}')
-            # crawler.implicitly_wait(5)
-
             # ? 가게 연락처
             try:
                 contact = crawler.find_element(By.CLASS_NAME, "xlx7Q").text #! 모든 검색명 동일
             except:
                 contact = NULL
             print(f'연락처: {contact}')
-
-            values = [
+            keys = [
                 "name",
                 "type",
                 "star_rating",
                 "review_sum",
                 "address",
-                # "time_info",
                 "contact",
             ]
-            # keys = [name, type, star_rating, review_sum, address, time_info, contact]
-            keys = [name, type, star_rating, review_sum, address, contact]
-            crawl_data.append(dict(zip(values, keys)))
+            values = [name, type, star_rating, review_sum, address, contact]
+            crawl_data.append(dict(zip(keys, values)))
 
     end_time = time.time()  #! 끝난 시간
-    print(
-        f"크롤링에 걸린 시간: {(int(end_time - start_time)//60)}분 {(int(end_time - start_time))%60}초"
-    )
+    print(f"크롤링에 걸린 시간: {(int(end_time - start_time)//60)}분 {(int(end_time - start_time))%60}초")
 
     crawler.quit()
+    print(f'크롤링 끝')
+
+    for data in crawl_data:
+        print(data)
 
     with open(f"./csv/{area_kor_to_eng[area_kor]}_{type_searchname_to_typecode[place_type_kor]}.csv", "w", encoding="UTF-8") as file:
-        csvWriter = csv.DictWriter(file, fieldnames=values)
+        csvWriter = csv.DictWriter(file, fieldnames=keys)
         csvWriter.writeheader()
         csvWriter.writerows(crawl_data)

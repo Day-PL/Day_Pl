@@ -1,9 +1,7 @@
-import os
-import sys
 import urllib.request
 import urllib.parse
 import json
-from secret import NAVER_CLIENT_ID, NAVER_CLIENT_SECRET
+from ..secret import NAVER_CLIENT_ID, NAVER_CLIENT_SECRET
 
 encText = urllib.parse.quote("식껍 종로익선점") #! 예시
 url = "https://openapi.naver.com/v1/search/local?query=" + encText
