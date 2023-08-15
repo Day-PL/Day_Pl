@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>{% block title %}기본{% endblock %}</title>
+    <title>{% block title %}기본title{% endblock %}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="#" />
@@ -38,9 +38,13 @@
 		{% endif %}
 		{% include 'components/navigation.html' %}
 	</header>
+
 	{% block contents %}
+        기본 컨텐츠
 	{% endblock %}
+
 	<footer>
+        {% include 'components/footer.html' %}
 	</footer>    
 </body>
 </html>
