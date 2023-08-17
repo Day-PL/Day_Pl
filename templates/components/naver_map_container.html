@@ -1,0 +1,14 @@
+{% load static %}
+<!--? head layout으로 빼야 한다.  -->
+<body>
+    <div id="wrap" class="section" style="height: 530px; width:530px;">
+        <div id="map" style="width:100%; height:100%;">
+            <div class="search" style="">
+                <input id="address" type="text" placeholder="검색할 주소" value="종로 3가" />
+                <input id="submit" type="button" value="주소 검색" />
+            </div>
+        </div>
+        <code id="snippet" class="snippet"></code>
+    </div>
+    <script id="code" src="{% static 'js/script.js' %}"></script>
+</body>
