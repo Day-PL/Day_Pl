@@ -1,7 +1,7 @@
 <section class="plan-container__section">
   <div class="plan-submit__box">
     {% csrf_token %}
-    {% include 'components/like_button.html' %}
+    <button class="heart__btn"><i class="fa-regular fa-heart"></i></button>
     <input class="plan-title" type="text" name="plan_title" placeholder="{{ current_date }}의 플랜">
     <button class="plan-submit__btn">저장</button>
   </div>
