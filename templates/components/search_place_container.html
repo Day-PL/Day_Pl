@@ -10,10 +10,10 @@
 
 	<div class="place_container" style="overflow:scroll; height: 500px; width:300px">
 		{% for place in places %}
-			<div class="card" style="height:90px; width: 18rem;">
+			<div id="place_{{ place.id }}" class="card" style="height:90px; width: 18rem;">
 				<div class="card-body">
 					<h6 class="card-title">
-						<span id="placeName"><font size=2>{{ place.name }}</font></span>
+						<span class="placeName" id="{{ place.id }}"><font size=2>{{ place.name }}</font></span>
 						&nbsp;
 						<a href="https://map.naver.com/v5/search/{{ place.address_gu }} {{ place.address_lo }} {{ place.name }}/place" target="_blank">
 							<font size=1>네이버플레이스</font>
