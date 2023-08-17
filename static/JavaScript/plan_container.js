@@ -1,5 +1,7 @@
 const plusBtn = document.querySelector('.place-plus__btn')
-const placeContainer = document.querySelector('.place__container')
+const selectedPlaceContainer = document.querySelector('.selected-place__container')
+
+const placeContainer = document.querySelector('.place_container')
 
 // TODO: 하드코딩 변수 옮기기
 PLACE_CURRENT = 1;
@@ -25,20 +27,23 @@ function addPlaceItem(placeName) {
   return placeBox
 }
 
-// TODO: 이름 가져오는 코드 추가 구현 필요
-plusBtn.addEventListener('click', () => {
-  if (PLACE_CURRENT < PLACE_TOTAL) {
-    const placeBox = addPlaceItem('장소')
-    placeContainer.appendChild(placeBox)
-    PLACE_CURRENT++;
-  }
-});
-
-placeContainer.addEventListener('click', event => {
+selectedPlaceContainer.addEventListener('click', event => {
   const id = event.target.dataset.id;
   if (id) {
     const toBeDeleted = document.querySelector(`.place__box[data-id="${id}"]`);
     toBeDeleted.remove();
     PLACE_CURRENT--;
+  }
+})
+
+placeContainer.addEventListener('click', event => {
+  const placeId = event.target.dataset.place;
+  console.log(placeId)
+  if (placeId && PLACE_CURRENT < PLACE_TOTAL) {
+    const placeName = document.getElementById(`${placeId}`).innerText;
+    console.log(placeName)
+    const placeBox = addPlaceItem(placeName)
+    selectedPlaceContainer.appendChild(placeBox)
+    PLACE_CURRENT++;
   }
 })
