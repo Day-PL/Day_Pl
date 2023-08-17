@@ -24,6 +24,7 @@ def index(request):
         data = json.loads(request.body)
         title = data.get('plantitle')
         place_ids = data.get('placeids')
+        is_liked = data.get('isliked')
 
         user = request.user
         created_at = datetime.now()
@@ -31,12 +32,17 @@ def index(request):
         # hashtag_type =
         # hashtag_pick =
 
-        try: 
+        try:
             new_plan = Plan.objects.create(
                 created_at = created_at,
                 user_id = user,
                 title = title,
             )
+
+            if is_liked:
+                print('likeuser true')
+                new_plan.like_users.add(user)
+                print('like user 등록 성공')
             
             for idx, place_id in enumerate(place_ids):
                 if place_id == None:

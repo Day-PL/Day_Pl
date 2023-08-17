@@ -1,6 +1,19 @@
 const planSubmitBtn = document.querySelector('.plan-submit__btn')
 const selectedPlaceContainer = document.querySelector('.selected-place__container')
 const placeContainer = document.querySelector('.place_container')
+const heartBtn = document.querySelector('.heart__btn')
+
+let isLiked = false
+heartBtn.addEventListener('click', () => {
+  // 좋아요 x 이면
+  if (isLiked == true) {
+    heartBtn.innerHTML = '<i class="fa-regular fa-heart"></i>'
+    isLiked = false
+  } else {
+    heartBtn.innerHTML = '<i class="fa-solid fa-heart"></i>'
+    isLiked = true
+  }
+})
 
 // TODO: 하드코딩 변수 옮기기
 PLACE_CURRENT = 1;
@@ -63,7 +76,8 @@ planSubmitBtn.addEventListener('click', () => {
     },
     body : JSON.stringify({ 
       plantitle: planTitle,
-      placeids: placeIds }),
+      placeids: placeIds,
+      isliked: isLiked, }),
   })
     .then((response) => response.json())
     .then((data) => {
