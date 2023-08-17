@@ -1,13 +1,42 @@
-<section class="plan__section">
-  <ul class="place__container">
+<section class="plan-container__section">
+  <div class="plan-submit__box">
+    {% csrf_token %}
+    {% include 'components/like_button.html' %}
+    <input class="plan-title" type="text" name="plan_title" placeholder="{{ current_date }}의 플랜">
+    <button class="plan-submit__btn">저장</button>
+  </div>
+  <ul class="selected-place__container">
     <li class="place__box">
       <div class="place__item">
         <span class="place-like__btn">
           <i class="fa-solid fa-star"></i>
         </span>
-        <span class="place__name">첫 장소</span>
+        <span class="place__name">장소를 선택해 주세요</span>
+      </div>
+    </li>
+    <li class="place__box">
+      <div class="place__item">
+        <span class="place-like__btn">
+          <i class="fa-solid fa-star"></i>
+        </span>
+        <span class="place__name">장소를 선택해 주세요</span>
+      </div>
+    </li>
+    <li class="place__box">
+      <div class="place__item">
+        <span class="place-like__btn">
+          <i class="fa-solid fa-star"></i>
+        </span>
+        <span class="place__name">장소를 선택해 주세요</span>
+      </div>
+    </li>
+    <li class="place__box">
+      <div class="place__item">
+        <span class="place-like__btn">
+          <i class="fa-solid fa-star"></i>
+        </span>
+        <span class="place__name">장소를 선택해 주세요</span>
       </div>
     </li>
   </ul>
-  <button class="place-plus__btn">추가하기</button>  
 </section>
