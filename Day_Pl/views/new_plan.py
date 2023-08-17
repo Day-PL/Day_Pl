@@ -40,9 +40,7 @@ def index(request):
             )
 
             if is_liked:
-                print('likeuser true')
                 new_plan.like_users.add(user)
-                print('like user 등록 성공')
             
             for idx, place_id in enumerate(place_ids):
                 if place_id == None:
