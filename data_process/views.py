@@ -31,7 +31,6 @@ def exhibit_crawler(request):
 def exhibit_save_to_db(request, date):
     save_to_db(f'data_process/exhibit_crawler/interpark_csv/exhibit_{date}.csv')
     return redirect('Day_Pl:browse')
-    return redirect('Day_Pl:browse')
 
 def naver_api_search(request):
     naver_api_search_info()
