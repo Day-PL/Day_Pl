@@ -1,2 +1,12 @@
-플랜만들기에서 장소 클릭시 뜨는 장소의 세부 정보 창
-
+<!-- 플랜만들기에서 장소 클릭시 뜨는 장소의 세부 정보 창 -->
+<div style="height: 530px; width:530px;">
+    {% for place in places %}
+        <div id="detail_{{ place.id }}" style="display:none;">
+            <p>{{ place.name }}</p>
+            <p>{{ place.rating }}</p>
+            <p>{{ place.review_total }}</p>
+            <p>{{ place.contact }}</p>
+            <button class="close-detail">닫기</button>
+        </div>
+    {% endfor %}
+</div>
