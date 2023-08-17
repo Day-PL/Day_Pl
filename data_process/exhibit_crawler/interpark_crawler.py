@@ -6,22 +6,21 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 
 # data formatter
-from data_formatter import format_date
+from .data_formatter import format_date
 
 # data save to excel
-from data_save_to import save_to_xlsx
+from .data_save_to import save_to_xlsx
 
-# kakao address search api
-import sys
-sys.path.append('/Users/minjoo/projects/Day_Pl')
-from data_process.api.kakao_api_test import kakao_search_address
-from data_process.constant import NULL
+from ..api.kakao_api_test import kakao_search_address
+from ..constant import NULL
 
 import os
 import csv
 from datetime import datetime, date
 
 current_dir = os.getcwd()
+keys = ['name', 'address_si', 'address_gu', 'address_lo', 'address_detail', 'period_start', 'period_end', 'url', 'created_at']
+file_path = f'{current_dir}/data_process/exhibit_crawler/interpark_csv/exhibit_{date.today()}.csv'
 
 def interpark_crawler():
     chrome_options = Options()
@@ -47,14 +46,14 @@ def interpark_crawler():
         address_detail = place
 
         try: 
-            address = kakao_search_address(place, 'CT1')
-            address.replace('로', '로 ')
-            address.replace('로  ', '로')
-            address_list = address.split()
-            address_si = address_list[0]
-            address_gu = address_list[1]
-            address_lo = address_list[2]
-            address_detail = ' '.join(address_list[3:] + [place])
+                address = kakao_search_address(place, 'CT1')
+                address.replace('로', '로 ')
+                address.replace('로  ', '로')
+                address_list = address.split()
+                address_si = address_list[0]
+                address_gu = address_list[1]
+                address_lo = address_list[2]
+                address_detail = ' '.join(address_list[3:] + [place])
         except:
             pass
 
@@ -64,6 +63,7 @@ def interpark_crawler():
         created_at = datetime.now()
         values = [name, address_si, address_gu, address_lo, address_detail, period_start, period_end, url, created_at]
         datas.append(dict(zip(keys, values)))
+    save_csv(file_path, datas)
 
 def save_csv(file_path, datas):
     with open(file_path, "w", newline="") as file:
@@ -72,11 +72,4 @@ def save_csv(file_path, datas):
         writer.writeheader()
         for data in datas:
             writer.writerow(data)
-
-    save_csv(file_path, datas)
-    save_to_xlsx(current_dir, file_path, keys)
-
-if __name__ == "__main__":
-    keys = ['name', 'address_si', 'address_gu', 'address_lo', 'address_detail', 'period_start', 'period_end', 'url', 'created_at']
-    file_path = f'{current_dir}/interpark_csv/exhibit_{date.today()}.csv'
-    interpark_crawler()
+    save_to_xlsx(current_dir, file_path, keys)    

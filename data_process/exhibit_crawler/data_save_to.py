@@ -14,7 +14,7 @@ def load_data(file_path):
 
 def save_to_xlsx(current_dir, file_path, keys):
     df = pd.DataFrame(load_data(file_path), columns=keys)
-    df.to_excel(f'{current_dir}/interpark_xlsx/exhibit_{date.today()}.xlsx', index=False)
+    df.to_excel(f'{current_dir}/data_process/exhibit_crawler/interpark_xlsx/exhibit_{date.today()}.xlsx', index=False)
 
 def save_to_db(file_path):
     placetype_obj = PlaceType.objects.get(code='F4')
