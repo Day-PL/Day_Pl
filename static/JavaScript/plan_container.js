@@ -14,9 +14,8 @@ heartBtn.addEventListener('click', () => {
   }
 })
 
-// TODO: 하드코딩 변수 옮기기
-PLACE_CURRENT = 1;
-PLACE_TOTAL = 10;
+let place_current = 1;
+const PLACE_TOTAL = 10;
 
 function addPlaceItem(placeName, placeId) {
   let uuid = self.crypto.randomUUID();
@@ -52,7 +51,7 @@ selectedPlaceContainer.addEventListener('click', event => {
 
 placeContainer.addEventListener('click', event => {
   const placeId = event.target.dataset.place;
-  if (placeId && PLACE_CURRENT < PLACE_TOTAL) {
+  if (placeId && place_current < PLACE_TOTAL) {
     const placeName = document.getElementById(`${placeId}`).innerText;
     const placeBox = addPlaceItem(placeName, placeId)
     selectedPlaceContainer.appendChild(placeBox)
