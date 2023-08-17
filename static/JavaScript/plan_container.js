@@ -5,7 +5,6 @@ const heartBtn = document.querySelector('.heart__btn')
 
 let isLiked = false
 heartBtn.addEventListener('click', () => {
-  // 좋아요 x 이면
   if (isLiked == true) {
     heartBtn.innerHTML = '<i class="fa-regular fa-heart"></i>'
     isLiked = false
