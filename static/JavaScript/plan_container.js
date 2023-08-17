@@ -45,7 +45,7 @@ selectedPlaceContainer.addEventListener('click', event => {
   if (id) {
     const toBeDeleted = document.querySelector(`.place__box[data-id="${id}"]`);
     toBeDeleted.remove();
-    PLACE_CURRENT--;
+    place_current--;
   }
 })
 
@@ -55,7 +55,7 @@ placeContainer.addEventListener('click', event => {
     const placeName = document.getElementById(`${placeId}`).innerText;
     const placeBox = addPlaceItem(placeName, placeId)
     selectedPlaceContainer.appendChild(placeBox)
-    PLACE_CURRENT++;
+    place_current++;
   }
 })
 
