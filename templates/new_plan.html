@@ -3,7 +3,19 @@
 {% block title %}새로운 플랜{% endblock %}
 
 {% block contents %}
-    {% include 'components/plan_container.html' %}
-    {% include 'components/search_place_container.html' %}
-    {% include 'components/naver_map_container.html' %}
+    <div class="d-flex justify-content-center">
+        <div id="div1">
+            {% include 'components/plan_container.html' %}
+        </div>
+        <div id="div2">
+            {% include 'components/search_place_container.html' %}
+        </div>
+        <div id="div3">
+            {% include 'components/naver_map_container.html' %}
+        </div>
+        <div id="div4">
+            {% include 'components/search_place_click_info_container.html' %}
+        </div>
+    </div>
+
 {% endblock %}
