@@ -2,7 +2,7 @@ import urllib.parse
 import urllib.request
 import json
 import requests
-from secret import KAKAO_REST_API_KEY
+from ..secret import KAKAO_REST_API_KEY
 
 
 #! 식당: "FD6"  관광명소: "AT4"  문화시설: "CT1"
@@ -29,7 +29,7 @@ def kakao_search_address(search_keyword, category_group_code='', page=1, size=1)
             print(item['road_address_name'])
             print(item['place_url'])
             print(f"지번주소: {item['address_name']}\n도로명주소: {item['road_address_name']}")
-            return item['address_name'], item['road_address_name'] #! 도로명
+            return item['road_address_name'] #! 도로명
 
 # kakao_search_address("예술의전당 한가람미술관", "CT1")
 
