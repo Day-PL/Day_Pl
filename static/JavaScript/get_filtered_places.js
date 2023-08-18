@@ -14,13 +14,54 @@ function getFilteredPlace(){
         for(i=0; i < data.length; i++) {
             let placeBox = showPlace(data[i])
             placeContainer.appendChild(placeBox)
+            let placeBoxBody = placeBox.querySelector('.card-body')
+
+            let placeId = data[i]['pk']
+            printLikeBtn(placeId, placeBoxBody)
+
         }
+    })
+}
+
+function printLikeBtn(placeId, placeBoxBody) {
+    checkIsLiked(placeId)
+    .then(result => { 
+        let isPlaceLiked = result
+        if (isPlaceLiked === true) {
+            let likeBtn = document.createElement('button')
+            likeBtn.setAttribute('class', 'place-like__btn')
+            let likeIcon = document.createElement('i')
+            likeIcon.setAttribute('class', 'fa-solid fa-star')
+            likeBtn.setAttribute('data-placelike', `${placeId}`)
+            likeBtn.appendChild(likeIcon)
+            placeBoxBody.appendChild(likeBtn)
+        } else {
+            let likeBtn = document.createElement('button')
+            likeBtn.setAttribute('class', 'place-like__btn')
+            let likeIcon = document.createElement('i')
+            likeIcon.setAttribute('class', 'fa-regular fa-star')
+            likeBtn.setAttribute('data-placelike', `${placeId}`)
+            likeBtn.appendChild(likeIcon)
+            placeBoxBody.appendChild(likeBtn)
+        }
+    })
+}
+
+function checkIsLiked(placeId) {
+    return new Promise((resolve) => {
+        fetch(`check-like/${placeId}/`, {
+            method: 'GET',
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            resolve(data.is_liked);
+        })
     })
 }
 
 function showPlace(place){
     const placeInfo = place['fields'];
-    const placeId = place['id'];
+    const placeId = place['pk'];
     const name = placeInfo['name'];
     const rating = placeInfo['rating'];
     const reviewTotal = placeInfo['review_total'];

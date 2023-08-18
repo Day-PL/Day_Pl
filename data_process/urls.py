@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import naver_place_crawler, naver_place_csv_to_db_all, exhibit_save_to_db, exhibit_crawler, naver_api_search, place_obj_create
+from .views import naver_place_crawler, naver_place_csv_to_db_all, exhibit_save_to_db, exhibit_crawler, naver_api_search
 
 app_name = "data_process"
 
