@@ -9,34 +9,6 @@
 	</select>
 
 	<div class="place_container" style="overflow:scroll; height: 500px; width:300px">
-		{% for place in places %}
-			<div id="place_{{ place.id }}" class="card" style="height:90px; width: 18rem;">
-				<div class="card-body">
-					<h6 class="card-title">
-						<span class="placeName" id="{{ place.id }}"><font size=2>{{ place.name }}</font></span>
-						&nbsp;
-						<a href="https://map.naver.com/v5/search/{{ place.address_gu }} {{ place.address_lo }} {{ place.name }}/place" target="_blank">
-							<font size=1>네이버플레이스</font>
-						</a>
-						&nbsp;
-						<a href="https://map.naver.com/v5/directions/-/14129228.684381623,4517601.068035996,{{ place.address_gu }} {{ place.address_lo }} {{ place.name }},1151030658,PLACE_POI/-/transit?c=15,0,0,0,dh&isCorrectAnswer=true" target="_blank">
-							<font size=1>길찾기</font>
-						</a>
-					</h6>   
-					<font size=1>
-						<p class="card-text">
-							별점: {{ place.rating }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;리뷰수: {{ place.review_total }}
-						</p>
-					</font>
-					<font size=1>
-						<p class="card-text">
-							{{ place.address_gu }} {{ place.address_lo }} {{ place.address_detail }}
-						</p>
-					</font>
-					<button data-place="{{ place.id }}">플랜에 추가</button>
-				</div>
-			</div>
-		{% endfor %}
 	</div>
 
 </div>

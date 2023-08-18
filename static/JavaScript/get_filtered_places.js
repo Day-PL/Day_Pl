@@ -1,17 +1,16 @@
 const selectElement = document.querySelector('.search_place_filter');
 
+window.addEventListener('DOMContentLoaded', getFilteredPlace)
+
 function getFilteredPlace(){
     const placeContainer = document.querySelector('.place_container')
     placeContainer.innerHTML = ''
-    console.log('실행됨');
     const selectedPlace = selectElement.options[selectElement.selectedIndex].value;
     fetch(`get-filter/${selectedPlace}/`, {
         method : "get",
     })
     .then((response) => response.json())
     .then((data) => {
-        // 가져온 데이터로 html에 뿌려주는 코드
-        console.log(data)
         for(i=0; i < data.length; i++) {
             let placeBox = showPlace(data[i])
             placeContainer.appendChild(placeBox)

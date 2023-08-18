@@ -10,12 +10,10 @@ from datetime import datetime, date
 
 @login_required
 def index(request):
-    places = Place.objects.all()[1:]
     placetypes = PlaceType.objects.all()
     current_date = date.today()
 
     context = {
-        'places' : places,
         'placetypes' : placetypes,
         'current_date' : current_date,
     }
@@ -71,7 +69,7 @@ def get_filter(request, placetype_id):
     if placetype_id:
         places = Place.objects.filter(type_code_id = placetype_id)
     else:
-        places = Place.objects.all()
+        places = Place.objects.all()[1:]
     # print(places)
 
     places_json = serializers.serialize('json', places)
