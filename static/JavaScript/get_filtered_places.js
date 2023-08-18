@@ -23,28 +23,29 @@ function getFilteredPlace(){
     })
 }
 
+function createLikeButton(isLiked, placeId) {
+    let likeBtn = document.createElement('button');
+    likeBtn.setAttribute('class', 'place-like__btn');
+    let likeIcon = document.createElement('i');
+    
+    if (isLiked) {
+        likeIcon.setAttribute('class', 'fa-solid fa-star');
+    } else {
+        likeIcon.setAttribute('class', 'fa-regular fa-star');
+    }
+
+    likeBtn.setAttribute('data-placelike', placeId);
+    likeBtn.appendChild(likeIcon);
+    return likeBtn;
+}
+
 function printLikeBtn(placeId, placeBoxBody) {
     checkIsLiked(placeId)
     .then(result => { 
-        let isPlaceLiked = result
-        if (isPlaceLiked === true) {
-            let likeBtn = document.createElement('button')
-            likeBtn.setAttribute('class', 'place-like__btn')
-            let likeIcon = document.createElement('i')
-            likeIcon.setAttribute('class', 'fa-solid fa-star')
-            likeBtn.setAttribute('data-placelike', `${placeId}`)
-            likeBtn.appendChild(likeIcon)
-            placeBoxBody.appendChild(likeBtn)
-        } else {
-            let likeBtn = document.createElement('button')
-            likeBtn.setAttribute('class', 'place-like__btn')
-            let likeIcon = document.createElement('i')
-            likeIcon.setAttribute('class', 'fa-regular fa-star')
-            likeBtn.setAttribute('data-placelike', `${placeId}`)
-            likeBtn.appendChild(likeIcon)
-            placeBoxBody.appendChild(likeBtn)
-        }
-    })
+        let isPlaceLiked = result;
+        let likeBtn = createLikeButton(isPlaceLiked, placeId);
+        placeBoxBody.appendChild(likeBtn);
+    });
 }
 
 function checkIsLiked(placeId) {
