@@ -10,7 +10,7 @@ from datetime import datetime, date
 
 @login_required
 def index(request):
-    places = Place.objects.all()
+    places = Place.objects.all()[1:]
     placetypes = PlaceType.objects.all()
     current_date = date.today()
 
@@ -80,7 +80,4 @@ def get_filter(request, placetype_id):
     return HttpResponse(places_json, content_type="text/json-comment-filtered")
 
 def get_naver_map(request):
-    context = {
-        'NAVER_MAP_CLIENT_ID': NAVER_MAP_CLIENT_ID,
-    }
     return render(request, 'components/naver_map_container.html', context=context)
