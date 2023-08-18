@@ -11,5 +11,6 @@ urlpatterns = [
     path('new-user/', views.signup, name='signup'), #! 회원가입
     path('new-user/check-username/', views.check_username, name='check-username'),
     path('new-user/check-mail/', views.check_mail, name='check-mail'),
+    path('new-user/check-nickname/', views.check_nickname, name='check-nickname'),
     # path('info/', views.info, name='info'), #! 회원정보 수정, 회원 탈퇴
 ]

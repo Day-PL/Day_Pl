@@ -7,7 +7,6 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from common.forms import UserForm, ProfileForm
 from datetime import datetime
-from Day_Pl.models import Preference # TODO: 이름 바꾸어야 함
 from .models import Profile
 
 def signup(request):
@@ -32,9 +31,9 @@ def signup(request):
         user_form = UserForm()
         profile_form = ProfileForm()
     return render(request, 'auth/signup.html',\
-                  {'user_form': user_form,
-                  'profile_form': profile_form,
-                  'current_date': current_date})
+                {'user_form': user_form,
+                'profile_form': profile_form,
+                'current_date': current_date})
 
 def check_username(request):
     data = json.loads(request.body)
@@ -80,4 +79,20 @@ def check_mail(request):
                 'status': 'success',
                 'message': '사용 가능한 이메일입니다.'
             }
+    return JsonResponse(response)
+
+def check_nickname(request):
+    data = json.loads(request.body)
+    nickname = data.get('nickname')
+    
+    if Profile.objects.filter(nickname=nickname).exists():
+        response = {
+            'status': 'fail',
+            'message': '이미 사용 중인 닉네입니다.'
+        }
+    else:
+        response = {
+            'status': 'success',
+            'message': '사용 가능한 닉네임입니다.'
+        }
     return JsonResponse(response)
