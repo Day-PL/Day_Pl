@@ -56,6 +56,28 @@ placeContainer.addEventListener('click', event => {
     const placeBox = addPlaceItem(placeName, placeId)
     selectedPlaceContainer.appendChild(placeBox)
     place_current++;
+    return;
+  }
+
+  const likePlaceId = event.target.dataset.placelike;
+  if (likePlaceId) {
+    fetch('', {
+      method: 'PUT',
+      headers: {
+        'X-CSRFToken': csrfToken,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ placeid: likePlaceId }),
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      const placeLikeBtn = document.querySelector(`.place-like__btn[data-placelike="${likePlaceId}"]`)
+      if (data.isliked === true) {
+        placeLikeBtn.innerHTML = '<i class="fa-solid fa-star"></i>'
+      } else {
+        placeLikeBtn.innerHTML = '<i class="fa-regular fa-star"></i>'
+      }
+    })
   }
 })
 

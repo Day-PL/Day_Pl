@@ -12,11 +12,28 @@ from datetime import datetime, date
 def index(request):
     placetypes = PlaceType.objects.all()
     current_date = date.today()
+    user = request.user
 
     context = {
         'placetypes' : placetypes,
         'current_date' : current_date,
     }
+
+    if request.method == 'PUT':
+        data = json.loads(request.body)
+        place_id = data.get('placeid')
+        place = Place.objects.get(pk=place_id)
+        if place.like_users.filter(pk=user.pk).exists():
+            place.like_users.remove(user)
+            response = {
+                'isliked': False,
+            }
+        else:
+            place.like_users.add(user)
+            response = {
+                'isliked': True,
+            }
+        return JsonResponse(response)
 
     if request.method == 'POST':
         data = json.loads(request.body)
@@ -24,7 +41,6 @@ def index(request):
         place_ids = data.get('placeids')
         is_liked = data.get('isliked')
 
-        user = request.user
         created_at = datetime.now()
         # hashtag_area =
         # hashtag_type =
