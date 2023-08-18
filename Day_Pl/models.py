@@ -54,90 +54,10 @@ class Preference(models.Model):
 
 class PlanPlace(models.Model):
     plan = models.ForeignKey(Plan, on_delete=models.CASCADE)
-    place = models.ForeignKey(Place, on_delete=models.CASCADE, default=1)
+    place = models.ForeignKey(Place, on_delete=models.CASCADE, blank=True, default=0) #? models.SET_NULL  null=True, blank=True  (직접 0번째에 값 넣기)
     order = models.IntegerField()
 
 # class UserPlaceLike(models.Model):
 #     uuid = models.CharField(max_length=128, blank=False)
 #     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
 #     place_id = models.ForeignKey(Place, on_delete=models.CASCADE)
-
-
-# A1 = models.BooleanField(default=True) #! 식당 : 선호도 조사에서 받지는 않음
-
-# A2 = models.BooleanField(default=True)
-# # cafe = models.BooleanField(default=True)
-
-# A3 = models.BooleanField(default=True) 
-# # pub = models.BooleanField(default=True)
-
-# B1 = models.BooleanField(default=True)
-# # walk  = models.BooleanField(default=True)
-
-# B2 = models.BooleanField(default=True)
-# # shopping = models.BooleanField(default=True)
-
-# B3 = models.BooleanField(default=True)
-# # movie    = models.BooleanField(default=True)
-
-# B4 = models.BooleanField(default=True) #! 원데이클래스
-
-# C1 = models.BooleanField(default=True)
-# # cartoon  = models.BooleanField(default=True)
-
-# C2 = models.BooleanField(default=True)
-# # dog = models.BooleanField(default=True)
-
-# C3 = models.BooleanField(default=True)
-# # cat = models.BooleanField(default=True)
-
-# C4 = models.BooleanField(default=True)
-# # boardgame = models.BooleanField(default=True)
-
-# C5 = models.BooleanField(default=True)
-# # escaperoom = models.BooleanField(default=True)
-
-# D1 = models.BooleanField(default=True)
-# # screen_baseball = models.BooleanField(default=True)
-
-# D2 = models.BooleanField(default=True)
-# # bawling = models.BooleanField(default=True)
-
-# D3 = models.BooleanField(default=True)
-# # gameroom = models.BooleanField(default=True)
-
-# E1 = models.BooleanField(default=True) #! 추가한 것
-# # hike = models.BooleanField(default=True) #! 추가한 것
-
-# E2 = models.BooleanField(default=True) #! 추가한 것
-# # bike = models.BooleanField(default=True) #! 추가한 것
-
-# F1 = models.BooleanField(default=True)
-# # musical = models.BooleanField(default=True)
-
-# F2 = models.BooleanField(default=True)
-# # play = models.BooleanField(default=True)
-
-# F3 = models.BooleanField(default=True)
-# # concert = models.BooleanField(default=True)
-
-# F4 = models.BooleanField(default=True)
-# # exhibition = models.BooleanField(default=True)
-
-# G1 = models.BooleanField(default=True)
-# # amusement_park = models.BooleanField(default=True)
-
-# G2 = models.BooleanField(default=True)
-# # zoo    = models.BooleanField(default=True)
-
-# G3 = models.BooleanField(default=True)
-# # plant  = models.BooleanField(default=True)
-
-# G4 = models.BooleanField(default=True)
-# # aquarium = models.BooleanField(default=True)
-
-# G5 = models.BooleanField(default=True)
-# # skate = models.BooleanField(default=True)
-
-# G6 = models.BooleanField(default=True)
-# # spa = models.BooleanField(default=True) 
