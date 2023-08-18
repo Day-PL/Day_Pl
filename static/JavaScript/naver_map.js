@@ -1,9 +1,10 @@
 var HOME_PATH = window.HOME_PATH || '.';
 
+//! 지도의 옵션
 var mapOptions = {
     center: new naver.maps.LatLng(37.5713, 126.9883),
-    zoom: 10, //! 지도의 초기 줌 레벨
-    minZoom: 7, //! 지도의 최소 줌 레벨
+    zoom: 15, //! 지도의 초기 줌 레벨
+    minZoom: 11, //! 지도의 최소 줌 레벨
     zoomControl: true, // 줌 컨트롤의 표시 여부
     zoomControlOptions: { // 줌 컨트롤의 옵션
         position: naver.maps.Position.TOP_RIGHT
@@ -12,14 +13,9 @@ var mapOptions = {
 }
 
 var map = new naver.maps.Map('map', mapOptions);
-naver.maps.Event.addListener(map, 'zoom_changed', function (zoom) {
-    console.log('zoom:' + zoom); //! 줌할 때마다 줌 콘솔로 표시
-});
-//! 마커 표시
-var marker = new naver.maps.Marker({
-    position: new naver.maps.LatLng(37.5713, 126.9883),
-    map: map
-});
+// naver.maps.Event.addListener(map, 'zoom_changed', function (zoom) {
+//     console.log('zoom:' + zoom);
+// });
 
 //! 지도 인터랙션 옵션
 $("#interaction").on("click", function(e) {
@@ -109,18 +105,21 @@ $("#controls").on("click", function(e) {
 $("#interaction, #tile-transition, #controls").addClass("control-on");
 
 
-// //! 검색
-// var map = new naver.maps.Map("map", {
-//     center: new naver.maps.LatLng(37.5713, 126.9883),
-//     zoom: 15,
-//     mapTypeControl: true
-// });
-
 var infoWindow = new naver.maps.InfoWindow({
     anchorSkew: true
 });
 
 map.setCursor('pointer');
+
+var cityhall = new naver.maps.LatLng(37.5666805, 126.9784147),
+    map = new naver.maps.Map('map', {
+        center: cityhall.destinationPoint(0, 500),
+        zoom: 15
+    }),
+    marker = new naver.maps.Marker({
+        map: map,
+        position: cityhall
+    });
 
 function searchCoordinateToAddress(latlng) {
 
@@ -159,6 +158,17 @@ function searchCoordinateToAddress(latlng) {
         infoWindow.open(map, latlng);
     });
 }
+//! 좌표계 변환하기
+function initGeocoder() {
+    var tm128 = (310917, 552751);
+    var naverCoord = naver.maps.TransCoord.fromTM128ToNaver(tm128); // TM128 -> NAVER
+
+    infoWindow = new naver.maps.InfoWindow({
+        content: ''
+    });
+    console.log('NAVER: ' + naverCoord.toString());
+}
+naver.maps.onJSContentLoaded = initGeocoder;
 
 function searchAddressToCoordinate(address) {
     naver.maps.Service.geocode({
@@ -176,12 +186,13 @@ function searchAddressToCoordinate(address) {
         if (item.roadAddress) {
             htmlAddresses.push('[도로명 주소] ' + item.roadAddress);
         }
-        // if (item.jibunAddress) {
-        //     htmlAddresses.push('[지번 주소] ' + item.jibunAddress);
-        // }
-        // if (item.englishAddress) {
-        //     htmlAddresses.push('[영문명 주소] ' + item.englishAddress);
-        // }
+
+        //! 마커 표시
+        var marker = new naver.maps.Marker({
+            position: new naver.maps.LatLng(37.5713, 126.9883),
+            map: map
+        });
+
         infoWindow.setContent([
             '<font size=1><div style="padding:10px;min-width:100px;line-height:150%;">',
             // '<h6 style="margin-top:5px;">검색 주소 : '+ address +'</h6><br />',
@@ -193,7 +204,7 @@ function searchAddressToCoordinate(address) {
         infoWindow.open(map, point);
     });
 }
-
+//! 맨 처음 주소
 function initGeocoder() {
     map.addListener('click', function(e) {
         searchCoordinateToAddress(e.coord);
@@ -212,7 +223,7 @@ function initGeocoder() {
 
         searchAddressToCoordinate($('#address').val());
     });
-
+    //! 주소 들어가는 곳
     searchAddressToCoordinate('종로 3가');
 }
 
