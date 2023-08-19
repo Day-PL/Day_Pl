@@ -97,7 +97,6 @@ function updatePlaceLike(likePlaceId) {
 
 planSubmitBtn.addEventListener('click', () => {
   const planTitle = getPlanTitle()
-  // TODO: 등록된 장소들 찾기
   const placeBoxItems = selectedPlaceContainer.querySelectorAll('.place__box');
   const placeIds = Array.from(placeBoxItems).map(item => item.dataset.place);
   console.log(placeIds)

@@ -81,15 +81,12 @@ def index(request):
     return render(request, 'new_plan.html', context=context)
 
 def get_filter(request, placetype_id):
-    print(placetype_id)
     if placetype_id:
         places = Place.objects.filter(type_code_id = placetype_id)
     else:
         places = Place.objects.all()[1:]
-    # print(places)
 
     places_json = serializers.serialize('json', places)
-    # print(places_json)
 
     return HttpResponse(places_json, content_type="text/json-comment-filtered")
 
