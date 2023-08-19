@@ -24,8 +24,9 @@ function addPlaceItem(placeName, placeId) {
   // uuid 기반으로 삭제되기 때문에 같은 장소 두 번 추가해도 선택한 값만 삭제되도록 하기 위해
   const placeBox = document.createElement('li');
   placeBox.setAttribute('class', 'place__box');
-  placeBox.setAttribute('data-id', uuid)
-  placeBox.setAttribute('data-place', `${placeId}`)
+  placeBox.setAttribute('draggable', 'true');
+  placeBox.setAttribute('data-id', uuid);
+  placeBox.setAttribute('data-place', `${placeId}`);
   placeBox.innerHTML = `
     <div class="place__item">
       <span class="place-like__btn">
@@ -119,3 +120,31 @@ function getPlanTitle() {
   }
   return planTitle
 }
+
+// drag & drop event
+let currentItemIndex = null;
+let currentItem = null;
+
+selectedPlaceContainer.addEventListener('dragstart', event => {
+  currentItem = event.target.closest('li');
+  const listArr = [...currentItem.parentElement.children];
+  currentItemIndex = listArr.indexOf(currentItem);
+});
+
+selectedPlaceContainer.addEventListener('dragover', event => {
+  event.preventDefault();
+});
+
+selectedPlaceContainer.addEventListener('drop', event => {
+  event.preventDefault();
+
+  const currentDropItem = event.target.closest('li');
+  const listArr = [...currentItem.parentElement.children];
+  const dropItemIndex = listArr.indexOf(currentDropItem);
+  
+  if (currentItemIndex < dropItemIndex) {
+    currentDropItem.after(currentItem)
+  } else {
+    currentDropItem.before(currentItem)
+  }
+});
