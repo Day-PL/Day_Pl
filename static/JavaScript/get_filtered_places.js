@@ -39,15 +39,6 @@ function createLikeButton(isLiked, placeId) {
     return likeBtn;
 }
 
-function printLikeBtn(placeId, placeBoxBody) {
-    checkIsLiked(placeId)
-    .then(result => { 
-        let isPlaceLiked = result;
-        let likeBtn = createLikeButton(isPlaceLiked, placeId);
-        placeBoxBody.insertBefore(likeBtn, placeBoxBody.firstChild)
-    });
-}
-
 function checkIsLiked(placeId) {
     return new Promise((resolve) => {
         fetch(`check-like/${placeId}/`, {
@@ -58,6 +49,15 @@ function checkIsLiked(placeId) {
             resolve(data.is_liked);
         })
     })
+}
+
+function printLikeBtn(placeId, placeBoxBody) {
+    checkIsLiked(placeId)
+    .then(result => { 
+        let isPlaceLiked = result;
+        let likeBtn = createLikeButton(isPlaceLiked, placeId);
+        placeBoxBody.insertBefore(likeBtn, placeBoxBody.firstChild)
+    });
 }
 
 function showPlace(place){

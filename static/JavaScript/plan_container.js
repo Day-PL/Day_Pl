@@ -45,6 +45,12 @@ selectedPlaceContainer.addEventListener('click', event => {
     const toBeDeleted = document.querySelector(`.place__box[data-id="${id}"]`);
     toBeDeleted.remove();
     place_current--;
+    return;
+  }
+
+  const likePlaceId = event.target.dataset.placelike;
+  if (likePlaceId) {
+    updatePlaceLike(likePlaceId)
   }
 })
 
@@ -60,6 +66,12 @@ placeContainer.addEventListener('click', event => {
 
   const likePlaceId = event.target.dataset.placelike;
   if (likePlaceId) {
+    updatePlaceLike(likePlaceId)
+  }
+})
+
+function updatePlaceLike(likePlaceId) {
+  if (likePlaceId) {
     fetch('', {
       method: 'PUT',
       headers: {
@@ -70,15 +82,18 @@ placeContainer.addEventListener('click', event => {
     })
     .then((response) => response.json())
     .then((data) => {
-      const placeLikeBtn = document.querySelector(`.place-like__btn[data-placelike="${likePlaceId}"]`)
-      if (data.isliked === true) {
-        placeLikeBtn.innerHTML = '<i class="fa-solid fa-star"></i>'
-      } else {
-        placeLikeBtn.innerHTML = '<i class="fa-regular fa-star"></i>'
-      }
+      const placeLikeBtn = document.querySelectorAll(`.place-like__btn[data-placelike="${likePlaceId}"]`)
+      placeLikeBtn.forEach(btn => {
+        if (data.isliked === true) {
+          btn.innerHTML = '<i class="fa-solid fa-star"></i>'
+        } else {
+          btn.innerHTML = '<i class="fa-regular fa-star"></i>'
+        }
+      })
+
     })
   }
-})
+}
 
 planSubmitBtn.addEventListener('click', () => {
   const planTitle = getPlanTitle()
