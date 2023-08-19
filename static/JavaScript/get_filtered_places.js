@@ -44,7 +44,7 @@ function printLikeBtn(placeId, placeBoxBody) {
     .then(result => { 
         let isPlaceLiked = result;
         let likeBtn = createLikeButton(isPlaceLiked, placeId);
-        placeBoxBody.appendChild(likeBtn);
+        placeBoxBody.insertBefore(likeBtn, placeBoxBody.firstChild)
     });
 }
 
@@ -73,8 +73,9 @@ function showPlace(place){
     const div = document.createElement('div')
     div.setAttribute('class', 'card')
     div.innerHTML = 
+    // style="height:90px; width: 18rem;"
     `
-        <div id="place_${placeId}" class="card" style="height:90px; width: 18rem;">
+        <div id="place_${placeId}" class="card">
             <div class="card-body">
                 <h6 class="card-title">
                     <span class="placeName" id="${placeId}">

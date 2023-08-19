@@ -29,15 +29,13 @@ function addPlaceItem(placeName, placeId) {
   placeBox.setAttribute('data-place', `${placeId}`);
   placeBox.innerHTML = `
     <div class="place__item">
-      <span class="place-like__btn">
-        <i class="fa-solid fa-star"></i>
-      </span>
       <span class="place__name">${placeName}</span>
       <button class="place-remove__btn">
         <i class="fa-solid fa-xmark" data-id=${uuid}></i>
       </button>
     </div>
     `
+  printLikeBtn(placeId, placeBox)
   return placeBox
 }
 
