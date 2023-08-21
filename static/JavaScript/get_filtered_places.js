@@ -3,10 +3,11 @@ var HOME_PATH = window.HOME_PATH || '.';
 window.addEventListener('DOMContentLoaded', getFilteredPlace)
 const selectElement = document.querySelector('.search_place_filter');
 
+window.addEventListener('DOMContentLoaded', getFilteredPlace)
+
 function getFilteredPlace(){
     const placeContainer = document.querySelector('.place_container')
     placeContainer.innerHTML = ''
-    console.log('실행됨');
     const selectedPlace = selectElement.options[selectElement.selectedIndex].value;
     fetch(`get-filter/${selectedPlace}/`, {
         method : "get",
@@ -69,27 +70,68 @@ function getFilteredPlace(){
             naver.maps.Event.addListener(markerList[i], 'click', getClickHandler(i)); // 클릭한 마커 핸들러
             
 
+            let placeBoxBody = placeBox.querySelector('.card-body')
+
+            let placeId = data[i]['pk']
+            printLikeBtn(placeId, placeBoxBody)
         }
         console.log('after markerList: ', markerList)
     })
 }
 
-function showPlace(place){
-    const placeId   = place['pk'];
-    const placeInfo = place['fields'];
+function createLikeButton(isLiked, placeId) {
+    let likeBtn = document.createElement('button');
+    likeBtn.setAttribute('class', 'place-like__btn');
+    let likeIcon = document.createElement('i');
     
-    const name          = placeInfo['name'];
-    const rating        = placeInfo['rating'];
-    const reviewTotal   = placeInfo['review_total'];
-    const addressGu     = placeInfo['address_gu'];
-    const addressLo     = placeInfo['address_lo'];
+    if (isLiked) {
+        likeIcon.setAttribute('class', 'fa-solid fa-star');
+    } else {
+        likeIcon.setAttribute('class', 'fa-regular fa-star');
+    }
+
+    likeBtn.setAttribute('data-placelike', placeId);
+    likeBtn.appendChild(likeIcon);
+    return likeBtn;
+}
+
+function checkIsLiked(placeId) {
+    return new Promise((resolve) => {
+        fetch(`check-like/${placeId}/`, {
+            method: 'GET',
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            resolve(data.is_liked);
+        })
+    })
+}
+
+function printLikeBtn(placeId, placeBoxBody) {
+    checkIsLiked(placeId)
+    .then(result => { 
+        let isPlaceLiked = result;
+        let likeBtn = createLikeButton(isPlaceLiked, placeId);
+        placeBoxBody.insertBefore(likeBtn, placeBoxBody.firstChild)
+    });
+}
+
+function showPlace(place){
+    const placeInfo = place['fields'];
+    const placeId = place['pk'];
+    const name = placeInfo['name'];
+    const rating = placeInfo['rating'];
+    const reviewTotal = placeInfo['review_total'];
+    const addressGu = placeInfo['address_gu'];
+    const addressLo = placeInfo['address_lo'];
     const addressDetail = placeInfo['address_detail'];
     
     const div = document.createElement('div');
     div.setAttribute('class', 'card');
     div.innerHTML = 
+    // style="height:90px; width: 18rem;"
     `
-        <div id="place_${placeId}" class="card" style="height:90px; width: 18rem;">
+        <div id="place_${placeId}" class="card">
             <div class="card-body">
                 <h6 class="card-title">
                     <span class="placeName" id="${placeId}">
