@@ -1,2 +1,2 @@
-name,type_code,type,star_rating,review_total,address_si,address_gu,address_lo,address_detail,area,contact,create_time
-테지움 테디베어 테마파크 서울점,G1,테마파크,4.38,0,서울,종로구,지봉로,19 시즌빌딩 지하 1층,jongno,1877-0279,2023-08-15 13:17:30
+name,type_code,type,star_rating,review_total,address_si,address_gu,address_lo,address_detail,area,contact,create_time,lat,lng
+테지움 테디베어 테마파크 서울점,G1,테마파크,4.38,0,서울,종로구,지봉로,19 시즌빌딩 지하 1층,jongno,1877-0279,2023-08-20 16:40:58,127.0152465,37.5717317
