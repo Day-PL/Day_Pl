@@ -29,35 +29,55 @@ function getFilteredPlace(){
         var markerList = new Array();
         var infoWindows = new Array();
 
+        function getClickHandler(seq) {
+            return function(e) {  // 마커를 클릭하는 부분
+                var marker = markerList[seq], // 클릭한 마커의 시퀀스로 찾는다.
+                    infoWindow = infoWindows[seq]; // 클릭한 마커의 시퀀스로 찾는다
+
+                if (infoWindow.getMap()) {
+                    infoWindow.close();
+                } else {
+                    infoWindow.open(map, marker); // 표출
+                }
+            }
+        }
+
         //! 위도,경도 어레이(latlngs)로 넣기
-        for (let i=0; i < data.length; i++) {
+        for (let i=0; i<data.length; i++) {
             let placeBox = showPlace(data[i]);
             placeContainer.appendChild(placeBox);
-
+            var name = data[i]['fields']['name'];
             var lng = data[i]['fields']['lng'];
             var lat = data[i]['fields']['lat'];
-            // latlngs.push(new naver.maps.LatLng(lng, lat));
             var latlng = new naver.maps.LatLng(lng, lat);
             marker = new naver.maps.Marker({
                 position: latlng,
                 map: map,
-                title: ""
+                title: name
             });
+            var infoWindow = new naver.maps.InfoWindow({
+                content: `<div style="text-align:center;padding:10px;"><b><font size=2>${name}</font></b></div>`
+            }); // 클릭했을 때 띄워줄 정보 입력
             marker.set('seq', i);
 
             markerList.push(marker);
+            infoWindows.push(infoWindow); 
             
             icon = null;
             marker = null;
+            
+            naver.maps.Event.addListener(markerList[i], 'click', getClickHandler(i)); // 클릭한 마커 핸들러
+            
+
         }
         console.log('after markerList: ', markerList)
     })
 }
 
 function showPlace(place){
-    const placeId = place['id'];
-
-    const placeInfo     = place['fields'];
+    const placeId   = place['pk'];
+    const placeInfo = place['fields'];
+    
     const name          = placeInfo['name'];
     const rating        = placeInfo['rating'];
     const reviewTotal   = placeInfo['review_total'];
@@ -102,3 +122,5 @@ function showPlace(place){
 }
 
 selectElement.addEventListener('change', getFilteredPlace);
+
+
