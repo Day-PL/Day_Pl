@@ -15,10 +15,25 @@ def index(request):
     current_date = date.today()
 
     context = {
-        'places' : places,
         'placetypes' : placetypes,
         'current_date' : current_date,
     }
+
+    if request.method == 'PUT':
+        data = json.loads(request.body)
+        place_id = data.get('placeid')
+        place = Place.objects.get(pk=place_id)
+        if place.like_users.filter(pk=user.pk).exists():
+            place.like_users.remove(user)
+            response = {
+                'isliked': False,
+            }
+        else:
+            place.like_users.add(user)
+            response = {
+                'isliked': True,
+            }
+        return JsonResponse(response)
 
     if request.method == 'POST':
         data = json.loads(request.body)
@@ -67,16 +82,26 @@ def index(request):
     return render(request, 'new_plan.html', context=context)
 
 def get_filter(request, placetype_id):
-    print(placetype_id)
     if placetype_id:
         places = Place.objects.filter(type_code_id = placetype_id) #! type_code 컬럼(object) : id
     else:
-        places = Place.objects.all()
+        places = Place.objects.all()[1:]
 
     places_json = serializers.serialize('json', places)
-    # print(places_json)
-    
-    return HttpResponse(places_json, content_type="text/json-comment-filtered") #! text/json-comment-filtered : 주석 빼고 JSON 데이터만
+
+    return HttpResponse(places_json, content_type="text/json-comment-filtered")
+
+def check_like(request, place_id):
+    place = Place.objects.get(pk=place_id)
+    if place.like_users.filter(pk=request.user.pk).exists():
+        response = {
+            'is_liked': True,
+        }
+    else:
+        response = {
+            'is_liked': False,
+        }
+    return JsonResponse(response)
 
 def get_naver_map(request):
     return render(request, 'components/naver_map_container.html')
