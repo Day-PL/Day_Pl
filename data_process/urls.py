@@ -9,5 +9,5 @@ urlpatterns = [
     path("exhibit_crawler/", exhibit_crawler, name = 'exhibit_crawler'),
     path("exhibit_save_to_db/<str:date>/", exhibit_save_to_db, name = 'exhibit_save_to_db'),
     path("naver_api_search/",          naver_api_search,          name = 'naver_api_search'),
-    # path("place_obj_create/",          place_obj_create,          name = 'place_obj_create'),
+    path("place_obj_create/",          place_obj_create,          name = 'place_obj_create'),
 ]

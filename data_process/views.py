@@ -37,7 +37,7 @@ def naver_api_search(request):
     naver_api_search_info()
     return redirect('Day_Pl:browse')
 
-# def place_obj_create(request):
-#     Place.objects.create(id=0, name='', address_si='', address_gu='', address_lo='') #! type_code
-#     print(Place.objects.filter(id=0))
-#     return redirect('Day_Pl:browse')
+def place_obj_create(request):
+    Place.objects.create(id=0, name='', address_si='', address_gu='', address_lo='') #! type_code
+    print(Place.objects.filter(id=0))
+    return redirect('Day_Pl:browse')
