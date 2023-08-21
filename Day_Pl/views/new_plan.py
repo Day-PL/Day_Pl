@@ -20,6 +20,7 @@ def index(request):
     }
 
     if request.method == 'PUT':
+        user = request.user
         data = json.loads(request.body)
         place_id = data.get('placeid')
         place = Place.objects.get(pk=place_id)
