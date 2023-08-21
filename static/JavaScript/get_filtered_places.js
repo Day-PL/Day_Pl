@@ -36,7 +36,6 @@ function getFilteredPlace(){
 
             var lng = data[i]['fields']['lng'];
             var lat = data[i]['fields']['lat'];
-            // latlngs.push(new naver.maps.LatLng(lng, lat));
             var latlng = new naver.maps.LatLng(lng, lat);
             marker = new naver.maps.Marker({
                 position: latlng,
