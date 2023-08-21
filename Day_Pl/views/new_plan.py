@@ -69,15 +69,14 @@ def index(request):
 def get_filter(request, placetype_id):
     print(placetype_id)
     if placetype_id:
-        places = Place.objects.filter(type_code_id = placetype_id)
+        places = Place.objects.filter(type_code_id = placetype_id) #! type_code 컬럼(object) : id
     else:
         places = Place.objects.all()
-    # print(places)
 
     places_json = serializers.serialize('json', places)
     # print(places_json)
-
-    return HttpResponse(places_json, content_type="text/json-comment-filtered")
+    
+    return HttpResponse(places_json, content_type="text/json-comment-filtered") #! text/json-comment-filtered : 주석 빼고 JSON 데이터만
 
 def get_naver_map(request):
-    return render(request, 'components/naver_map_container.html', context=context)
+    return render(request, 'components/naver_map_container.html')

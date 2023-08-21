@@ -1,6 +1,7 @@
 import csv
 from datetime import datetime
 from ..constant import NULL
+from ..api.naver_api_test import naver_map_LatLng
 
 def processed_data_to_csv(area_Eng, type_code, before_file, after_file):
     processed_data = []
@@ -10,15 +11,20 @@ def processed_data_to_csv(area_Eng, type_code, before_file, after_file):
     with open(before_file, "r", encoding="UTF-8") as file:
         csvReader = csv.DictReader(file)
         for shop in csvReader:
-            name = shop["name"]
-            type = shop["type"]
-            star_rating = shop["star_rating"]
+            name         = shop["name"]
+            type         = shop["type"]
+            star_rating  = shop["star_rating"]
             review_total = shop["review_sum"]
-            address = shop["address"]
-            contact = shop["contact"]
+            address      = shop["address"]
+            contact      = shop["contact"]
+
+            latlng = naver_map_LatLng(address)
+            lat    = latlng[0]
+            lng    = latlng[1]
+
             if review_total == NULL:
                 review_total = 0
-         
+
             if address == NULL:
                 address_si, address_gu, address_lo, address_detail = NULL, NULL, NULL, NULL
             else:
@@ -43,6 +49,8 @@ def processed_data_to_csv(area_Eng, type_code, before_file, after_file):
                 "area",
                 "contact",
                 "create_time",
+                "lat",
+                "lng",
             ]
 
             values = [
@@ -58,6 +66,8 @@ def processed_data_to_csv(area_Eng, type_code, before_file, after_file):
                 area_Eng,
                 contact,
                 create_time,
+                lat,
+                lng,
             ]
             processed_data.append(dict(zip(keys, values)))
 

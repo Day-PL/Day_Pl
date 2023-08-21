@@ -16,17 +16,17 @@ class Data_Crawl_and_Process:
         type_code = type_searchname_to_typecode[type_kor]
         try:
             naver_crawler(area_kor, type_kor)
-            csv_to_xlsx(f"./csv/{area_eng}_{type_code}.csv", f"./xlsx/{area_eng}_{type_code}.xlsx") 
+            csv_to_xlsx(f"data_process/csv/{area_eng}_{type_code}.csv", f"data_process/xlsx/{area_eng}_{type_code}.xlsx") 
             print(f'{area_kor}_{type_kor} 크롤링하여 데이터 저장 성공')
         except:
             print(f'{area_kor}_{type_kor} 크롤링/데이터저장 실패')
     
         try:
             processed_data_to_csv(area_eng, type_code,
-                                f'./csv/{area_eng}_{type_code}.csv', 
-                                f'./csv/{area_eng}_{type_code}_processed.csv')
+                                f'data_process/csv/{area_eng}_{type_code}.csv', 
+                                f'data_process/csv/{area_eng}_{type_code}_processed.csv')
             print('(중간) processed_data_to_csv 완료')
-            csv_to_xlsx(f"./csv/{area_eng}_{type_code}_processed.csv", f"./xlsx/{area_eng}_{type_code}_processed.xlsx")
+            csv_to_xlsx(f"data_process/csv/{area_eng}_{type_code}_processed.csv", f"data_process/xlsx/{area_eng}_{type_code}_processed.xlsx")
             print(f'{area_kor}_{type_kor} 데이터 가공하여 저장 성공')
         except:
             print(f'{area_kor}_{type_kor} 데이터 가공/저장 실패')

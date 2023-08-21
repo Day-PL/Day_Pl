@@ -24,6 +24,8 @@ class Place(models.Model):
     url = models.CharField(max_length=128, null=True)
     like_users = models.ManyToManyField(User, related_name='place_like_users')
     created_at = models.DateTimeField(null=True) #! 크롤링한 시간을 넣어줄 것이다
+    lat = models.FloatField(null=True)
+    lng = models.FloatField(null=True)
 
 class Plan(models.Model):
     uuid = models.UUIDField(max_length=128, default=uuid.uuid4)
