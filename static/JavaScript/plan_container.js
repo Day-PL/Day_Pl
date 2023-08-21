@@ -11,6 +11,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const blankBtn = box.querySelector('.plan-blank__btn')
     box.setAttribute('data-id', uuid)
     box.setAttribute('data-blank', uuid)
+    box.setAttribute('data-place', '')
     blankBtn.setAttribute('data-blank', uuid)
   })
 })
@@ -26,7 +27,7 @@ heartBtn.addEventListener('click', () => {
   }
 })
 
-let place_current = 1;
+let place_current = 4;
 const PLACE_TOTAL = 10;
 
 function addPlaceItem(placeName, placeId) {
@@ -37,7 +38,7 @@ function addPlaceItem(placeName, placeId) {
   placeBox.setAttribute('class', 'place__box');
   placeBox.setAttribute('draggable', 'true');
   placeBox.setAttribute('data-id', uuid);
-  placeBox.setAttribute('data-place', `${placeId}`);
+  placeBox.setAttribute('data-place', placeId);
   placeBox.setAttribute('data-blank', uuid);
   placeBox.innerHTML = `
     <div class="place__item">
@@ -74,6 +75,7 @@ selectedPlaceContainer.addEventListener('click', event => {
     const toBeBlanked = document.querySelector(`.place__box[data-blank="${blankItemId}"]`)
     const blankBtn = toBeBlanked.querySelector('.plan-blank__btn')
     const blankStatus = blankBtn.dataset.state
+    
     if (blankItemId && blankStatus === 'filled') {
       blankPlanPlace(blankItemId, toBeBlanked)
     } else if (blankItemId && blankStatus === 'blanked') {
@@ -90,14 +92,8 @@ placeContainer.addEventListener('click', event => {
   const placeId = event.target.dataset.place;
   if (placeId && place_current < PLACE_TOTAL) {
     const placeName = document.getElementById(`${placeId}`).innerText;
-    const placeBox = addPlaceItem(placeName, placeId)
 
-    // TODO: selectedPlaceContainer 중
-    // 1. blank btn의 dataset.status가 filled인게 있으면 위에서부터 추가
-    // 2. 없으면 새로 추가
-    selectedPlaceContainer.appendChild(placeBox)
-    place_current++;
-    return;
+    printSelectedPlace(placeName, placeId)
   }
 
   const likePlaceId = event.target.dataset.placelike;
@@ -106,11 +102,37 @@ placeContainer.addEventListener('click', event => {
   }
 })
 
+function printSelectedPlace(placeName, placeId) {
+  const listArr = [...selectedPlaceContainer.children]
+  let foundEmptySlot = false;
+
+  listArr.forEach(list => {
+    const blankStatus = list.querySelector('.plan-blank__btn')
+    const dataPlace = list.dataset.place
+
+    if (blankStatus.dataset.state === 'filled' && !dataPlace && !foundEmptySlot) {
+      foundEmptySlot = true;
+      printLikeBtn(placeId, list)
+      list.dataset.place = placeId
+      const newPlaceName = list.querySelector('.place__name')
+      newPlaceName.innerText = placeName
+      return;
+    }
+  })
+
+  if (!foundEmptySlot) {
+    placeBox = addPlaceItem(placeName, placeId)
+    selectedPlaceContainer.appendChild(placeBox)
+    place_current++;
+  }
+}
+
 function blankPlanPlace(blankItemId, toBeBlanked) {
   const liArr = [...selectedPlaceContainer.children]
   const itemIndex = liArr.indexOf(toBeBlanked)
 
-  toBeBlanked.innerHTML = ``
+  toBeBlanked.dataset.place = ''
+  toBeBlanked.innerHTML = ''
   const placeItemDiv = document.createElement('div')
   placeItemDiv.setAttribute('class', 'place__item')
   placeItemDiv.innerHTML = `
