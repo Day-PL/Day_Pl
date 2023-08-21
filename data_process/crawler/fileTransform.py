@@ -23,7 +23,7 @@ def naver_place_csv_to_db(area_kor, place_type_code):
     placetype_obj = PlaceType.objects.get(code=place_type_code)
     print(placetype_obj)
 
-    csvfile = f"data_process/csv/{area_eng}_{place_type_code}_processed.csv"
+    csvfile = f"data_process/crawler/csv/{area_eng}_{place_type_code}_processed.csv"
     with open(csvfile, newline="") as file:
         csvReader = csv.DictReader(file)
         for row in csvReader:
@@ -63,5 +63,7 @@ def naver_place_csv_to_db(area_kor, place_type_code):
                     expected_time = 60,
                     url = f"https://map.naver.com/v5/directions/-/14129228.684381623,4517601.068035996,{row['address_gu']} {row['name']},1151030658,PLACE_POI/-/transit?c=15,0,0,0,dh&isCorrectAnswer=true",
                     # like_users = 0,
-                    created_at = row['create_time']
+                    created_at = row['create_time'],
+                    lat = row['lat'],
+                    lng = row['lng'],
                     )

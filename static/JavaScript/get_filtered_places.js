@@ -1,3 +1,6 @@
+var HOME_PATH = window.HOME_PATH || '.';
+
+window.addEventListener('DOMContentLoaded', getFilteredPlace)
 const selectElement = document.querySelector('.search_place_filter');
 
 function getFilteredPlace(){
@@ -11,26 +14,73 @@ function getFilteredPlace(){
     .then((response) => response.json())
     .then((data) => {
         // 가져온 데이터로 html에 뿌려주는 코드
-        console.log(data)
-        for(i=0; i < data.length; i++) {
-            let placeBox = showPlace(data[i])
-            placeContainer.appendChild(placeBox)
+        console.log('data 길이: ', data.length)
+
+        //! 네이버 지도에 마커 찍기
+        var map = new naver.maps.Map(document.getElementById('map'), {
+            zoom: 16,
+            center: new naver.maps.LatLng(37.5737109, 126.9896893),
+            zoomControl: true,
+            zoomControlOptions: {
+                style: naver.maps.ZoomControlStyle.SMALL,
+                position: naver.maps.Position.TOP_RIGHT
+            }
+        });
+
+        // var latlngs = new Array();
+        // console.log('before latlngs: ', latlngs);
+        //! 위도,경도 어레이(latlngs)로 넣기
+        for (let i=0; i < data.length; i++) {
+            let placeBox = showPlace(data[i]);
+            placeContainer.appendChild(placeBox);
+
+            var lng = data[i]['fields']['lng'];
+            var lat = data[i]['fields']['lat'];
+            // latlngs.push(new naver.maps.LatLng(lng, lat));
+            var latlng = new naver.maps.LatLng(lng, lat);
         }
+        // console.log('after latlngs:', latlngs);
+
+        var markerList = new Array();
+        var infoWindows = new Array();
+        // console.log('before markerList: ', markerList)
+
+        for (let j=0; j<latlngs.length; j++) {
+            marker = new naver.maps.Marker({
+                position: latlngs[j],
+                map: map,
+                title: ""
+                // icon: {
+                //     // url: './img/pin_default.png', // HOME_PATH +'/img/example/sp_pins_spot_v3.png', //! 얜 어디에..?
+                //     size: new naver.maps.Size(24, 37),
+                //     anchor: new naver.maps.Point(12, 37),
+                //     origin: new naver.maps.Point(j * 29, 0)
+                // }
+            });
+            marker.set('seq', j);
+
+            markerList.push(marker);
+            
+            icon = null;
+            marker = null;
+        }
+        console.log('after markerList: ', markerList)
     })
 }
 
 function showPlace(place){
-    const placeInfo = place['fields'];
     const placeId = place['id'];
-    const name = placeInfo['name'];
-    const rating = placeInfo['rating'];
-    const reviewTotal = placeInfo['review_total'];
-    const addressGu = placeInfo['address_gu'];
-    const addressLo = placeInfo['address_lo'];
+
+    const placeInfo     = place['fields'];
+    const name          = placeInfo['name'];
+    const rating        = placeInfo['rating'];
+    const reviewTotal   = placeInfo['review_total'];
+    const addressGu     = placeInfo['address_gu'];
+    const addressLo     = placeInfo['address_lo'];
     const addressDetail = placeInfo['address_detail'];
     
-    const div = document.createElement('div')
-    div.setAttribute('class', 'card')
+    const div = document.createElement('div');
+    div.setAttribute('class', 'card');
     div.innerHTML = 
     `
         <div id="place_${placeId}" class="card" style="height:90px; width: 18rem;">
@@ -61,8 +111,8 @@ function showPlace(place){
                 <button data-place="${placeId}">플랜에 추가</button>
             </div>
         </div>
-    `
-    return div
+    `;
+    return div;
 }
 
-selectElement.addEventListener('change', getFilteredPlace)
+selectElement.addEventListener('change', getFilteredPlace);

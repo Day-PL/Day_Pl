@@ -55,19 +55,19 @@ def kogpt_api(prompt, max_tokens = 1, temperature = 1.0, top_p = 1.0, n = 1):
     response = json.loads(r.content)
     return response
 
-#! KoGPT에게 전달할 명령어 구성
-prompt = ''' "서울 종로구 돈화문로11다길 34 세컨디포레스트 익선점"에서 "서울 중구 을지로12길 29 2층"까지 대중교통과 걷는 것을 이용해서 얼마나 걸리는 지 알려줘'''
+# #! KoGPT에게 전달할 명령어 구성
+# prompt = ''' "서울 종로구 돈화문로11다길 34 세컨디포레스트 익선점"에서 "서울 중구 을지로12길 29 2층"까지 대중교통과 걷는 것을 이용해서 얼마나 걸리는 지 알려줘'''
 
-#! 파라미터를 전달해 kogpt_api()메서드 호출
-response = kogpt_api(
-    prompt = prompt,
-    max_tokens = 32,
-    temperature = 0.5,
-    top_p = 0.5,
-    n = 3
-)
+# #! 파라미터를 전달해 kogpt_api()메서드 호출
+# response = kogpt_api(
+#     prompt = prompt,
+#     max_tokens = 32,
+#     temperature = 0.5,
+#     top_p = 0.5,
+#     n = 3
+# )
 
-print(response)
+# print(response)
 
 
 # page = 1
