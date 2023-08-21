@@ -9,6 +9,7 @@ window.addEventListener('DOMContentLoaded', () => {
   planBoxes.forEach(box => {
     const uuid = self.crypto.randomUUID();
     const blankBtn = box.querySelector('.plan-blank__btn')
+    box.setAttribute('data-id', uuid)
     box.setAttribute('data-blank', uuid)
     blankBtn.setAttribute('data-blank', uuid)
   })
@@ -210,29 +211,33 @@ selectedPlaceContainer.addEventListener('drop', event => {
   event.preventDefault();
 
   const currentDropItem = event.target.closest('li');
-  const listArr = [...currentItem.parentElement.children];
+  let listArr = [...currentItem.parentElement.children];
   const dropItemIndex = listArr.indexOf(currentDropItem);
-  const placeItem = currentItem.querySelector('.place__item');
-  const removeBtn = placeItem.querySelector('.place-remove__btn');
   
   if (currentItemIndex < dropItemIndex) {
     currentDropItem.after(currentItem)
   } else {
     currentDropItem.before(currentItem)
   }
-  
-  if (removeBtn && dropItemIndex < 4) {
-    removeBtn.remove()
-  } else if (!removeBtn && dropItemIndex >= 4) {
-    const currenItemUuid = currentItem.dataset.id
-    const button = document.createElement('button')
-    button.setAttribute('class', 'place-remove__btn')
-    button.innerHTML = `
-    <i class="fa-solid fa-xmark" data-id="${currenItemUuid}"></i>
-    `
-    placeItem.appendChild(button)
-  }
 
-  currentItemIndex = null;
-  currentItem = null;
+  listArr = [...currentItem.parentElement.children];
+  handleRemoveBtn(listArr)
 });
+
+function handleRemoveBtn(listArr) {
+  for (let [idx, item] of listArr.entries()) {
+    let placeItem = item.querySelector('.place__item');
+    let removeBtn = placeItem.querySelector('.place-remove__btn');
+    if (removeBtn && idx < 4) {
+      removeBtn.remove()
+    } else if (!removeBtn && idx >= 4) {
+      let currenItemUuid = item.dataset.id
+      let button = document.createElement('button')
+      button.setAttribute('class', 'place-remove__btn')
+      button.innerHTML = `
+      <i class="fa-solid fa-xmark" data-id="${currenItemUuid}"></i>
+      `
+      placeItem.appendChild(button)
+    }
+  }
+}
