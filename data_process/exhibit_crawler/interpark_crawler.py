@@ -11,15 +11,17 @@ from .data_formatter import format_date
 # data save to excel
 from .data_save_to import save_to_xlsx
 
+from ..api.naver_api_test import naver_map_LatLng
 from ..api.kakao_api_test import kakao_search_address
 from ..constant import NULL
 
 import os
 import csv
-from datetime import datetime, date
+from datetime import date
+from django.utils import timezone
 
 current_dir = os.getcwd()
-keys = ['name', 'address_si', 'address_gu', 'address_lo', 'address_detail', 'period_start', 'period_end', 'url', 'created_at']
+keys = ['name', 'address_si', 'address_gu', 'address_lo', 'address_detail', 'period_start', 'period_end', 'url', 'created_at', 'lat', 'lng']
 file_path = f'{current_dir}/data_process/exhibit_crawler/interpark_csv/exhibit_{date.today()}.csv'
 
 def interpark_crawler():
@@ -49,6 +51,7 @@ def interpark_crawler():
                 address = kakao_search_address(place, 'CT1')
                 address.replace('로', '로 ')
                 address.replace('로  ', '로')
+                lat, lng = naver_map_LatLng(address)
                 address_list = address.split()
                 address_si = address_list[0]
                 address_gu = address_list[1]
@@ -60,8 +63,8 @@ def interpark_crawler():
         str_date = dl.find_element(By.CSS_SELECTOR, 'dd.date').text
         period_start, period_end = format_date(str_date)
 
-        created_at = datetime.now()
-        values = [name, address_si, address_gu, address_lo, address_detail, period_start, period_end, url, created_at]
+        created_at = timezone.now()
+        values = [name, address_si, address_gu, address_lo, address_detail, period_start, period_end, url, created_at, lat, lng]
         datas.append(dict(zip(keys, values)))
     save_csv(file_path, datas)
 

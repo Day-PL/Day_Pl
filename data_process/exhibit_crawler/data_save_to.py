@@ -46,5 +46,7 @@ def save_to_db(file_path):
                     period_start = row['period_start'],
                     period_end = row['period_end'],
                     url = row['url'],
-                    created_at = row['created_at']
+                    created_at = row['created_at'],
+                    lat = row['lat'],
+                    lng = row['lng'],
                 )
