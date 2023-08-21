@@ -26,9 +26,9 @@ function getFilteredPlace(){
                 position: naver.maps.Position.TOP_RIGHT
             }
         });
+        var markerList = new Array();
+        var infoWindows = new Array();
 
-        // var latlngs = new Array();
-        // console.log('before latlngs: ', latlngs);
         //! 위도,경도 어레이(latlngs)로 넣기
         for (let i=0; i < data.length; i++) {
             let placeBox = showPlace(data[i]);
@@ -38,26 +38,12 @@ function getFilteredPlace(){
             var lat = data[i]['fields']['lat'];
             // latlngs.push(new naver.maps.LatLng(lng, lat));
             var latlng = new naver.maps.LatLng(lng, lat);
-        }
-        // console.log('after latlngs:', latlngs);
-
-        var markerList = new Array();
-        var infoWindows = new Array();
-        // console.log('before markerList: ', markerList)
-
-        for (let j=0; j<latlngs.length; j++) {
             marker = new naver.maps.Marker({
-                position: latlngs[j],
+                position: latlng,
                 map: map,
                 title: ""
-                // icon: {
-                //     // url: './img/pin_default.png', // HOME_PATH +'/img/example/sp_pins_spot_v3.png', //! 얜 어디에..?
-                //     size: new naver.maps.Size(24, 37),
-                //     anchor: new naver.maps.Point(12, 37),
-                //     origin: new naver.maps.Point(j * 29, 0)
-                // }
             });
-            marker.set('seq', j);
+            marker.set('seq', i);
 
             markerList.push(marker);
             
