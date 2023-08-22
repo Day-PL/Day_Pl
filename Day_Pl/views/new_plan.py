@@ -15,6 +15,7 @@ def index(request):
     current_date = date.today()
 
     context = {
+        'places' : places,
         'placetypes' : placetypes,
         'current_date' : current_date,
     }
