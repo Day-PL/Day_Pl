@@ -17,7 +17,7 @@ def processed_data_to_csv(area_Eng, type_code, before_file, after_file):
             review_total = shop["review_sum"]
             address      = shop["address"]
             contact      = shop["contact"]
-
+            # url          = 
             latlng = naver_map_LatLng(address)
             lat    = latlng[0]
             lng    = latlng[1]
