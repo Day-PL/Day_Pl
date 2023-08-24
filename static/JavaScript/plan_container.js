@@ -1,3 +1,4 @@
+const csrfToken = document.querySelector('[name="csrfmiddlewaretoken"]').value
 const planSubmitBtn = document.querySelector('.plan-submit__btn')
 const selectedPlaceContainer = document.querySelector('.selected-place__container')
 const placeContainer = document.querySelector('.place_container')
