@@ -6,6 +6,7 @@ from Day_Pl.models import Place, PlaceType, Preference, Plan, PlanPlace
 from data_process.constant import area_kor_to_eng
 from django.http import HttpResponse
 from django.core import serializers
+from django.db import transaction
 from datetime import datetime, date
 
 @login_required
@@ -48,37 +49,39 @@ def index(request):
         # hashtag_type =
         # hashtag_pick =
 
-        try:
-            new_plan = Plan.objects.create(
-                created_at = created_at,
-                user_id = user,
-                title = title,
-            )
+        with transaction.atomic():
+            try:
+                new_plan = Plan.objects.create(
+                    created_at = created_at,
+                    user_id = user,
+                    title = title,
+                )
 
-            if is_liked:
-                new_plan.like_users.add(user)
-            
-            for idx, place_id in enumerate(place_ids):
-                if place_id == None:
-                    PlanPlace.objects.create(
-                        plan = new_plan,
-                        order = idx,
-                    )
-                else:
-                    place_obj = Place.objects.get(id = place_id)
-                    PlanPlace.objects.create(
-                        plan = new_plan,
-                        place = place_obj,
-                        order = idx,
-                    )
-            
-            response = {
-                'status': 'success',
-            }
-        except:
-            response = {
-                'status': 'fail',
-            }
+                if is_liked:
+                    new_plan.like_users.add(user)
+                
+                for idx, place_id in enumerate(place_ids):
+                    if place_id == '':
+                        PlanPlace.objects.create(
+                            plan = new_plan,
+                            order = idx,
+                        )
+                    else:
+                        place_obj = Place.objects.get(id = place_id)
+                        PlanPlace.objects.create(
+                            plan = new_plan,
+                            place = place_obj,
+                            order = idx,
+                        )
+                
+                response = {
+                    'status': 'success',
+                }
+            except Exception:
+                transaction.set_rollback(True)
+                response = {
+                    'status': 'fail',
+                }
         return JsonResponse(response)
     return render(request, 'new_plan.html', context=context)
 
