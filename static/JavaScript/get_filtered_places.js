@@ -68,31 +68,31 @@ async function getDetailedAddress(lat, lng) {
         return '';
     }
 }
-function searchCoordinateToAddress(latlng) {
-    naver.maps.Service.reverseGeocode({
-        coords: latlng,
-        orders: [
-            naver.maps.Service.OrderType.ADDR,
-            naver.maps.Service.OrderType.ROAD_ADDR
-        ].join(',')
-    }, getAddress); 
-}
-function getAddress(status, response) {
-    if (status === naver.maps.Service.Status.ERROR) {
-        return alert('Something Wrong!');
-    }
-    var items = response.v2.results,
-        address = '';
-    for (var i=0, ii=items.length, item; i<ii; i++) {
-        item = items[i];
-        address = makeAddress(item) || '';
-        if (item.name == 'roadaddr'){
-            document.getElementById('div3').dataset.address = address;
-            console.log('1', document.getElementById('div3').dataset.address);
-            return address;
-        }
-    }
-}
+// function searchCoordinateToAddress(latlng) {
+//     naver.maps.Service.reverseGeocode({
+//         coords: latlng,
+//         orders: [
+//             naver.maps.Service.OrderType.ADDR,
+//             naver.maps.Service.OrderType.ROAD_ADDR
+//         ].join(',')
+//     }, getAddress); 
+// }
+// function getAddress(status, response) {
+//     if (status === naver.maps.Service.Status.ERROR) {
+//         return alert('Something Wrong!');
+//     }
+//     var items = response.v2.results,
+//         address = '';
+//     for (var i=0, ii=items.length, item; i<ii; i++) {
+//         item = items[i];
+//         address = makeAddress(item) || '';
+//         if (item.name == 'roadaddr'){
+//             document.getElementById('div3').dataset.address = address;
+//             console.log('1', document.getElementById('div3').dataset.address);
+//             return address;
+//         }
+//     }
+// }
 //! 위도,경도 객체 -> 주소
 function makeAddress(item) {
     if (!item) {
