@@ -1,24 +1,73 @@
 
-function getAddress(status, response) {
-    if (status === naver.maps.Service.Status.ERROR) {
-        return alert('Something Wrong!');
+//! 사용자 위치 권한 사용가능한지 브라우저에게 물어보기 (가장 먼저 실행, 가장 마지막에 끝)
+let userAddress = '';
+$(document).ready(function(){
+    console.log('유저 위치 정보 가져오기 시작')
+    if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(function(data) {
+            var latitude = data.coords.latitude;
+            var longitude = data.coords.longitude;
+            console.log(latitude, longitude);
+            getDetailedAddress(latitude, longitude)
+            .then(result => {
+                console.log(result);
+                userAddress = result;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                userAddress = '';
+            });
+            
+        }, function(error) {
+            alert(error);
+        }, {
+            enableHighAccuracy: true,
+            timeout: Infinity,
+            maximumAge: 0
+        });
+    } else {
+        alert('geolocation 사용 불가능');
     }
-    var items = response.v2.results,
-        address = '';
-        
-    for (var i=0, ii=items.length, item, addrType; i<ii; i++) {
-        item = items[i];
-        address = makeAddress(item) || '';
-        addrType = item.name === 'roadaddr' ? '[도로명 주소]' : '[지번 주소]';
-        if (addrType == '[도로명 주소]'){
-            document.getElementById('div3').dataset.address = address;
-            console.log(document.getElementById('div3').dataset.address);
-        }
-    }
-    //! 도로명 주소 : address
-}
+});
+var HOME_PATH = window.HOME_PATH || '.';
+window.addEventListener('DOMContentLoaded', getFilteredPlace);
+const selectElement = document.querySelector('.search_place_filter');
 
-//! 위도,경도 객체 -> 주소
+selectElement.addEventListener('change', getFilteredPlace);
+
+async function getDetailedAddress(lat, lng) {
+    const latlng = new naver.maps.LatLng(lat, lng);
+    try {
+        const response = await new Promise((resolve, reject) => {
+            naver.maps.Service.reverseGeocode({
+                coords: latlng,
+                orders: [
+                    naver.maps.Service.OrderType.ADDR,
+                    naver.maps.Service.OrderType.ROAD_ADDR
+                ].join(',')
+            }, (status, response) => {
+                if (status === naver.maps.Service.Status.ERROR) {
+                    reject('Error while reverse geocoding');
+                } else {
+                    resolve(response);
+                }
+            });
+        });
+
+        const items = response.v2.results;
+        for (let i = 0; i < items.length; i++) {
+            const item = items[i];
+            if (item.name === 'roadaddr') {
+                const address = makeAddress(item) || '';
+                return address;
+            }
+        }
+        return '';
+    } catch (error) {
+        console.error('Error:', error);
+        return '';
+    }
+}
 function searchCoordinateToAddress(latlng) {
     naver.maps.Service.reverseGeocode({
         coords: latlng,
@@ -26,14 +75,29 @@ function searchCoordinateToAddress(latlng) {
             naver.maps.Service.OrderType.ADDR,
             naver.maps.Service.OrderType.ROAD_ADDR
         ].join(',')
-    }, getAddress);
-    
+    }, getAddress); 
 }
+function getAddress(status, response) {
+    if (status === naver.maps.Service.Status.ERROR) {
+        return alert('Something Wrong!');
+    }
+    var items = response.v2.results,
+        address = '';
+    for (var i=0, ii=items.length, item; i<ii; i++) {
+        item = items[i];
+        address = makeAddress(item) || '';
+        if (item.name == 'roadaddr'){
+            document.getElementById('div3').dataset.address = address;
+            console.log('1', document.getElementById('div3').dataset.address);
+            return address;
+        }
+    }
+}
+//! 위도,경도 객체 -> 주소
 function makeAddress(item) {
     if (!item) {
         return;
     }
-
     var name = item.name,
         region = item.region,
         land = item.land,
@@ -44,32 +108,26 @@ function makeAddress(item) {
     if (hasArea(region.area1)) {
         sido = region.area1.name;
     }
-
     if (hasArea(region.area2)) {
         sigugun = region.area2.name;
     }
-
     if (hasArea(region.area3)) {
         dongmyun = region.area3.name;
     }
-
     if (hasArea(region.area4)) {
         ri = region.area4.name;
     }
-
     if (land) {
         if (hasData(land.number1)) {
             if (hasData(land.type) && land.type === '2') {
                 rest += '산';
             }
-
             rest += land.number1;
 
             if (hasData(land.number2)) {
                 rest += ('-' + land.number2);
             }
         }
-
         if (isRoadAddress === true) {
             if (checkLastString(dongmyun, '면')) {
                 ri = land.name;
@@ -77,13 +135,11 @@ function makeAddress(item) {
                 dongmyun = land.name;
                 ri = '';
             }
-
             if (hasAddition(land.addition0)) {
                 rest += ' ' + land.addition0.value;
             }
         }
     }
-
     return [sido, sigugun, dongmyun, ri, rest].join(' ');
 }
 function hasArea(area) {
@@ -98,39 +154,6 @@ function checkLastString (word, lastString) {
 function hasAddition (addition) {
     return !!(addition && addition.value);
 }
-//! 사용자 위치 권한 사용가능한지 브라우저에게 물어보기
-$(document).ready(function(){
-    if ("geolocation" in navigator) {	/* geolocation 사용 가능 */
-        // console.log('사용 가능!');
-        navigator.geolocation.getCurrentPosition(function(data) {
-            var latitude = data.coords.latitude;
-            var longitude = data.coords.longitude;
-            searchCoordinateToAddress({
-                'y' : latitude, 
-                '_lat': latitude, 
-                'x': longitude, 
-                '_lng': longitude
-            });
-            console.log(document.getElementById('div3'));
-        }, function(error) {
-            alert(error);
-        }, {
-            enableHighAccuracy: true,
-            timeout: Infinity,
-            maximumAge: 0
-        });
-
-    } else {
-        alert('geolocation 사용 불가능');
-    }
-    
-});
-
-var HOME_PATH = window.HOME_PATH || '.';
-
-window.addEventListener('DOMContentLoaded', getFilteredPlace);
-const selectElement = document.querySelector('.search_place_filter');
-
 function getFilteredPlace(){
     const placeContainer = document.querySelector('.place_container');
     placeContainer.innerHTML = '';
@@ -168,7 +191,6 @@ function getFilteredPlace(){
                 }
             }
         }
-
         
         //! 위도,경도 어레이(latlngs)로 넣기
         for (let i=0; i<data.length; i++) {
@@ -179,7 +201,7 @@ function getFilteredPlace(){
             let addressGu = data[i]['fields']['address_gu']
             let addressLo = data[i]['fields']['address_lo']
             
-            let url = `https://map.naver.com/v5/directions/-/14129228.684381623,4517601.068035996,${addressGu} ${addressLo} ${name},1151030658,PLACE_POI/-/transit?c=15,0,0,0,dh&isCorrectAnswer=true`
+            let url = `https://map.naver.com/v5/search/${addressGu} ${name}/place`;
             let lng = data[i]['fields']['lng'];
             let lat = data[i]['fields']['lat'];
             let latlng = new naver.maps.LatLng(lng, lat);
@@ -191,7 +213,7 @@ function getFilteredPlace(){
             let infoWindow = new naver.maps.InfoWindow({
                 content: 
                 `<div style="text-align:center;padding:10px;"><b><font size=2>
-                    <a href="${url}">
+                    <a href="${url}" target="_blank">
                         ${name}
                     </a>
                 </font></b></div>`
@@ -212,7 +234,6 @@ function getFilteredPlace(){
             let placeId = data[i]['pk']
             printLikeBtn(placeId, placeBoxBody)
         }
-        console.log('after markerList: ', markerList);
 
         const placeNames = document.querySelectorAll('.placeName');
         console.log('placeName 클래스 찾은 것: ', placeNames);
@@ -243,7 +264,6 @@ function getFilteredPlace(){
         });
     })
 }
-
 function createLikeButton(isLiked, placeId) {
     let likeBtn = document.createElement('button');
     likeBtn.setAttribute('class', 'place-like__btn');
@@ -259,7 +279,6 @@ function createLikeButton(isLiked, placeId) {
     likeBtn.appendChild(likeIcon);
     return likeBtn;
 }
-
 function checkIsLiked(placeId) {
     return new Promise((resolve) => {
         fetch(`check-like/${placeId}/`, {
@@ -271,7 +290,6 @@ function checkIsLiked(placeId) {
         })
     })
 }
-
 function printLikeBtn(placeId, placeBoxBody) {
     checkIsLiked(placeId)
     .then(result => { 
@@ -280,7 +298,6 @@ function printLikeBtn(placeId, placeBoxBody) {
         placeBoxBody.insertBefore(likeBtn, placeBoxBody.firstChild)
     });
 }
-
 function showPlace(place){
     const placeInfo = place['fields'];
     const placeId = place['pk'];
@@ -294,7 +311,6 @@ function showPlace(place){
     const div = document.createElement('div');
     div.setAttribute('class', 'card');
     div.innerHTML = 
-    // style="height:90px; width: 18rem;"
     `
         <div id="place_${placeId}" class="card">
             <div class="card-body">
@@ -303,11 +319,11 @@ function showPlace(place){
                         <font size=2>${name}</font>
                     </span>
                     &nbsp;
-                    <a href="https://map.naver.com/v5/search/${addressGu} ${addressLo} ${name}/place" target="_blank">
+                    <a href="https://map.naver.com/v5/search/${addressGu} ${name}/place" target="_blank">
                         <font size=1>네이버플레이스</font>
                     </a>
                     &nbsp;
-                    <a href="https://map.naver.com/v5/directions/-/14129228.684381623,4517601.068035996,${addressGu} ${addressLo} ${name},1151030658,PLACE_POI/-/transit?c=15,0,0,0,dh&isCorrectAnswer=true" target="_blank">
+                    <a href="https://map.naver.com/v5/directions/-/14129228.684381623,4517601.068035996,${addressGu} ${name},1151030658,PLACE_POI/-/transit?c=15,0,0,0,dh&isCorrectAnswer=true" target="_blank">
                         <font size=1>길찾기</font>
                     </a>
                 </h6>   
@@ -327,7 +343,3 @@ function showPlace(place){
     `;
     return div;
 }
-
-selectElement.addEventListener('change', getFilteredPlace);
-
-
