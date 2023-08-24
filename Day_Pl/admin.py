@@ -4,4 +4,6 @@ from .models import *
 admin.site.register(PlaceType)
 admin.site.register(Place)
 admin.site.register(Plan)
+admin.site.register(UserPlanView)
 admin.site.register(Preference)
+admin.site.register(PlanPlace)
