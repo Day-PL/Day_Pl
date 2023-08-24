@@ -27,9 +27,8 @@ file_path = f'{current_dir}/data_process/exhibit_crawler/interpark_csv/exhibit_{
 def interpark_crawler():
     chrome_options = Options()
     chrome_options.add_experimental_option("detach", True)
-
-    crawler = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
-    crawler = webdriver.Chrome(options=chrome_options)
+    chrome_options.add_experimental_option("excludeSwitches", ["enable-logging"]) 
+    crawler = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
 
     crawler.implicitly_wait(3)
     crawler.get('http://ticket.interpark.com/TiKi/Special/TPRegionReserve.asp?Region=42001&RegionName=%BC%AD%BF%EF#btn_genre_exhibit')
