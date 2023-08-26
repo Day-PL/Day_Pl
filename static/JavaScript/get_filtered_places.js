@@ -1,41 +1,46 @@
+getUserAddress()
+
+window.addEventListener('DOMContentLoaded', getFilteredPlace); //! 모두 로딩되고 보내준 장소 데이터들 가져와서 네이버 지도에 마커 표시 및 관련 기능(좋아요,추가)
+
+const selectElement = document.querySelector('.search_place_filter'); 
+selectElement.addEventListener('change', getFilteredPlace); //! (필터가) 바뀔 때마다 장소 데이터들 가져와서 네이버 지도에 마커 표시 및 관련 기능(좋아요,추가)
+let userAddress = '';
 
 //! 사용자 위치 권한 사용가능한지 브라우저에게 물어보기 (가장 먼저 실행, 가장 마지막에 끝)
-let userAddress = '';
-$(document).ready(function(){
-    console.log('유저 위치 정보 가져오기 시작')
-    if ("geolocation" in navigator) {
-        navigator.geolocation.getCurrentPosition(function(data) {
-            var latitude = data.coords.latitude;
-            var longitude = data.coords.longitude;
-            console.log(latitude, longitude);
-            getDetailedAddress(latitude, longitude)
-            .then(result => {
-                console.log(result);
-                userAddress = result;
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                userAddress = '';
+function getUserAddress(){
+    window.addEventListener('DOMContentLoaded', function(){
+        console.log('유저 위치 정보 가져오기 시작')
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(function(data) {
+                let latitude = data.coords.latitude;
+                let longitude = data.coords.longitude;
+                console.log(latitude, longitude);
+                
+                getDetailedAddress(latitude, longitude)
+                .then(result => {
+                    console.log(result);
+                    userAddress = result;
+                    return userAddress;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    userAddress = '';
+                });
+                
+            }, function(error) {
+                alert(error);
+            }, {
+                enableHighAccuracy: true,
+                timeout: Infinity,
+                maximumAge: 0
             });
-            
-        }, function(error) {
-            alert(error);
-        }, {
-            enableHighAccuracy: true,
-            timeout: Infinity,
-            maximumAge: 0
-        });
-    } else {
-        alert('geolocation 사용 불가능');
-    }
-});
-var HOME_PATH = window.HOME_PATH || '.';
-window.addEventListener('DOMContentLoaded', getFilteredPlace);
-const selectElement = document.querySelector('.search_place_filter');
-
-selectElement.addEventListener('change', getFilteredPlace);
-
+        } else {
+            alert('geolocation 사용 불가능');
+        }
+    });
+}
 async function getDetailedAddress(lat, lng) {
+    console.log('getDetailedAddress 실행');
     const latlng = new naver.maps.LatLng(lat, lng);
     try {
         const response = await new Promise((resolve, reject) => {
@@ -68,39 +73,39 @@ async function getDetailedAddress(lat, lng) {
         return '';
     }
 }
-function searchCoordinateToAddress(latlng) {
-    naver.maps.Service.reverseGeocode({
-        coords: latlng,
-        orders: [
-            naver.maps.Service.OrderType.ADDR,
-            naver.maps.Service.OrderType.ROAD_ADDR
-        ].join(',')
-    }, getAddress); 
-}
-function getAddress(status, response) {
-    if (status === naver.maps.Service.Status.ERROR) {
-        return alert('Something Wrong!');
-    }
-    var items = response.v2.results,
-        address = '';
-    for (var i=0, ii=items.length, item; i<ii; i++) {
-        item = items[i];
-        address = makeAddress(item) || '';
-        if (item.name == 'roadaddr'){
-            document.getElementById('div3').dataset.address = address;
-            console.log('1', document.getElementById('div3').dataset.address);
-            return address;
-        }
-    }
-}
-//! 위도,경도 객체 -> 주소
-function makeAddress(item) {
+// function searchCoordinateToAddress(latlng) {
+//     naver.maps.Service.reverseGeocode({
+//         coords: latlng,
+//         orders: [
+//             naver.maps.Service.OrderType.ADDR,
+//             naver.maps.Service.OrderType.ROAD_ADDR
+//         ].join(',')
+//     }, getAddress); 
+// }
+// function getAddress(status, response) {
+//     if (status === naver.maps.Service.Status.ERROR) {
+//         return alert('Something Wrong!');
+//     }
+//     var items = response.v2.results,
+//         address = '';
+//     for (var i=0, ii=items.length, item; i<ii; i++) {
+//         item = items[i];
+//         address = makeAddress(item) || '';
+//         if (item.name == 'roadaddr'){
+//             document.getElementById('div3').dataset.address = address;
+//             console.log('1', document.getElementById('div3').dataset.address);
+//             return address;
+//         }
+//     }
+// }
+function makeAddress(item) { //! 위도,경도 객체 -> 주소
+    console.log('makeAddress 실행');
     if (!item) {
         return;
     }
-    var name = item.name,
+    var name   = item.name,
         region = item.region,
-        land = item.land,
+        land   = item.land,
         isRoadAddress = name === 'roadaddr';
 
     var sido = '', sigugun = '', dongmyun = '', ri = '', rest = '';
@@ -155,6 +160,7 @@ function hasAddition (addition) {
     return !!(addition && addition.value);
 }
 function getFilteredPlace(){
+    console.log('getFilteredPlace 실행');
     const placeContainer = document.querySelector('.place_container');
     placeContainer.innerHTML = '';
     const selectedPlace = selectElement.options[selectElement.selectedIndex].value;
@@ -163,7 +169,6 @@ function getFilteredPlace(){
     })
     .then((response) => response.json())
     .then((data) => {
-        // 가져온 데이터로 html에 뿌려주는 코드
         console.log('data 길이: ', data.length)
 
         //! 네이버 지도에 마커 찍기
@@ -178,7 +183,7 @@ function getFilteredPlace(){
         });
         var markerList = new Array();
         var infoWindows = new Array();
-
+        
         function getClickHandler(seq) {
             return function(e) {  // 마커를 클릭하는 부분
                 var marker = markerList[seq], // 클릭한 마커의 시퀀스로 찾는다.
@@ -205,11 +210,13 @@ function getFilteredPlace(){
             let lng = data[i]['fields']['lng'];
             let lat = data[i]['fields']['lat'];
             let latlng = new naver.maps.LatLng(lng, lat);
-            marker = new naver.maps.Marker({
+
+            let marker = new naver.maps.Marker({
                 position: latlng,
                 map: map,
                 title: name
             });
+
             let infoWindow = new naver.maps.InfoWindow({
                 content: 
                 `<div style="text-align:center;padding:10px;"><b><font size=2>
@@ -222,8 +229,7 @@ function getFilteredPlace(){
 
             markerList.push(marker);
             infoWindows.push(infoWindow); 
-            
-            icon = null;
+
             marker = null;
             
             naver.maps.Event.addListener(markerList[i], 'click', getClickHandler(i)); // 클릭한 마커 핸들러
@@ -298,14 +304,14 @@ function printLikeBtn(placeId, placeBoxBody) {
         placeBoxBody.insertBefore(likeBtn, placeBoxBody.firstChild)
     });
 }
-function showPlace(place){
-    const placeInfo = place['fields'];
-    const placeId = place['pk'];
-    const name = placeInfo['name'];
-    const rating = placeInfo['rating'];
-    const reviewTotal = placeInfo['review_total'];
-    const addressGu = placeInfo['address_gu'];
-    const addressLo = placeInfo['address_lo'];
+function showPlace(place){ //! 이름 변경
+    const placeInfo     = place['fields'];
+    const placeId       = place['pk'];
+    const name          = placeInfo['name'];
+    const rating        = placeInfo['rating'];
+    const reviewTotal   = placeInfo['review_total'];
+    const addressGu     = placeInfo['address_gu'];
+    const addressLo     = placeInfo['address_lo'];
     const addressDetail = placeInfo['address_detail'];
     
     const div = document.createElement('div');
@@ -343,3 +349,7 @@ function showPlace(place){
     `;
     return div;
 }
+
+export { userAddress, getUserAddress, getDetailedAddress, makeAddress, hasArea, hasData, checkLastString, hasAddition, getFilteredPlace, createLikeButton, checkIsLiked, printLikeBtn, showPlace };
+console.log('export 완료');
+console.log('1111', userAddress);

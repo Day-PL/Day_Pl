@@ -1,25 +1,27 @@
 {% extends 'layout.html' %}
 {% load static %}
+
 {% block title %}새로운 플랜{% endblock %}
 
 {% block contents %}
 	<div class="d-flex">
-		<div id="div1">
+		<div id="div1"  class="p-2 flex-fill">
 			{% include 'components/plan_container.html' %}
 		</div>
-		<div id="div2">
+		<div id="div2"  class="p-2 flex-fill">
 			{% include 'components/search_place_container.html' %}
 		</div>
-		<div id="div3">
+		<div id="div3"  class="p-2 flex-fill">
 			{% include 'components/naver_map_container.html' %}
 		</div>
-		<div id="div4" style="display: none;">
+		<div id="div4" style="display: none;" class="p-2 flex-fill">
 			{% include 'components/search_place_click_info_container.html' %}
 		</div>
 	</div>
 {% endblock %}
 
 {% block scripts %}
-	<script src="{% static 'javascript/get_filtered_places.js' %}"></script>
+	<script type="module" src="{% static 'javascript/get_filtered_places.js' %}"></script>
+	<script src="{% static 'javascript/plan_container.js' %}"></script>
 	<script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=bl1rchjvv7&submodules=geocoder"></script>
 {% endblock %}
