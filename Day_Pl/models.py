@@ -30,16 +30,17 @@ class Plan(models.Model):
     uuid         = models.UUIDField(max_length=128, default=uuid.uuid4)
     created_at   = models.DateTimeField(auto_now_add=True)
     modified_at  = models.DateTimeField(null=True)
-    user_id      = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    user         = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     title        = models.CharField(max_length=64, default=f'{created_at}의 플랜')
     hashtag_area = models.CharField(max_length=32, blank=True)
     hashtag_type = models.CharField(max_length=32, blank=True)
     hashtag_pick = models.CharField(max_length=32, blank=True)
-    like_users   = models.ManyToManyField(User, related_name='plan_like_users')
-    memo         = models.TextField(null=True)
+    like_users   = models.ManyToManyField(User, related_name='plans')
+    memo         = models.TextField(blank=True, null=True)
     public       = models.BooleanField(null=False, default=False)
     removed      = models.BooleanField(null=False, default=False)
-    removed_at   = models.BooleanField(null=True)
+    removed_at   = models.DateTimeField(blank=True, null=True)
+    total_time   = models.CharField(max_length=64, blank=True, null=True)
 
 class UserPlanView(models.Model):
     user         = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -54,7 +55,7 @@ class PlanPlace(models.Model):
     plan                    = models.ForeignKey(Plan, on_delete=models.CASCADE)
     place                   = models.ForeignKey(Place, on_delete=models.CASCADE, blank=True, default=0)
     order                   = models.IntegerField()
-    expected_time_from_this = models.IntegerField(null=True)
+    expected_time_from_this = models.IntegerField(blank=True, null=True)
 
 # class UserPlaceLike(models.Model):
 #     uuid = models.CharField(max_length=128, blank=False)
