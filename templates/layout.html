@@ -29,7 +29,7 @@
     </head>
     
     <body>
-        <header>
+        <header style="height: 10%;">
             {% if user.is_authenticated %}
 			    {% include 'components/after_login.html' %}
             {% else %}
@@ -37,10 +37,12 @@
             {% endif %}
             {% include 'components/navigation.html' %}
         </header>
-        {% block contents %}
-            기본 컨텐츠
-        {% endblock %}
-        <footer>
+        <div style="height: 80%;">
+            {% block contents %}
+                기본 컨텐츠
+            {% endblock %}
+        </div>
+        <footer style="height: 10%;">
             {% include 'components/footer.html' %}
         </footer> 
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
