@@ -1,6 +1,6 @@
 // import * as module from './get_filtered_places';
 
-module.getUserAddress();
+// module.getUserAddress();
 
 let clickElements = document.getElementsByClassName('planName');
 let placeElements = document.getElementsByClassName('plan');
