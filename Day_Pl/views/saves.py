@@ -1,7 +1,5 @@
 from django.shortcuts import render, redirect
 from ..models import Place, PlaceType, Plan, PlanPlace, Preference, UserPlanView
-from django.contrib.auth.models import User
-# from common.models import User
 
 def index(request):
     user = request.user
@@ -35,19 +33,9 @@ def index(request):
             check_planid.append(saw_plan.id)
 
     for plan_places in plans_places:
-        print(plan_places)
-        
-        for plan_place in plan_places:
-            print(f'{plan_place.plan.title:15s}, {plan_place.place.name:15s} {plan_place.place.lng}')
-
         for i in range(len(plan_places)-1):
             road_url = f"https://map.naver.com/p/directions/,,,{ plan_places[i].place.naver_place_id },PLACE_POI/,,,{ plan_places[i+1].place.naver_place_id },PLACE_POI/-/transit?c=13.00,0,0,0,dh"
             PlanPlace.objects.filter(id = plan_places[i].id).update(road_url=road_url)
-
-
-
-            
-
 
     context = {
         'like_plans': like_plans,
