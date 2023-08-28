@@ -1,11 +1,11 @@
-name,type,star_rating,review_sum,address,contact
-청계광장옆자전거대여소,따릉이,정보 없음,10,서울 중구 태평로1가,정보 없음
-부산은행자전거대여소,따릉이,정보 없음,0,서울 중구 을지로1가,정보 없음
-롯데호텔자전거대여소,따릉이,정보 없음,10,서울 중구 을지로1가,정보 없음
-종각역1번출구앞자전거대여소,따릉이,정보 없음,1,서울 종로구 종로1가,정보 없음
-종묘공영주차장건너편자전거대여소,따릉이,정보 없음,2,서울 종로구 종로4가,정보 없음
-동묘앞역6번출구자전거대여소,따릉이,정보 없음,0,서울 종로구 창신동,정보 없음
-종로5가역4번출구자전거대여소,따릉이,정보 없음,1,서울 종로구 종로5가,정보 없음
-을지로입구역2번출구자전거대여소,따릉이,정보 없음,3,서울 중구 을지로1가,정보 없음
-종로3가역2번출구뒤자전거대여소,따릉이,정보 없음,1,서울 종로구 종로3가,정보 없음
-을지로3가역3번출구자전거대여소,따릉이,정보 없음,0,서울 중구 을지로3가,정보 없음
+name,type,star_rating,review_sum,address,contact,url
+부산은행자전거대여소,따릉이,정보 없음,0,서울 중구 을지로1가,정보 없음,https://pcmap.place.naver.com/place/1622717937/home?entry=bmp&from=map&fromPanelNum=1&ts=1693143529796
+청계광장옆자전거대여소,따릉이,정보 없음,9,서울 중구 태평로1가,정보 없음,https://pcmap.place.naver.com/place/38267105/home?entry=bmp&from=map&fromPanelNum=1&ts=1693143542085
+롯데호텔자전거대여소,따릉이,정보 없음,10,서울 중구 을지로1가,정보 없음,https://pcmap.place.naver.com/place/1280845528/home?entry=bmp&from=map&fromPanelNum=1&ts=1693143550922
+을지로입구역2번출구자전거대여소,따릉이,정보 없음,3,서울 중구 을지로1가,정보 없음,https://pcmap.place.naver.com/place/1063343973/home?entry=bmp&from=map&fromPanelNum=1&ts=1693143559800
+종각역1번출구앞자전거대여소,따릉이,정보 없음,1,서울 종로구 종로1가,정보 없음,https://pcmap.place.naver.com/place/38267109/home?entry=bmp&from=map&fromPanelNum=1&ts=1693143568471
+종묘공영주차장건너편자전거대여소,따릉이,정보 없음,2,서울 종로구 종로4가,정보 없음,https://pcmap.place.naver.com/place/1748135393/home?entry=bmp&from=map&fromPanelNum=1&ts=1693143577312
+종로5가역4번출구자전거대여소,따릉이,정보 없음,1,서울 종로구 종로5가,정보 없음,https://pcmap.place.naver.com/place/1475956814/home?entry=bmp&from=map&fromPanelNum=1&ts=1693143586126
+종로3가역2번출구뒤자전거대여소,따릉이,정보 없음,1,서울 종로구 종로3가,정보 없음,https://pcmap.place.naver.com/place/38267121/home?entry=bmp&from=map&fromPanelNum=1&ts=1693143594956
+을지로3가역3번출구자전거대여소,따릉이,정보 없음,0,서울 중구 을지로3가,정보 없음,https://pcmap.place.naver.com/place/1938301565/home?entry=bmp&from=map&fromPanelNum=1&ts=1693143603776
+국립어린이과학관자전거대여소,따릉이,정보 없음,7,서울 종로구 와룡동,정보 없음,https://pcmap.place.naver.com/place/1330252256/home?entry=bmp&from=map&fromPanelNum=1&ts=1693143614661
