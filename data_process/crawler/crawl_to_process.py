@@ -34,12 +34,12 @@ class Data_Crawl_and_Process:
     
     
     def get_one_area(self, area_kor):
-        for type_kor, type_code in type_searchname_to_typecode.items():
+        for type_kor in type_searchname_to_typecode.keys():
             self.get_one(area_kor,type_kor)
         return
 
 
     def get_all_area(self):
-        for area_kor, area_eng in area_kor_to_eng.items():
+        for area_kor in area_kor_to_eng.keys():
             self.get_one_area(area_kor)
         return
