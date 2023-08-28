@@ -40,7 +40,6 @@ class Plan(models.Model):
     view_users   = models.ManyToManyField(User, related_name='plans_view', through='UserPlanView')
     memo         = models.TextField(blank=True, null=True)
     public       = models.BooleanField(null=False, default=False)
-    removed      = models.BooleanField(null=False, default=False)
     removed_at   = models.DateTimeField(blank=True, null=True)
     total_time   = models.CharField(max_length=64, blank=True, null=True)
 
