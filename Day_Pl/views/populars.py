@@ -53,8 +53,7 @@ def get_plans(request, seach_keyword):
     plans = Plan.objects.filter(base_filter)\
                     .annotate(
                         count = Count('like_users'),
-                        # TODO: db migrate 후 user로 변경할 것
-                        nickname = F('user_id__profile__nickname'),)\
+                        nickname = F('user__profile__nickname'),)\
                     .order_by('-count')\
                     .values('title', 'count', 'nickname', 'hashtag_area', 'hashtag_type', 'hashtag_pick', 'uuid')
                     
@@ -79,7 +78,7 @@ def detail(request, plan_id):
             'id' : plan.pk,
             'uuid' : plan.uuid,
             'name' : plan.title,
-            'user' : plan.user_id.profile.nickname,
+            'user' : plan.user.profile.nickname,
         },
         'plan_places' : plan_places_list,
     }
