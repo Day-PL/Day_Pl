@@ -1,4 +1,6 @@
-console.log(getUserAddress())
+import { printPlaceLikeBtn } from '/static/javascript/like_button.js';
+
+getUserAddress()
 
 window.addEventListener('DOMContentLoaded', getFilteredPlace); //! 모두 로딩되고 보내준 장소 데이터들 가져와서 네이버 지도에 마커 표시 및 관련 기능(좋아요,추가)
 
@@ -9,7 +11,7 @@ let userAddress = '';
 //! 사용자 위치 권한 사용가능한지 브라우저에게 물어보기 (가장 먼저 실행, 가장 마지막에 끝)
 function getUserAddress(){
     window.addEventListener('DOMContentLoaded', function(){
-        console.log('유저 위치 정보 가져오기 시작');
+        console.log('유저 위치 정보 가져오기 시작')
         if ("geolocation" in navigator) {
             navigator.geolocation.getCurrentPosition(function(data) {
                 let latitude = data.coords.latitude;
@@ -213,7 +215,7 @@ function getFilteredPlace(){
             let placeBoxBody = placeBox.querySelector('.card-body')
 
             let placeId = data[i]['pk']
-            printLikeBtn(placeId, placeBoxBody)
+            printPlaceLikeBtn(placeId, placeBoxBody)
         }
 
         const placeNames = document.querySelectorAll('.placeName');
@@ -244,40 +246,6 @@ function getFilteredPlace(){
             });
         });
     })
-}
-function createLikeButton(isLiked, placeId) {
-    let likeBtn = document.createElement('button');
-    likeBtn.setAttribute('class', 'place-like__btn');
-    let likeIcon = document.createElement('i');
-    
-    if (isLiked) {
-        likeIcon.setAttribute('class', 'fa-solid fa-star');
-    } else {
-        likeIcon.setAttribute('class', 'fa-regular fa-star');
-    }
-
-    likeBtn.setAttribute('data-placelike', placeId);
-    likeBtn.appendChild(likeIcon);
-    return likeBtn;
-}
-function checkIsLiked(placeId) {
-    return new Promise((resolve) => {
-        fetch(`check-like/${placeId}/`, {
-            method: 'GET',
-        })
-        .then((response) => response.json())
-        .then((data) => {
-            resolve(data.is_liked);
-        })
-    })
-}
-function printLikeBtn(placeId, placeBoxBody) {
-    checkIsLiked(placeId)
-    .then(result => { 
-        let isPlaceLiked = result;
-        let likeBtn = createLikeButton(isPlaceLiked, placeId);
-        placeBoxBody.insertBefore(likeBtn, placeBoxBody.firstChild)
-    });
 }
 function showPlace(place){ //! 이름 변경
     const placeInfo     = place['fields'];

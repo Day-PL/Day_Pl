@@ -4,6 +4,7 @@
 {% block title %}새로운 플랜{% endblock %}
 
 {% block contents %}
+{% csrf_token %}
 	<div class="d-flex">
 		<div id="div1"  class="p-2 flex-fill">
 			{% include 'components/plan_container.html' %}
@@ -21,7 +22,7 @@
 {% endblock %}
 
 {% block scripts %}
-	<script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=bl1rchjvv7&submodules=geocoder"></script>
-	<script type="module" src="{% static 'javascript/get_filtered_places.js' %}"></script>
-	<script src="{% static 'javascript/plan_container.js' %}"></script>
+<script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=bl1rchjvv7&submodules=geocoder"></script>
+<script type="module" src="{% static '/javascript/get_filtered_places.js' %}"></script>
+<script type="module" src="{% static '/javascript/plan_container.js' %}"></script>
 {% endblock %}

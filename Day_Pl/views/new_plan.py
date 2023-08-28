@@ -1,9 +1,8 @@
 import json
 from django.http import JsonResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from Day_Pl.models import Place, PlaceType, Preference, Plan, PlanPlace
-from data_process.constant import area_kor_to_eng
+from Day_Pl.models import Place, PlaceType, Plan, PlanPlace
 from django.http import HttpResponse
 from django.core import serializers
 from django.db import transaction
@@ -95,18 +94,6 @@ def get_filter(request, placetype_id):
     places_json = serializers.serialize('json', places)
 
     return HttpResponse(places_json, content_type="text/json-comment-filtered")
-
-def check_like(request, place_id):
-    place = Place.objects.get(pk=place_id)
-    if place.like_users.filter(pk=request.user.pk).exists():
-        response = {
-            'is_liked': True,
-        }
-    else:
-        response = {
-            'is_liked': False,
-        }
-    return JsonResponse(response)
 
 def get_naver_map(request):
     return render(request, 'components/naver_map_container.html')

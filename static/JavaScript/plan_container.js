@@ -1,3 +1,6 @@
+import { printPlaceLikeBtn, updatePlaceLike } from '/static/javascript/like_button.js';
+
+const csrfToken = document.querySelector('[name="csrfmiddlewaretoken"]').value
 const planSubmitBtn = document.querySelector('.plan-submit__btn')
 const selectedPlaceContainer = document.querySelector('.selected-place__container')
 const placeContainer = document.querySelector('.place_container')
@@ -49,7 +52,7 @@ function addPlaceItem(placeName, placeId) {
       </button>
     </div>
     `
-  printLikeBtn(placeId, placeBox)
+  printPlaceLikeBtn(placeId, placeBox)
   return placeBox
 }
 
@@ -112,7 +115,7 @@ function printSelectedPlace(placeName, placeId) {
 
     if (blankStatus.dataset.state === 'filled' && !dataPlace && !foundEmptySlot) {
       foundEmptySlot = true;
-      printLikeBtn(placeId, list)
+      printPlaceLikeBtn(placeId, list)
       list.dataset.place = placeId
       const newPlaceName = list.querySelector('.place__name')
       newPlaceName.innerText = placeName
@@ -150,31 +153,6 @@ function blankPlanPlace(blankItemId, toBeBlanked) {
     placeItemDiv.appendChild(button)
   }
   toBeBlanked.appendChild(placeItemDiv)
-}
-
-function updatePlaceLike(likePlaceId) {
-  if (likePlaceId) {
-    fetch('', {
-      method: 'PUT',
-      headers: {
-        'X-CSRFToken': csrfToken,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ placeid: likePlaceId }),
-    })
-    .then((response) => response.json())
-    .then((data) => {
-      const placeLikeBtn = document.querySelectorAll(`.place-like__btn[data-placelike="${likePlaceId}"]`)
-      placeLikeBtn.forEach(btn => {
-        if (data.isliked === true) {
-          btn.innerHTML = '<i class="fa-solid fa-star"></i>'
-        } else {
-          btn.innerHTML = '<i class="fa-regular fa-star"></i>'
-        }
-      })
-
-    })
-  }
 }
 
 planSubmitBtn.addEventListener('click', () => {
