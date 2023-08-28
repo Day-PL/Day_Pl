@@ -57,3 +57,4 @@ class PlanPlace(models.Model):
     place                   = models.ForeignKey(Place, on_delete=models.CASCADE, blank=True, default=0)
     order                   = models.IntegerField()
     expected_time_from_this = models.IntegerField(blank=True, null=True)
+    road_url                = models.CharField(max_length=256, blank=True, null=True)
