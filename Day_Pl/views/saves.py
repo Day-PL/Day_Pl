@@ -23,15 +23,14 @@ def index(request):
 
     #! 내가 본 플랜들
     print('<봤던 플랜들>')
-    saw_plans = UserPlanView.objects.filter(user = user)
-    print(saw_plans)
+    saw_plans = user.plans_view.all()
     for saw_plan in saw_plans:
-        print(f'plan_title: {saw_plan.plan.title} plan_id: {saw_plan.plan.id} 하트수: {saw_plan.plan.like_users.count()}')
-        saw_plan_places = PlanPlace.objects.filter(plan = saw_plan.plan).order_by('order')
+        print(f'plan_title: {saw_plan.title} plan_id: {saw_plan.id} 하트수: {saw_plan.like_users.count()}')
+        saw_plan_places = PlanPlace.objects.filter(plan = saw_plan).order_by('order')
         #! 중복처리
-        if saw_plan.plan.id not in check_planid:
+        if saw_plan.id not in check_planid:
             plans_places.append(saw_plan_places)
-            check_planid.append(saw_plan.plan.id)
+            check_planid.append(saw_plan.id)
 
     for plan_places in plans_places:
         for i in range(len(plan_places)-1):

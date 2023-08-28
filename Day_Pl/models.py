@@ -37,16 +37,16 @@ class Plan(models.Model):
     hashtag_type = models.CharField(max_length=32, blank=True)
     hashtag_pick = models.CharField(max_length=32, blank=True)
     like_users   = models.ManyToManyField(User, related_name='plans')
+    view_users   = models.ManyToManyField(User, related_name='plans_view', through='UserPlanView')
     memo         = models.TextField(blank=True, null=True)
     public       = models.BooleanField(null=False, default=False)
-    removed      = models.BooleanField(null=False, default=False)
     removed_at   = models.DateTimeField(blank=True, null=True)
     total_time   = models.CharField(max_length=64, blank=True, null=True)
 
 class UserPlanView(models.Model):
     user         = models.ForeignKey(User, on_delete=models.CASCADE)
     plan         = models.ForeignKey(Plan, on_delete=models.CASCADE)
-    created_at   = models.DateTimeField(auto_now_add=True, null=False)
+    view_at      = models.DateTimeField(auto_now=True, null=False)
 
 class Preference(models.Model):
     user   = models.ForeignKey(User,      on_delete=models.CASCADE) 
