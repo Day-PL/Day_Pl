@@ -34,11 +34,12 @@ def naver_crawler(area_kor, place_type_kor="가볼만한곳"):
     chrome_options.add_experimental_option("excludeSwitches", ["enable-logging"])  #! 불필요한 에러 메세지 삭제
     service = Service(executable_path=ChromeDriverManager().install())  #! 크롬 드라이버 최신 버전 자동 설치 후 서비스 만들기
     crawler = webdriver.Chrome(service=service, options=chrome_options)
-    main_url = f"https://map.naver.com/v5/search/{area_kor}%20{place_type_kor}/place"
+    # main_url = f"https://map.naver.com/v5/search/{area_kor}%20{place_type_kor}/place"
+    main_url = f'https://map.naver.com/p/search/{area_kor}%20{place_type_kor}?c=13.00,0,0,0,dh'
 
     # ! 크롤링할 url로 이동
     crawler.get(main_url)  # ! 웹페이지 해당 주소 이동
-    crawler.implicitly_wait(5)  # ! 로딩이 끝날동안 기다리기
+    time.sleep(5)  # ! 로딩이 끝날동안 기다리기
     print('페이지 로딩 완료')
 
     # ! 크롤링한 상점들의 정보를 담는 리스트
@@ -147,6 +148,7 @@ def naver_crawler(area_kor, place_type_kor="가볼만한곳"):
             #! 가게 별점
             try:
                 star_rating = crawler.find_element(By.CSS_SELECTOR,"#app-root > div > div > div > div.place_section.OP4V8 > div.zD5Nm.f7aZ0 > div.dAsGb > span.PXMot.LXIwF > em").text #! 모든 검색명 동일
+                # star_rating = crawler.find_element(By.CSS_SELECTOR,"span.PXMot.LXIwF > em").text
             except:
                 star_rating = NULL
             crawler.implicitly_wait(2)
@@ -155,6 +157,7 @@ def naver_crawler(area_kor, place_type_kor="가볼만한곳"):
             try:
                 review_sum = 0
                 reviews = crawler.find_elements(By.CSS_SELECTOR,"#app-root > div > div > div > div.place_section.OP4V8 > div.zD5Nm.f7aZ0 > div.dAsGb > span > a > em") #! 모든 검색명 동일
+                # reviews = crawler.find_elements(By.CSS_SELECTOR,"div.dAsGb > span > a > em")
                 for review in reviews:
                     review_sum += int(review.text)
             except:
@@ -177,6 +180,20 @@ def naver_crawler(area_kor, place_type_kor="가볼만한곳"):
             except:
                 contact = NULL
             print(f'연락처: {contact}')
+
+
+            try:
+                url = crawler.find_element(By.ID, 'og:url').get_attribute('content')
+            except:
+                url = NULL
+            print(f'url: {url}')
+
+            try:
+                url2 = entryIframe.get_attribute('src')
+            except:
+                url2 = NULL
+            print(f'url2: {url2}')
+
             keys = [
                 "name",
                 "type",
@@ -184,8 +201,9 @@ def naver_crawler(area_kor, place_type_kor="가볼만한곳"):
                 "review_sum",
                 "address",
                 "contact",
+                "url"
             ]
-            values = [name, type, star_rating, review_sum, address, contact]
+            values = [name, type, star_rating, review_sum, address, contact, url]
             crawl_data.append(dict(zip(keys, values)))
 
     end_time = time.time()  #! 끝난 시간
@@ -197,7 +215,9 @@ def naver_crawler(area_kor, place_type_kor="가볼만한곳"):
     for data in crawl_data:
         print(data)
 
-    with open(f"./csv/{area_kor_to_eng[area_kor]}_{type_searchname_to_typecode[place_type_kor]}.csv", "w", encoding="UTF-8") as file:
+    with open(f"data_process/csv/{area_kor_to_eng[area_kor]}_{type_searchname_to_typecode[place_type_kor]}.csv", "w", encoding="UTF-8") as file:
         csvWriter = csv.DictWriter(file, fieldnames=keys)
         csvWriter.writeheader()
         csvWriter.writerows(crawl_data)
+    
+    print(f'{area_kor}_{place_type_kor} 크롤링하여 데이터 저장 성공')
