@@ -17,10 +17,10 @@ def processed_data_to_csv(area_Eng, type_code, before_file, after_file):
             review_total = shop["review_sum"]
             address      = shop["address"]
             contact      = shop["contact"]
-            # url          = 
-            latlng = naver_map_LatLng(address)
-            lat    = latlng[0]
-            lng    = latlng[1]
+            url          = shop["url"]
+            latlng       = naver_map_LatLng(address)
+            lat          = latlng[0]
+            lng          = latlng[1]
 
             if review_total == NULL:
                 review_total = 0
@@ -36,6 +36,12 @@ def processed_data_to_csv(area_Eng, type_code, before_file, after_file):
                 address_lo     = address_list[2]
                 address_detail = ' '.join(address_list[3:])
 
+            if url == NULL:
+                naver_place_id = NULL
+            else:
+                naver_place_id = url.replace('https://pcmap.place.naver.com/place/','').split('/')[0]
+
+
             keys = [
                 "name",
                 "type_code",
@@ -48,9 +54,11 @@ def processed_data_to_csv(area_Eng, type_code, before_file, after_file):
                 "address_detail",
                 "area",
                 "contact",
+                "url",
                 "create_time",
                 "lat",
                 "lng",
+                "naver_place_id",
             ]
 
             values = [
@@ -65,9 +73,11 @@ def processed_data_to_csv(area_Eng, type_code, before_file, after_file):
                 address_detail,
                 area_Eng,
                 contact,
+                url,
                 create_time,
                 lat,
                 lng,
+                naver_place_id,
             ]
             processed_data.append(dict(zip(keys, values)))
 

@@ -1,9 +1,10 @@
 from django.urls import path
-from .views import naver_place_crawler, naver_place_csv_to_db_all, exhibit_save_to_db, exhibit_crawler, naver_api_search, place_obj_create
+from .views import naver_place_crawler, naver_place_csv_to_db_all, exhibit_save_to_db, exhibit_crawler, naver_api_search, place_obj_create, index
 
 app_name = "data_process"
 
 urlpatterns = [
+    path("",                           index,                     name ='index'),
     path("naver_place_crawler/",       naver_place_crawler,       name = 'naver_place_crawler'), 
     path("naver_place_csv_to_db_all/", naver_place_csv_to_db_all, name = 'naver_place_csv_to_db_all'),
     path("exhibit_crawler/",           exhibit_crawler,           name = 'exhibit_crawler'),

@@ -23,18 +23,19 @@ def naver_place_csv_to_db(area_kor, place_type_code):
     placetype_obj = PlaceType.objects.get(code=place_type_code)
     print(placetype_obj)
 
-    csvfile = f"data_process/crawler/csv/{area_eng}_{place_type_code}_processed.csv"
+    csvfile = f"data_process/csv/{area_eng}_{place_type_code}_processed.csv"
     with open(csvfile, newline="") as file:
         csvReader = csv.DictReader(file)
         for row in csvReader:
             search_place  = Place.objects.filter(
                 name           = row['name'],
                 type_code      = placetype_obj,
-                address_si     = row['address_si'],
-                address_gu     = row['address_gu'],
-                address_lo     = row['address_lo'],
-                address_detail = row['address_detail'],
-                contact        = row['contact']
+                naver_place_id = row['naver_place_id'],
+                # address_si     = row['address_si'],
+                # address_gu     = row['address_gu'],
+                # address_lo     = row['address_lo'],
+                # address_detail = row['address_detail'],
+                # contact        = row['contact']
                 )
             print('찾은 장소: ', search_place)
             if search_place:
@@ -58,12 +59,12 @@ def naver_place_csv_to_db(area_kor, place_type_code):
                     address_lo     = row['address_lo'],
                     address_detail = row['address_detail'],
                     contact        = row['contact'],
+                    url            = row['url'],
                 #  period_start = row[''],
                 #  period_end = row[''],
-                    expected_time = 60,
-                    url = f"https://map.naver.com/v5/directions/-/14129228.684381623,4517601.068035996,{row['address_gu']} {row['name']},1151030658,PLACE_POI/-/transit?c=15,0,0,0,dh&isCorrectAnswer=true",
-                    # like_users = 0,
+                    expected_time_during = 60,
                     created_at = row['create_time'],
                     lat = row['lat'],
                     lng = row['lng'],
+                    naver_place_id = row['naver_place_id']
                     )
