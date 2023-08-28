@@ -1,4 +1,5 @@
 from .views import browse, preferences, saves, new_plan, populars
+from .components import check_like
 from django.urls import path
 
 app_name = "Day_Pl"
@@ -11,8 +12,10 @@ urlpatterns = [
     # path("saves/<str: plan_uuid>/update/", saves.update, name = 'saves_update'), #! 기록 페이지 / 플랜 하나 업데이트
     path("new-plan/", new_plan.index, name='new_plan'), #! 새로운 플랜 짜는 창
     path("new-plan/get-filter/<int:placetype_id>/", new_plan.get_filter, name='get_filter'), 
-    path("new-plan/check-like/<int:place_id>/", new_plan.check_like, name = 'check-like'),
+    path("check-place-like/<int:place_id>/", check_like.check_place_like, name = 'check-place-like'),
+    path("check-plan-like/<int:plan_id>/", check_like.check_plan_like, name = 'check-plan-like'),
     path("new-plan/naver_map/", new_plan.get_naver_map, name='get_naver_map'), 
     path("populars/", populars.index, name='populars'), #! 인기 많은 플랜들 뜨는 창
-    path("populars/detail", populars.detail, name='populars_detail'), #! 인기 많은 플랜들 / 플랜 하나
+    path("populars/search/<str:seach_keyword>/", populars.get_plans, name='get-plans'),
+    path("populars/<str:plan_id>/", populars.detail, name='populars_detail'), #! 인기 많은 플랜들 / 플랜 하나
 ]
