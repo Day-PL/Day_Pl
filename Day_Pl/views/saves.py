@@ -38,7 +38,7 @@ def index(request):
     for plan_places in plans_places:
         print(plan_places)
         for plan_place in plan_places:
-            print(f'{plan_place.plan.title:15s}, {plan_place.place.name:15s}')
+            print(f'{plan_place.plan.title:15s}, {plan_place.place.name:15s} {plan_place.place.lng}')
 
     context = {
         'like_plans': like_plans,

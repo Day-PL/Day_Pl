@@ -1,4 +1,4 @@
-getUserAddress()
+console.log(getUserAddress())
 
 window.addEventListener('DOMContentLoaded', getFilteredPlace); //! 모두 로딩되고 보내준 장소 데이터들 가져와서 네이버 지도에 마커 표시 및 관련 기능(좋아요,추가)
 
@@ -9,7 +9,7 @@ let userAddress = '';
 //! 사용자 위치 권한 사용가능한지 브라우저에게 물어보기 (가장 먼저 실행, 가장 마지막에 끝)
 function getUserAddress(){
     window.addEventListener('DOMContentLoaded', function(){
-        console.log('유저 위치 정보 가져오기 시작')
+        console.log('유저 위치 정보 가져오기 시작');
         if ("geolocation" in navigator) {
             navigator.geolocation.getCurrentPosition(function(data) {
                 let latitude = data.coords.latitude;
@@ -73,31 +73,6 @@ async function getDetailedAddress(lat, lng) {
         return '';
     }
 }
-// function searchCoordinateToAddress(latlng) {
-//     naver.maps.Service.reverseGeocode({
-//         coords: latlng,
-//         orders: [
-//             naver.maps.Service.OrderType.ADDR,
-//             naver.maps.Service.OrderType.ROAD_ADDR
-//         ].join(',')
-//     }, getAddress); 
-// }
-// function getAddress(status, response) {
-//     if (status === naver.maps.Service.Status.ERROR) {
-//         return alert('Something Wrong!');
-//     }
-//     var items = response.v2.results,
-//         address = '';
-//     for (var i=0, ii=items.length, item; i<ii; i++) {
-//         item = items[i];
-//         address = makeAddress(item) || '';
-//         if (item.name == 'roadaddr'){
-//             document.getElementById('div3').dataset.address = address;
-//             console.log('1', document.getElementById('div3').dataset.address);
-//             return address;
-//         }
-//     }
-// }
 function makeAddress(item) { //! 위도,경도 객체 -> 주소
     console.log('makeAddress 실행');
     if (!item) {
@@ -349,7 +324,3 @@ function showPlace(place){ //! 이름 변경
     `;
     return div;
 }
-
-export { userAddress, getUserAddress, getDetailedAddress, makeAddress, hasArea, hasData, checkLastString, hasAddition, getFilteredPlace, createLikeButton, checkIsLiked, printLikeBtn, showPlace };
-console.log('export 완료');
-console.log('1111', userAddress);
