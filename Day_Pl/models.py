@@ -11,20 +11,21 @@ class Place(models.Model):
     name                  = models.CharField(max_length=64, blank=False)
     type_code             = models.ForeignKey(PlaceType, on_delete=models.SET_NULL, null=True)
     rating                = models.CharField(null=True, max_length=16)
-    review_total          = models.IntegerField(null=True)
+    review_total          = models.IntegerField(null=True, blank=True)
     address_si            = models.CharField(max_length=32, blank=False)
     address_gu            = models.CharField(max_length=32, blank=False)
     address_lo            = models.CharField(max_length=32, blank=False)
     address_detail        = models.CharField(max_length=32, blank=True)
     contact               = models.CharField(max_length=16, blank=True)
-    period_start          = models.DateTimeField(null=True)
-    period_end            = models.DateTimeField(null=True)
-    expected_time_during  = models.IntegerField(null=True)
-    url                   = models.CharField(max_length=128, null=True)
+    period_start          = models.DateTimeField(null=True, blank=True)
+    period_end            = models.DateTimeField(null=True, blank=True)
+    expected_time_during  = models.IntegerField(null=True, blank=True)
+    url                   = models.CharField(max_length=256, null=True, blank=True) #! 128 넘어서 256으로 업그레이드 함
     like_users            = models.ManyToManyField(User, related_name='place_like_users')
-    created_at            = models.DateTimeField(null=True) #! 크롤링한 시간을 넣어줄 것이다
+    created_at            = models.DateTimeField(null=True) #! 크롤링한 시간
     lat                   = models.FloatField(null=True)
     lng                   = models.FloatField(null=True)
+    naver_place_id        = models.CharField(max_length=32, null=True)
 
 class Plan(models.Model):
     uuid         = models.UUIDField(max_length=128, default=uuid.uuid4)
@@ -56,8 +57,3 @@ class PlanPlace(models.Model):
     place                   = models.ForeignKey(Place, on_delete=models.CASCADE, blank=True, default=0)
     order                   = models.IntegerField()
     expected_time_from_this = models.IntegerField(blank=True, null=True)
-
-# class UserPlaceLike(models.Model):
-#     uuid = models.CharField(max_length=128, blank=False)
-#     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-#     place_id = models.ForeignKey(Place, on_delete=models.CASCADE)
