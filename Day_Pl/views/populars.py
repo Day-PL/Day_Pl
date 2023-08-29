@@ -38,15 +38,16 @@ def index(request):
         
     return render(request, 'populars.html')
 
-def get_plans(request, seach_keyword):
+def get_plans(request, search_keyword):
     base_filter = Q(public = True)
 
-    if seach_keyword != 'none':
+    if search_keyword != 'none':
         search_query_filter = (
-            Q(title__icontains = seach_keyword) |
-            Q(hashtag_area__icontains = seach_keyword) |
-            Q(hashtag_type__icontains = seach_keyword) |
-            Q(hashtag_pick__icontains = seach_keyword)
+            Q(title__icontains = search_keyword) |
+            Q(hashtag_area__icontains = search_keyword) |
+            Q(hashtag_type__icontains = search_keyword) |
+            Q(hashtag_pick__icontains = search_keyword) |
+            Q(planplace__place__name__icontains = search_keyword) 
         )
         base_filter &= search_query_filter
 
