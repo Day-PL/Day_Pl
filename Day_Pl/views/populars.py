@@ -88,14 +88,13 @@ def detail(request, plan_id):
     return JsonResponse(response)
 
 def control_user_plan_view(user, plan):
-    user_plan_view = UserPlanView.objects.filter(user=user, plan=plan).first()
-    if user_plan_view:
-        created_at = timezone.now()
-        user_plan_view.created_at = created_at
-        user_plan_view.save()
-    else:
-        UserPlanView.objects.create(user=user, plan=plan)
+    user_plan_view, created = UserPlanView.objects.get_or_create(user=user, plan=plan)
 
-    if UserPlanView.objects.filter(user=user).count() > 50:
+    if not created:
+        user_plan_view.view_at = timezone.now()
+        user_plan_view.save()
+
+    user_view_count = UserPlanView.objects.filter(user=user).count()
+    if user_view_count > 50:
         oldest_record = UserPlanView.objects.filter(user=user).order_by('created_at').first()
         oldest_record.delete()
