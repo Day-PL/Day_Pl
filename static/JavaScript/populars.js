@@ -10,7 +10,7 @@ window.addEventListener('DOMContentLoaded', () => {
   getPlans('');
 });
 
-searchInput.addEventListener('input', () => {
+searchInput.addEventListener('keyup', () => {
   getPlans(searchInput.value);
   })
 
