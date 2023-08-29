@@ -25,9 +25,9 @@ export function updatePlaceLike(PlaceId) {
       const placeLikeBtn = document.querySelectorAll(`.place-like__btn[data-placelike="${PlaceId}"]`)
       placeLikeBtn.forEach(btn => {
         if (data.isliked === true) {
-          btn.innerHTML = '<i class="fa-solid fa-star"></i>'
+          btn.innerHTML = `<i data-placelike="${PlaceId}" class="fa-solid fa-star"></i>`
         } else {
-          btn.innerHTML = '<i class="fa-regular fa-star"></i>'
+          btn.innerHTML = `<i data-placelike="${PlaceId}" class="fa-regular fa-star"></i>`
         }
       })
 
@@ -42,8 +42,10 @@ function createPlaceLikeButton(isLiked, placeId) {
   
   if (isLiked) {
       likeIcon.setAttribute('class', 'fa-solid fa-star');
+      likeIcon.setAttribute('data-placelike', placeId);
   } else {
       likeIcon.setAttribute('class', 'fa-regular fa-star');
+      likeIcon.setAttribute('data-placelike', placeId);
   }
 
   likeBtn.setAttribute('data-placelike', placeId);
@@ -88,9 +90,9 @@ export function updatePlanLike(planId) {
       const planLikeBtn = document.querySelectorAll(`.plan-like__btn[data-planlike="${planId}"]`)
       planLikeBtn.forEach(btn => {
         if (data.isliked === true) {
-          btn.innerHTML = '<i class="fa-solid fa-heart"></i>'
+          btn.innerHTML = `<i data-planlike="${planId}" class="fa-solid fa-heart"></i>`
         } else {
-          btn.innerHTML = '<i class="fa-regular fa-heart"></i>'
+          btn.innerHTML = `<i data-planlike="${planId}" class="fa-regular fa-heart"></i>`
         }
       })
 
@@ -105,8 +107,10 @@ function createPlanLikeButton(isLiked, planId) {
 
   if (isLiked) {
     likeIcon.setAttribute('class', 'fa-solid fa-heart');
+    likeIcon.setAttribute('data-planlike', planId);
   } else {
     likeIcon.setAttribute('class', 'fa-regular fa-heart');
+    likeIcon.setAttribute('data-planlike', planId);
   }
   
   likeBtn.setAttribute('data-planlike', planId);
