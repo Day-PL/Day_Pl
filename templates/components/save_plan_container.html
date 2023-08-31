@@ -1,52 +1,51 @@
 <div>
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <ul class="nav nav-tabs" id="myTab" role="tablist" style="width: 14rem;">
         <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="like-tab1" data-bs-toggle="tab" data-bs-target="#like-tab2" type="button" role="tab" aria-controls="like-tab" aria-selected="true">내가 좋아하는 플랜</button>
+            <button class="nav-link active" id="like-tab1" data-bs-toggle="tab" data-bs-target="#like-tab2" type="button" role="tab" aria-controls="like-tab" aria-selected="true" style="width: 7rem; font-size:0.8rem;">내가 좋아하는</button>
         </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="saw-tab1" data-bs-toggle="tab" data-bs-target="#saw-tab2" type="button" role="tab" aria-controls="view-tab" aria-selected="false">내가 본 플랜</button>
+        <li class="nav-item" role="presentation" >
+            <button class="nav-link" id="view-tab1" data-bs-toggle="tab" data-bs-target="#view-tab2" type="button" role="tab" aria-controls="view-tab" aria-selected="false" style="width: 7rem; font-size:0.8rem;">내가 본</button>
         </li>
     </ul>
     
-    <div class="tab-content" id="myTabContent">
+    <div class="tab-content" id="myTabContent" style="width: 14rem;">
         <div class="tab-pane fade show active" id="like-tab2" role="tabpanel" aria-labelledby="like-tab1" tabindex="0">
-            {% for like_plan in like_plans %}
+            {% for plan in like_plans %}
                 <div class="card">
                     <div class="card-body">
                         <h6 class="card-title">
-                            <span class="planName" id="{{ like_plan.id }}">
-                                <font size=2>{{ like_plan.title }}</font>
+                            <span class="planName" id="{{ plan.id }}">
+                                <font size=2>{{ plan.title }}</font>
                             </span>
                             &nbsp;
                         </h6>   
                         <font size=1>
                             <p class="card-text">
-                                좋아요수 : {{ like_plan.like_users.count }}
+                                좋아요수 : {{ plan.like_users.count }}
                             </p>
                         </font>
                     </div>
                 </div>
             {% endfor %}
         </div>
-    </div>
-
-    <div class="tab-pane fade" id="saw-tab2" role="tabpanel" aria-labelledby="saw-tab1" tabindex="0">
-        {% for saw_plan in saw_plans %}
-            <div class="card">
-                <div class="card-body">
-                    <h6 class="card-title">
-                        <span class="planName" id="{{ saw_plan.id }}">
-                            <font size=2>{{ saw_plan.title }}</font>
-                        </span>
-                        &nbsp;
-                    </h6>   
-                    <font size=1>
-                        <p class="card-text">
-                            좋아요수 : {{ saw_plan.like_users.count }}
-                        </p>
-                    </font>
+        <div class="tab-pane fade" id="view-tab2" role="tabpanel" aria-labelledby="view-tab1" tabindex="0">
+            {% for plan in view_plans %}
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="card-title">
+                            <span class="planName" id="{{ plan.id }}">
+                                <font size=2>{{ plan.title }}</font>
+                            </span>
+                            &nbsp;
+                        </h6>   
+                        <font size=1>
+                            <p class="card-text">
+                                좋아요수 : {{ plan.like_users.count }}
+                            </p>
+                        </font>
+                    </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
     </div>
 </div>

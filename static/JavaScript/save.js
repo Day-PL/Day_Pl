@@ -39,7 +39,6 @@ planNames.forEach(function(planName) {
                 let lngAvg = 0;
                 let len = labels.length;
                 labels.forEach(function(label){
-                    console.log(label);
                     let lat = label.dataset.lat;
                     let lng = label.dataset.lng;
 
@@ -51,7 +50,8 @@ planNames.forEach(function(planName) {
                         map: map,
                         title: 1
                     });
-                    // markerList.push(marker);
+                    
+
                     marker = null;
                 })
                 lngAvg /= len;
@@ -77,11 +77,14 @@ planNames.forEach(function(planName) {
                     let lng = label.dataset.lng;
                     latAvg += lat;
                     lngAvg += lng;
+                    console.log(label.getAttribute('for'));
+                    status1 = $('input:checkbox[id="' + label.getAttribute('for') + '"]').is(':checked');
+                    console.log(status1);
                 })
                 lngAvg /= len;
                 latAvg /= len;
                 map.setOptions("center", new naver.maps.LatLng(lngAvg, latAvg));
-            }else if (! planDiv.classList.contains('hide-plan')){  //! 클릭하지 않은 것들 중 보이는 장소들은 안 보이게 하기
+            } else if (! planDiv.classList.contains('hide-plan')){  //! 클릭하지 않은 것들 중 보이는 장소들은 안 보이게 하기
                 planDiv.classList.add('hide-plan');
             }
         });
