@@ -1,10 +1,6 @@
-<<<<<<< HEAD
+
 from django.shortcuts import render
-from ..models import  PlanPlace 
-=======
-from django.shortcuts import render, redirect
-from ..models import Place, PlaceType, Plan, PlanPlace, Preference, UserPlanView
->>>>>>> 138dfd0 (rename : 사용 안하는 import 삭제 및 db 변경)
+from ..models import PlanPlace
 
 def index(request):
     user = request.user
