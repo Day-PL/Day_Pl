@@ -3,14 +3,11 @@
 /* components */
 @import 'components/social-login-buttons.css';
 
-html {
-    font-size: 16px;
-  }
 /* view */
 @import 'popular.css';
 html {
     font-size: 16px;
-  }
+}
 
 * {
     font-family: 'Noto Sans KR', sans-serif;
@@ -41,8 +38,11 @@ ul {
     display: none;
 }
 
+<<<<<<< HEAD
 .populars__main{
     display: flex;
+=======
+>>>>>>> f0137e7 (design : 인기 플랜 - 스타일링)
 .fa-star {
     color: #F4D03F;
 }
@@ -54,7 +54,10 @@ ul {
 button .fa-heart,
 button .fa-star {
     font-size: 1.5rem;
+<<<<<<< HEAD
 .populars__main{
     display: flex;
+=======
+>>>>>>> f0137e7 (design : 인기 플랜 - 스타일링)
 }
 
