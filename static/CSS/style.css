@@ -1,23 +1,55 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+/* components */
 @import 'components/social-login-buttons.css';
 
 html {
     font-size: 16px;
   }
+/* view */
+@import 'popular.css';
 
 * {
     font-family: 'Noto Sans KR', sans-serif;
+    box-sizing: border-box;
 }
 
 a {
     text-decoration: none;
     color:black;
 }
+
+a:hover {
+    cursor: pointer;
+}
+
+button {
+    background-color: transparent;
+    outline: 0;
+    border: 0;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
 .hide-plan {
     display: none;
 }
 
 .populars__main{
     display: flex;
+.fa-star {
+    color: #F4D03F;
+}
+
+.fa-heart {
+    color: #E74C3C;
+}
+
+button .fa-heart,
+button .fa-star {
+    font-size: 1.5rem;
 }
 
