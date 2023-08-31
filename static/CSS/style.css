@@ -8,6 +8,9 @@ html {
   }
 /* view */
 @import 'popular.css';
+html {
+    font-size: 16px;
+  }
 
 * {
     font-family: 'Noto Sans KR', sans-serif;
@@ -51,5 +54,7 @@ ul {
 button .fa-heart,
 button .fa-star {
     font-size: 1.5rem;
+.populars__main{
+    display: flex;
 }
 
