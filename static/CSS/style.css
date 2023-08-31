@@ -49,6 +49,8 @@ ul {
 button .fa-heart,
 button .fa-star {
     font-size: 1.5rem;
+.populars__main{
+    display: flex;
 }
 .populars__main{
     display: flex;
