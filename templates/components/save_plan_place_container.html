@@ -1,9 +1,11 @@
+
 {% for plan_places in plans_places %}
-    <div role="group" aria-label="Vertical radio toggle button group" class="plan plan_{{ plan_places.0.plan.id }} hide-plan">
+    <div role="group" aria-label="Vertical radio toggle button group" class="plan plan_{{ plan_places.0.plan.id }} hide-plan" style="width: 15rem;">
+        <h6 style="text-align: center;">{{ plan_places.0.plan.title }}</h6>
         {% for plan_place in plan_places %}
             <div class="place d-flex">
                 <input type="radio" class="btn-check" name="plan_{{ plan_place.plan.id }}" id="place_{{ plan_place.place.id }}" autocomplete="off">
-                <label class="btn btn-outline-success" for="place_{{ plan_place.place.id }}" style="width: 160px; height:40px;" data-lat="{{ plan_place.place.lat }}" data-lng="{{ plan_place.place.lng }}">
+                <label class="btn btn-outline-success" for="place_{{ plan_place.place.id }}" style="width: 10rem; height:2.5rem;" data-lat="{{ plan_place.place.lat }}" data-lng="{{ plan_place.place.lng }}">
                     <h6><font size="2">{{ plan_place.place.name }} ({{ plan_place.order }})</font></h6>
                 </label>
                 <div>{{ plan_place.place.expected_time_during }}</div>
