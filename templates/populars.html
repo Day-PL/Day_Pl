@@ -2,20 +2,18 @@
 {% load static %}
 {% block title %}인기 플랜{% endblock %}
 {% block contents %}
-<main class="populars__main">
+<main class="populars__main d-flex justify-content-center">
   {% csrf_token %}
     <section class="popular-plans-list__container">
       <div class="popular-plans-serch__box">
-        <span class="search__icon">
-          <i class="fa-solid fa-magnifying-glass"></i>
-        </span>
         <input type="text" class="popular-plans-search__input">
+        <i class="fa-solid fa-magnifying-glass search__icon"></i>
         <button class="search-clear__btn">
-          <i class="fa-solid fa-xmark"></i>
+          <i class="fa-solid fa-xmark search-clear__icon"></i>
         </button>
       </div>
-      <ul class="popular-plans__list">
-      </ul>
+      <div class="list-group popular-plans__list">
+      </div>
     </section>
     <section class="popular-plan-detail__container">
       <div class="popular-plan-detail__box">
@@ -24,12 +22,16 @@
       </ul>
     </section>
     <section class="map">
-      <h1>지도</h1>
+      {% include 'components/naver_map_container.html' %}
     </section>
 </main>
 {% include 'components/share_modal.html' %}
 {% endblock %}
 
 {% block scripts %}
-	<script type="module" src="{% static '/javascript/populars.js' %}"></script>
+  <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=bl1rchjvv7&submodules=geocoder"></script>
+  <script src="{% static '/javascript/like_button.js' %}" ></script>
+	<script src="{% static '/javascript/populars.js' %}"></script>
+	<script src="{% static '/javascript/share_modal.js' %}"></script>
+  <script src="{% static '/javascript/popular_map.js' %}"></script>
 {% endblock %}

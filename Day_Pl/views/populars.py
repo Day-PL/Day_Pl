@@ -56,7 +56,7 @@ def get_plans(request, search_keyword):
                         count = Count('like_users'),
                         nickname = F('user__profile__nickname'),)\
                     .order_by('-count')\
-                    .values('title', 'count', 'nickname', 'hashtag_area', 'hashtag_type', 'hashtag_pick', 'uuid')
+                    .values('id', 'title', 'count', 'nickname', 'hashtag_area', 'hashtag_type', 'hashtag_pick', 'uuid')
                     
     plans_list = list(plans)
 
@@ -68,9 +68,11 @@ def detail(request, plan_id):
     plan_places = PlanPlace.objects.filter(plan=plan)\
                                     .annotate(
                                         placeid = F('place__id'),
-                                        place_name = F('place__name'),)\
+                                        place_name = F('place__name'),
+                                        lat = F('place__lat'),
+                                        lng = F('place__lng'),)\
                                     .order_by('order')\
-                                    .values('placeid', 'place_name', 'expected_time_from_this')
+                                    .values('placeid', 'place_name', 'expected_time_from_this', 'lat', 'lng')
 
     plan_places_list = list(plan_places)
 
@@ -97,5 +99,5 @@ def control_user_plan_view(user, plan):
 
     user_view_count = UserPlanView.objects.filter(user=user).count()
     if user_view_count > 50:
-        oldest_record = UserPlanView.objects.filter(user=user).order_by('created_at').first()
+        oldest_record = UserPlanView.objects.filter(user=user).order_by('view_at').first()
         oldest_record.delete()

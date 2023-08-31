@@ -1,6 +1,3 @@
-import { printPlaceLikeBtn, updatePlaceLike } from '/static/javascript/like_button.js';
-
-const csrfToken = document.querySelector('[name="csrfmiddlewaretoken"]').value
 const planSubmitBtn = document.querySelector('.plan-submit__btn')
 const selectedPlaceContainer = document.querySelector('.selected-place__container')
 const placeContainer = document.querySelector('.place_container')
@@ -174,6 +171,7 @@ planSubmitBtn.addEventListener('click', () => {
   })
     .then((response) => response.json())
     .then((data) => {
+      console.log(data)
       if (data.status === 'success') {
         location.reload()
       } else {
