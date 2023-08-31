@@ -53,7 +53,7 @@ def index(request):
             try:
                 new_plan = Plan.objects.create(
                     created_at = created_at,
-                    user_id = user,
+                    user = user,
                     title = title,
                 )
 
