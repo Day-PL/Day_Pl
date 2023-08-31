@@ -1,7 +1,7 @@
 const FULL_PATH = 'http://127.0.0.1:8000'
 const csrfToken = document.querySelector('[name="csrfmiddlewaretoken"]').value
 
-export function printPlaceLikeBtn(placeId, placeBoxBody) {
+function printPlaceLikeBtn(placeId, placeBoxBody) {
   checkPlaceIsLiked(placeId)
   .then(result => { 
       let isPlaceLiked = result;
@@ -10,7 +10,7 @@ export function printPlaceLikeBtn(placeId, placeBoxBody) {
   });
 }
 
-export function updatePlaceLike(PlaceId) {
+function updatePlaceLike(PlaceId) {
   if (PlaceId) {
     fetch('', {
       method: 'PUT',
@@ -66,16 +66,16 @@ function checkPlaceIsLiked(placeId) {
 }
 
 // 인기 플랜 / 나의 기록 중 남의 기록 ➡️ 하트 버튼 관련 function
-export function printPlanLikeBtn(planId, planBoxBody) {
+function printPlanLikeBtn(planId, planBoxBody) {
   checkPlanIsLiked(planId)
   .then(result => { 
       let isPlanLiked = result;
       let likeBtn = createPlanLikeButton(isPlanLiked, planId);
-      planBoxBody.insertBefore(likeBtn, planBoxBody.firstChild)
+      planBoxBody.insertBefore(likeBtn, planBoxBody.firstChild);
   });
 }
 
-export function updatePlanLike(planId) {
+function updatePlanLike(planId) {
   if (planId) {
     fetch('', {
       method: 'PUT',

@@ -1,5 +1,3 @@
-import { printPlaceLikeBtn } from '/static/javascript/like_button.js';
-
 getUserAddress()
 
 window.addEventListener('DOMContentLoaded', getFilteredPlace); //! 모두 로딩되고 보내준 장소 데이터들 가져와서 네이버 지도에 마커 표시 및 관련 기능(좋아요,추가)
@@ -30,7 +28,7 @@ function getUserAddress(){
                 });
                 
             }, function(error) {
-                alert(error);
+                // alert(error);
             }, {
                 enableHighAccuracy: true,
                 timeout: Infinity,

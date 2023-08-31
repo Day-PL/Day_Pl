@@ -1,5 +1,3 @@
-import { printPlaceLikeBtn, updatePlaceLike, printPlanLikeBtn, updatePlanLike } from '/static/javascript/like_button.js';
-
 const searchInput = document.querySelector('.popular-plans-search__input');
 const searchClearBtn = document.querySelector('.search-clear__btn');
 const popularPlansList = document.querySelector('.popular-plans__list');
@@ -21,7 +19,7 @@ searchClearBtn.addEventListener('click', () => {
 })
 
 popularPlansList.addEventListener('click', event => {
-  const targetLi = event.target.closest('li');
+  const targetLi = event.target.closest('a');
 
   if (targetLi) {
     const planId = targetLi.dataset.id;
@@ -60,9 +58,10 @@ function getPlanDetail(planId) {
 
     planDetailContainer.appendChild(placeDetail);
     planDetailContainer.appendChild(planPlaceList);
+
+    printMap(planPlaceList)
   })
 }
-
 
 function printPlanDetail(plan) {
   const planId = plan['plan']['id'];
@@ -70,7 +69,6 @@ function printPlanDetail(plan) {
   const title = plan['plan']['name'];
   const nickname = plan['plan']['user'];
 
-  planDetailBox.innerHTML = '';
   planDetailBox.innerHTML = `
   <span class="popular-plan__title">${title}</span>
   <button class="plan-share__btn btn" data-shareid="${planUuid}" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -78,6 +76,7 @@ function printPlanDetail(plan) {
   </button>
   `
   printPlanLikeBtn(planId, planDetailBox)
+  shareFunction()
 
   return planDetailBox;
 }
@@ -88,16 +87,19 @@ function printPlanPlaceList(planPlaces) {
   for (let place of planPlaces) {
     let placeId = place['placeid'];
     let name = place['place_name'];
+    let lng = place['lng'];
+    let lat = place['lat'];
 
     let li = document.createElement('li');
-    li.getAttribute('class', 'place-list');
+    li.setAttribute('class', 'place-list');
+    li.setAttribute('data-lng', lng);
+    li.setAttribute('data-lat', lat);
 
     let span = document.createElement('span');
-    span.getAttribute('class', 'place__name');
+    span.setAttribute('class', 'place__name');
     if (placeId === 0) {
       span.innerText = '비어있음';
     } else {
-      // TODO: printPlaceLikeBtn full path 적어주기 + url 수정
       printPlaceLikeBtn(placeId, li)
       span.innerText = name;
     }
@@ -121,10 +123,11 @@ function getPlans(searchKeyword) {
   .then((data) => {
     popularPlansList.innerHTML = '';
     if (!data.length) {
-      const li = document.createElement('li');
-      li.getAttribute('class', 'popular-plan__box__none');
-      li.innerText = '해당하는 정보가 없습니다.'
-      popularPlansList.appendChild(li);
+      // 여기 다시 수정
+      const list = document.createElement('a');
+      list.getAttribute('class', 'popular-plan__box__none');
+      list.innerText = '해당하는 정보가 없습니다.'
+      popularPlansList.appendChild(list);
     }
     for (let plan of data) {
       let planList = printPopularPlanList(plan);
@@ -134,7 +137,8 @@ function getPlans(searchKeyword) {
 }
 
 function printPopularPlanList(plan) {
-  const id = plan['uuid'];
+  const id = plan['id'];
+  const uuid = plan['uuid'];
   const title = plan['title'];
   const count = plan['count'];
   const nickname = plan['nickname'];
@@ -142,11 +146,12 @@ function printPopularPlanList(plan) {
   const hashtagType = plan['hashtag_type'];
   const hashtagPick = plan['hashtag_pick'];
 
-  const li = document.createElement('li');
-  li.setAttribute('class', 'popular-plan__box');
-  li.setAttribute('data-id', id);
-  li.setAttribute('data-name', title);
-  li.innerHTML = `
+  const list = document.createElement('a');
+  list.setAttribute('class', 'popular-plan__box list-group-item list-group-item-action');
+  list.setAttribute('id', id);
+  list.setAttribute('data-id', uuid);
+  list.setAttribute('data-name', title);
+  list.innerHTML = `
                 <div class="popular-plan__detail">
                   <div class="popular-plan__title">${title}</div>
                   <span class="popular-plan__like">
@@ -154,10 +159,10 @@ function printPopularPlanList(plan) {
                     <span class="popular-plan__like-count">${count}</span>
                   </span>
                   <span class="popular-plan__nickname">${nickname}</span>
-                  <span class="popular-plan__hash-area">${hashtagArea}</span>
-                  <span class="popular-plan__hash-type">${hashtagType}</span>
-                  <span class="popular-plan__hash-pick">${hashtagPick}</span>
+                  <span class="popular-plan__hash area">${hashtagArea}</span>
+                  <span class="popular-plan__hash type">${hashtagType}</span>
+                  <span class="popular-plan__hash pick">${hashtagPick}</span>
                 </div>
                 `;
-  return li;
+  return list;
 }
