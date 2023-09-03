@@ -28,21 +28,25 @@
         <link rel="stylesheet" href="{% static 'css/style.css' %}">
     </head>
     
-    <body>
-        <header>
-            {% if user.is_authenticated %}
-			    {% include 'components/after_login.html' %}
-            {% else %}
-			    {% include 'components/before_login.html' %}
-            {% endif %}
-            {% include 'components/navigation.html' %}
+    <body style="padding: 1rem 2rem 0rem 2rem;">
+        <header style="height: 8rem;">
+            <div style="height: 3rem;">
+                {% if user.is_authenticated %}
+                    {% include 'components/after_login.html' %}
+                {% else %}
+                    {% include 'components/before_login.html' %}
+                {% endif %}
+            </div>
+            <div style="height: 5rem;">
+                {% include 'components/navigation.html' %}
+            </div>
         </header>
-        <div style="height: 80%;">
+        <div style="height: 42rem; padding-left: 1rem;">
             {% block contents %}
                 기본 컨텐츠
             {% endblock %}
         </div>
-        <footer style="height: 10%;">
+        <footer style="text-align:center;">
             {% include 'components/footer.html' %}
         </footer> 
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
