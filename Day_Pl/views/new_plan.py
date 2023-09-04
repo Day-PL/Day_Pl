@@ -42,12 +42,13 @@ def index(request):
         title = data.get('plantitle')
         place_ids = data.get('placeids')
         is_liked = data.get('isliked')
+        hashtag_area = data.get('hashtag_area')
+        hashtag_type = data.get('hashtag_type')
+        hashtag_pick = data.get('hashtag_pick')
+        is_public = data.get('ispublic')
 
         user = request.user
         created_at = datetime.now()
-        # hashtag_area =
-        # hashtag_type =
-        # hashtag_pick =
 
         with transaction.atomic():
             try:
@@ -55,6 +56,10 @@ def index(request):
                     created_at = created_at,
                     user = user,
                     title = title,
+                    hashtag_area = hashtag_area,
+                    hashtag_type = hashtag_type,
+                    hashtag_pick = hashtag_pick,
+                    public = is_public,
                 )
 
                 if is_liked:

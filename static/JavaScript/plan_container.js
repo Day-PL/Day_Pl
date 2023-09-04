@@ -1,4 +1,5 @@
-const planSubmitBtn = document.querySelector('.plan-submit__btn')
+// const planSubmitBtn = document.querySelector('.plan-submit__btn')
+const modalSubmitBtn = document.querySelector('.plan-modal-submit__btn')
 const selectedPlaceContainer = document.querySelector('.selected-place__container')
 const placeContainer = document.querySelector('.place_container')
 const heartBtn = document.querySelector('.heart__btn')
@@ -152,33 +153,60 @@ function blankPlanPlace(blankItemId, toBeBlanked) {
   toBeBlanked.appendChild(placeItemDiv)
 }
 
-planSubmitBtn.addEventListener('click', () => {
-  const planTitle = getPlanTitle()
-  const placeBoxItems = selectedPlaceContainer.querySelectorAll('.place__box');
-  const placeIds = Array.from(placeBoxItems).map(item => item.dataset.place);
-  console.log(placeIds)
+// 해시태그
+const input = document.querySelector('input[name=hashtags]')
+let tagify = new Tagify(input, {
+  maxTags: 3,
+});
 
-  fetch('', {
-    method: 'POST',
-    headers: {
-      'X-CSRFToken': csrfToken,
-      'Content-Type': 'application/json',
-    },
-    body : JSON.stringify({ 
-      plantitle: planTitle,
-      placeids: placeIds,
-      isliked: isLiked, }),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data)
-      if (data.status === 'success') {
-        location.reload()
-      } else {
-        console.log('에러 발생')
-      }
+function getHashtags() {
+  let values = tagify.value
+  const valueArr = []
+  for (let value of values) {
+    valueArr.push(value['value'])
+  }
+  return valueArr
+}
+
+if (modalSubmitBtn) {
+  modalSubmitBtn.addEventListener('click', () => {
+    const planTitle = getPlanTitle()
+    const placeBoxItems = selectedPlaceContainer.querySelectorAll('.place__box');
+    const placeIds = Array.from(placeBoxItems).map(item => item.dataset.place);
+    const hashtags = getHashtags()
+    // 이 중 undefined 일 때도 처리해야 함
+    const hashtagArea = hashtags[0]
+    const hashtagType = hashtags[1]
+    const hashtagPick = hashtags[2]
+    // true, false로 구분
+    const isPublic = document.querySelector('.new-plan__public ').checked
+  
+    fetch('', {
+      method: 'POST',
+      headers: {
+        'X-CSRFToken': csrfToken,
+        'Content-Type': 'application/json',
+      },
+      body : JSON.stringify({ 
+        plantitle: planTitle,
+        placeids: placeIds,
+        isliked: isLiked,
+        hashtag_area: hashtagArea,
+        hashtag_type: hashtagType,
+        hashtag_pick: hashtagPick,
+        ispublic: isPublic, }),
     })
-})
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data)
+        if (data.status === 'success') {
+          location.reload()
+        } else {
+          console.log('에러 발생')
+        }
+      })
+  })
+}
 
 function getPlanTitle() {
   const planTitleInput = document.querySelector('.plan-title');

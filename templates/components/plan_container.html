@@ -3,7 +3,9 @@
     {% csrf_token %}
     <button class="heart__btn"><i class="fa-regular fa-heart"></i></button>
     <input class="plan-title" type="text" name="plan_title" placeholder="{{ current_date }}의 플랜">
-    <button class="plan-submit__btn">저장</button>
+    <button type="button" class="plan-submit__btn btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      저장
+    </button>
   </div>
   <ul class="selected-place__container">
     <li class="place__box" draggable="true">
