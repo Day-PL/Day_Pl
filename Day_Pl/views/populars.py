@@ -1,7 +1,7 @@
 import json
 from django.http import JsonResponse
 from django.shortcuts import render
-from django.db.models import Count, F, Q
+from django.db.models import Count, F, Q, OuterRef, Subquery
 from Day_Pl.models import Place, Plan, PlanPlace, UserPlanView
 from django.utils import timezone
 
@@ -51,13 +51,19 @@ def get_plans(request, search_keyword):
         )
         base_filter &= search_query_filter
 
+    subquery = Plan.objects.filter(id=OuterRef('id'))\
+                        .annotate(plan_like_users = Count('like_users'))\
+                        .values('plan_like_users')[:1]
+    
     plans = Plan.objects.filter(base_filter)\
                     .annotate(
-                        count = Count('like_users'),
+                        # count = Count('like_users'),
+                        count = Subquery(subquery),
                         nickname = F('user__profile__nickname'),)\
                     .order_by('-count')\
-                    .values('id', 'title', 'count', 'nickname', 'hashtag_area', 'hashtag_type', 'hashtag_pick', 'uuid')
-                    
+                    .values('id', 'title', 'count', 'nickname', 'hashtag_area', 'hashtag_type', 'hashtag_pick', 'uuid')\
+                    .distinct()
+
     plans_list = list(plans)
 
     return JsonResponse(plans_list, safe=False)
