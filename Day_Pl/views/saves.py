@@ -1,6 +1,6 @@
+from django.shortcuts import render, redirect, HttpResponse
+from ..models import Plan, PlanPlace 
 
-from django.shortcuts import render
-from ..models import PlanPlace
 
 def index(request):
     user = request.user
@@ -10,21 +10,21 @@ def index(request):
 
     #! 내가 좋아하는 플랜들
     like_plans = user.like_plans.all()
-    for like_plan in like_plans:
-        like_plan_places = PlanPlace.objects.filter(plan = like_plan).order_by('order')
+    for plan in like_plans:
+        plan_places = PlanPlace.objects.filter(plan = plan).order_by('order')
         #! 중복처리
-        if like_plan.id not in check_planid:
-            plans_places.append(like_plan_places)
-            check_planid.append(like_plan.id)
+        if plan.id not in check_planid:
+            plans_places.append(plan_places)
+            check_planid.append(plan.id)
 
     #! 내가 본 플랜들
     view_plans = user.view_plans.all()
-    for view_plan in view_plans:
-        view_plan_places = PlanPlace.objects.filter(plan = view_plan).order_by('order')
+    for plan in view_plans:
+        plan_places = PlanPlace.objects.filter(plan = plan).order_by('order')
         #! 중복처리
-        if view_plan.id not in check_planid:
-            plans_places.append(view_plan_places)
-            check_planid.append(view_plan.id)
+        if plan.id not in check_planid:
+            plans_places.append(plan_places)
+            check_planid.append(plan.id)
     
     # TODO new_plan으로 가야 할 것 같다
     for plan_places in plans_places:
@@ -38,3 +38,15 @@ def index(request):
         'plans_places': plans_places
     }
     return render(request, 'saves.html', context=context)
+
+def remove(request, plan_id):
+    user = request.user
+    plan = user.like_plans.get(id=plan_id)
+    plan.like_users.remove(user)
+    return HttpResponse('Success', status = 200)
+
+def add(request, plan_id):
+    user = request.user
+    plan = Plan.objects.get(id=plan_id)
+    plan.like_users.add(user)
+    return HttpResponse('Success', status = 200)

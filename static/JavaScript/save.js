@@ -90,3 +90,29 @@ planNames.forEach(function(planName) {
         });
     });
 });
+
+const hearts = document.querySelectorAll('.fa-heart');
+
+hearts.forEach(function(heart){
+    const planId = heart.nextElementSibling.id;
+    heart.addEventListener('click', function(){
+        if (heart.classList.contains('fa-solid')) {
+            heart.classList.remove('fa-solid');
+            heart.classList.add('fa-regular');
+            fetch(`${planId}/remove`, {
+                method : "get",
+            })
+            .then((response) => response.json())
+            .then(() => {})
+
+        }else {
+            heart.classList.remove('fa-regular');
+            heart.classList.add('fa-solid');
+            fetch(`${planId}/add`, {
+                method : "get",
+            })
+            .then((response) => response.json())
+            .then(() => {})
+        }
+    });
+});
