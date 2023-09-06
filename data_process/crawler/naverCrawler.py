@@ -35,7 +35,8 @@ def naver_crawler(area_kor, place_type_kor="가볼만한곳"):
     service = Service(executable_path=ChromeDriverManager().install())  #! 크롬 드라이버 최신 버전 자동 설치 후 서비스 만들기
     crawler = webdriver.Chrome(service=service, options=chrome_options)
     # main_url = f"https://map.naver.com/v5/search/{area_kor}%20{place_type_kor}/place"
-    main_url = f'https://map.naver.com/p/search/{area_kor}%20{place_type_kor}?c=13.00,0,0,0,dh'
+    # main_url = f'https://map.naver.com/p/search/{area_kor}%20{place_type_kor}?c=13.00,0,0,0,dh'
+    main_url = f'https://map.naver.com/p/search/{area_kor}%20{place_type_kor}'
 
     # ! 크롤링할 url로 이동
     crawler.get(main_url)  # ! 웹페이지 해당 주소 이동
