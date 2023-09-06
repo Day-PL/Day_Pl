@@ -43,7 +43,6 @@ planPlaceList.addEventListener('click', (event) => {
 
 planDetailBox.addEventListener('click', (event) => {
   const likePlanId = event.target.dataset.planlike;
-  // TODO: 플랜 공유 버튼 클릭시 이벤트!
 
   if (likePlanId) {
     updatePlanLike(likePlanId);
@@ -128,7 +127,6 @@ function getPlans(searchKeyword) {
   .then((data) => {
     popularPlansList.innerHTML = '';
     if (!data.length) {
-      // 여기 다시 수정
       const list = document.createElement('a');
       list.getAttribute('class', 'popular-plan__box__none');
       list.innerText = '해당하는 정보가 없습니다.'
