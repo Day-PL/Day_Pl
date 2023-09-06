@@ -90,3 +90,46 @@ planNames.forEach(function(planName) {
         });
     });
 });
+
+const hearts = document.querySelectorAll('.fa-heart');
+
+hearts.forEach(function(heart){
+    const planId = heart.nextElementSibling.id;
+    const planTitle = heart.nextElementSibling.dataset.plantitle;
+    const div = heart.parentElement.parentElement.parentElement;
+    const planType = heart.dataset.plantype;
+    const modifyPlan = div.querySelectorAll('#modifyPlan');
+    const removePlan = div.querySelectorAll('#removePlan');
+    heart.addEventListener('click', function(){
+        if (heart.classList.contains('fa-solid')) {
+            heart.classList.remove('fa-solid');
+            heart.classList.add('fa-regular');
+            fetch(`${planId}/like/remove`, {
+                method : "get",
+            })
+        }else {
+            heart.classList.remove('fa-regular');
+            heart.classList.add('fa-solid');
+            fetch(`${planId}/like/add`, {
+                method : "get",
+            })
+        }
+    });
+    if (modifyPlan.length) {
+        modifyPlan[0].addEventListener('click', function(){
+            fetch(`${planId}/modify`, {
+                method : 'get',
+            })
+            .then(window.location.href = '/')
+        });
+        removePlan[0].addEventListener('click', function(){
+            fetch(`${planId}/remove`, {
+                method : 'get',
+            })
+            .then(() => {
+                alert(`플랜명 : "${planTitle}" 삭제`)
+            })
+            .then(location.reload())
+        });
+    }
+});

@@ -1,4 +1,4 @@
-// const planSubmitBtn = document.querySelector('.plan-submit__btn')
+const planSubmitBtn = document.querySelector('.plan-submit__btn')
 const modalSubmitBtn = document.querySelector('.plan-modal-submit__btn')
 const selectedPlaceContainer = document.querySelector('.selected-place__container')
 const placeContainer = document.querySelector('.place_container')

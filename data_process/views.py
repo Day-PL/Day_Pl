@@ -12,8 +12,8 @@ def index(request):
 
 def naver_place_crawler(request):
     machine = Data_Crawl_and_Process()
-    # machine.get_all_area()               #! 모든 지역 + 모든 종류 데이터 가져오기
-    machine.get_one('종로', '공원')
+    machine.get_all_area()               #! 모든 지역 + 모든 종류 데이터 가져오기
+    # machine.get_one('종로', '공원')
     print(f'실패한 항목: {machine.fail}')
     return redirect('data_process:index')
 
