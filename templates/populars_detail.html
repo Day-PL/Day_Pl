@@ -1,2 +1,39 @@
 {% extends 'layout.html' %}
 {% load static %}
+{% block title %}인기 플랜{% endblock %}
+{% block contents %}
+<main class="populars__main d-flex justify-content-center">
+  {% csrf_token %}
+    <section id="div1" class="popular-plans-list__container p-2 flex-fill">
+      <div class="popular-plans-serch__box">
+        <input type="text" class="popular-plans-search__input">
+        <i class="fa-solid fa-magnifying-glass search__icon"></i>
+        <button class="search-clear__btn">
+          <i class="fa-solid fa-xmark search-clear__icon"></i>
+        </button>
+      </div>
+      <div class="list-group popular-plans__list">
+      </div>
+    </section>
+    <section id="div2" class="popular-plan-detail__container share p-2 flex-fill" data-shareplanid="{{ plan_id }}">
+      <div class="popular-plan-detail__box">
+      </div>
+      <ul class="popular-plan-place__list">
+      </ul>
+    </section>
+    <section id="div3" class="map p-2 flex-fill">
+      {% include 'components/naver_map_container.html' %}
+    </section>
+</main>
+{% include 'components/share_modal.html' %}
+{% endblock %}
+
+{% block scripts %}
+  <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=bl1rchjvv7&submodules=geocoder"></script>
+  <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.3.0/kakao.min.js"
+  integrity="sha384-70k0rrouSYPWJt7q9rSTKpiTfX6USlMYjZUtr1Du+9o4cGvhPAWxngdtVZDdErlh" crossorigin="anonymous"></script>
+  <script src="{% static '/javascript/like_button.js' %}" ></script>
+	<script src="{% static '/javascript/populars.js' %}"></script>
+	<script src="{% static '/javascript/share_modal.js' %}"></script>
+  <script src="{% static '/javascript/popular_map.js' %}"></script>
+{% endblock %}

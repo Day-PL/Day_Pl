@@ -17,5 +17,6 @@ urlpatterns = [
     path("new-plan/naver_map/", new_plan.get_naver_map, name='get_naver_map'), 
     path("populars/", populars.index, name='populars'), #! 인기 많은 플랜들 뜨는 창
     path("populars/search/<str:search_keyword>/", populars.get_plans, name='get-plans'),
-    path("populars/<str:plan_id>/", populars.detail, name='populars_detail'), #! 인기 많은 플랜들 / 플랜 하나
+    path("populars/<str:plan_id>/", populars.detail, name='populars-detail'), #! 인기 많은 플랜들 / 플랜 하나
+    path("populars/detail/<str:plan_id>/", populars.share_detail, name='populars-share-detail'), #! 인기 많은 플랜들 / 플랜 하나
 ]

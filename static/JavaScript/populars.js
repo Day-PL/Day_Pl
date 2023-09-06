@@ -27,6 +27,11 @@ popularPlansList.addEventListener('click', event => {
   }
 })
 
+if (document.querySelector('.popular-plan-detail__container.share')) {
+  const sharedPlanId = document.querySelector('.popular-plan-detail__container.share').dataset.shareplanid;
+  getPlanDetail(sharedPlanId);
+}
+
 planPlaceList.addEventListener('click', (event) => {
   const likePlaceId = event.target.dataset.placelike;
 
@@ -47,7 +52,7 @@ planDetailBox.addEventListener('click', (event) => {
 })
 
 function getPlanDetail(planId) {
-  fetch(`${planId}/`, {
+  fetch(`${FULL_PATH}/populars/${planId}/`, {
     method : "GET",
   })
   .then((response) => response.json())
@@ -76,7 +81,7 @@ function printPlanDetail(plan) {
   </button>
   `
   printPlanLikeBtn(planId, planDetailBox)
-  shareFunction()
+  shareFunction(title)
 
   return planDetailBox;
 }
@@ -116,7 +121,7 @@ function getPlans(searchKeyword) {
     searchKeyword = 'none'
   }
   
-  fetch(`search/${searchKeyword}/`, {
+  fetch(`${FULL_PATH}/populars/search/${searchKeyword}/`, {
     method : "GET",
   })
   .then((response) => response.json())

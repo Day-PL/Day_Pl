@@ -38,6 +38,39 @@ def index(request):
         
     return render(request, 'populars.html')
 
+def share_detail(request, plan_id):
+    if request.method == 'PUT':
+        user = request.user
+        data = json.loads(request.body)
+        
+        target_id = ''
+        target_table = ''
+
+        if 'placeid' in data:
+            target_id = data['placeid']
+            target_table = Place
+
+        elif 'planid' in data:
+            target_id = data['planid']
+            target_table = Plan
+
+        target_obj = target_table.objects.get(pk=target_id)
+
+        if target_obj.like_users.filter(pk=user.pk).exists():
+            target_obj.like_users.remove(user)
+            response = {
+                'isliked': False,
+            }
+        else:
+            target_obj.like_users.add(user)
+            response = {
+                'isliked': True,
+            }
+
+        return JsonResponse(response)
+        
+    return render(request, 'populars_detail.html', context = { 'plan_id': plan_id })
+
 def get_plans(request, search_keyword):
     base_filter = Q(public = True)
 
