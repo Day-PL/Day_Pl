@@ -93,21 +93,30 @@ function printPlanPlaceList(planPlaces) {
     let name = place['place_name'];
     let lng = place['lng'];
     let lat = place['lat'];
+    let roadUrl = place['road_url'];
 
     let li = document.createElement('li');
     li.setAttribute('class', 'place-list');
     li.setAttribute('data-lng', lng);
     li.setAttribute('data-lat', lat);
 
+    let div = document.createElement('div');
     let span = document.createElement('span');
+    let aTag = document.createElement('a');
     span.setAttribute('class', 'place__name');
     if (placeId === 0) {
       span.innerText = '비어있음';
     } else {
       printPlaceLikeBtn(placeId, li)
       span.innerText = name;
+      if (planPlaces.indexOf(place) !== planPlaces.length - 1) {
+        aTag.setAttribute('href', roadUrl);
+        aTag.innerText = '길찾기';
+      }
     }
-    li.appendChild(span);
+    div.appendChild(span);
+    li.appendChild(div);
+    li.appendChild(aTag);
 
     planPlaceList.appendChild(li);
   }

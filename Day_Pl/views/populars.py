@@ -1,10 +1,12 @@
 import json
 from django.http import JsonResponse
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 from django.db.models import Count, F, Q, OuterRef, Subquery
 from Day_Pl.models import Place, Plan, PlanPlace, UserPlanView
 from django.utils import timezone
 
+@login_required
 def index(request):
     if request.method == 'PUT':
         user = request.user
@@ -38,6 +40,7 @@ def index(request):
         
     return render(request, 'populars.html')
 
+@login_required
 def share_detail(request, plan_id):
     if request.method == 'PUT':
         user = request.user
@@ -111,7 +114,7 @@ def detail(request, plan_id):
                                         lat = F('place__lat'),
                                         lng = F('place__lng'),)\
                                     .order_by('order')\
-                                    .values('placeid', 'place_name', 'expected_time_from_this', 'lat', 'lng')
+                                    .values('placeid', 'place_name', 'expected_time_from_this', 'lat', 'lng', 'road_url')
 
     plan_places_list = list(plan_places)
 
@@ -126,6 +129,7 @@ def detail(request, plan_id):
     }
 
     control_user_plan_view(user, plan)
+    print(response)
 
     return JsonResponse(response)
 
