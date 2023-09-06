@@ -101,13 +101,14 @@ function printPlanPlaceList(planPlaces) {
     li.setAttribute('data-lat', lat);
 
     let div = document.createElement('div');
+    div.setAttribute('class', 'place-detail__div')
     let span = document.createElement('span');
     let aTag = document.createElement('a');
     span.setAttribute('class', 'place__name');
     if (placeId === 0) {
       span.innerText = '비어있음';
     } else {
-      printPlaceLikeBtn(placeId, li)
+      printPlaceLikeBtn(placeId, div)
       span.innerText = name;
       if (planPlaces.indexOf(place) !== planPlaces.length - 1) {
         aTag.setAttribute('href', roadUrl);

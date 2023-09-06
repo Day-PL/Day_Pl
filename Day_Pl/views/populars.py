@@ -129,7 +129,6 @@ def detail(request, plan_id):
     }
 
     control_user_plan_view(user, plan)
-    print(response)
 
     return JsonResponse(response)
 
