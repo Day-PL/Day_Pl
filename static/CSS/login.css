@@ -1,0 +1,37 @@
+.login__main {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.login__form {
+  width: 40%;
+}
+
+.login__inputs {
+  margin: 0;
+}
+
+.login-submit__btn {
+  width: 100%;
+  columns: #8E44AD;
+  background-color: #EBDEF0;
+  padding: 1.1rem 1rem;
+  margin: 1rem 0;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.login-submit__btn:hover {
+  background-color: #8E44AD;
+  color: #EBDEF0;
+}
+
+.social_login_btns {
+  width: 40%;
+  align-items: center;
+}

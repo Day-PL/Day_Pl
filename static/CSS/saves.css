@@ -1,0 +1,8 @@
+.tab-content {
+  width: 100%;
+  overflow-y: scroll;
+}
+
+.tab-content::-webkit-scrollbar {
+  display: none;
+}

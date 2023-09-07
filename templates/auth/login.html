@@ -4,24 +4,28 @@
 {% block title %}로그인{% endblock %}
 
 {% block contents %}
-	<form action="#" method="post">
-		{% csrf_token %}
-		<div class="form-floating mb-3">
-			<input type="id" name="username" class="form-control" id="username" placeholder="아이디를 입력하세요">
-			<label for="floatingInput">Id</label>
-		</div>
-		<div class="form-floating">
-			<input type="password" name="password" class="form-control" id="password" placeholder="비밀번호를 입력하세요">
-			<label for="floatingPassword">Password</label>
-		</div>
-		<div>
-			<input type="submit">
-		</div>
-	</form>
+	<main class="login__main">
+		<form class="login__form" action="#" method="post">
+			{% csrf_token %}
+			<div class="login__inputs">
+				<div class="form-floating mb-3">
+					<input type="id" name="username" class="form-control" id="username" placeholder="아이디를 입력하세요">
+					<label for="floatingInput">Id</label>
+				</div>
+				<div class="form-floating">
+					<input type="password" name="password" class="form-control" id="password" placeholder="비밀번호를 입력하세요">
+					<label for="floatingPassword">Password</label>
+				</div>
+			</div>
+			<div>
+				<button class="login-submit__btn" type="submit">로그인하기</button>
+			</div>
+		</form>
 
-    <div class="d-flex flex-column">
+		<div class="social_login_btns d-flex flex-column">
 			<img class="social_login_img" src="{% static 'IMG/google_login_button.png' %}" alt="">
 			<img class="social_login_img" src="{% static 'IMG/kakao_login_button.png' %}"  alt="">
 			<img class="social_login_img" src="{% static 'IMG/naver_login_button.png' %}"  alt="">
-    </div>
+		</div>
+	</main>
 {% endblock %}

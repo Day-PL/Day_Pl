@@ -2,9 +2,9 @@
 {% load static %}
 {% block title %}인기 플랜{% endblock %}
 {% block contents %}
-<main class="populars__main d-flex justify-content-center">
+<main class="populars__main d-flex justify-content-between">
   {% csrf_token %}
-    <section id="div1" class="popular-plans-list__container p-2 flex-fill">
+    <section id="div1" class="popular-plans-list__container">
       <div class="popular-plans-serch__box">
         <input type="text" class="popular-plans-search__input">
         <i class="fa-solid fa-magnifying-glass search__icon"></i>
@@ -15,13 +15,13 @@
       <div class="list-group popular-plans__list">
       </div>
     </section>
-    <section id="div2" class="popular-plan-detail__container p-2 flex-fill">
+    <section id="div2" class="popular-plan-detail__container">
       <div class="popular-plan-detail__box">
       </div>
       <ul class="popular-plan-place__list">
       </ul>
     </section>
-    <section id="div3" class="map p-2 flex-fill">
+    <section id="div3" class="map">
       {% include 'components/naver_map_container.html' %}
     </section>
 </main>

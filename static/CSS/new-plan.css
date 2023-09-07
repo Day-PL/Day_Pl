@@ -1,6 +1,5 @@
 .new-plan__main {
-  display: flex;
-  justify-content: space-between;
+  gap: 3rem;
 }
 
 .plan-container__section {
@@ -8,9 +7,8 @@
 }
 
 .new-plan-plan__container,.new-plan-places__container {
-  width: 10rem;
+  width: 30rem;
   height: 100%;
-  margin-left: 5rem;
 }
 
 .new-plan-plan__container {
@@ -72,6 +70,7 @@
 }
 
 .selected-place__container {
+  width: 100%;
   height: 550px;
   overflow-y: scroll;
 }
@@ -85,9 +84,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 25rem;
+  width: 100%;
   height: 8rem;
   margin: auto;
+  margin-right: 0;
   margin-bottom: 2rem;
   background-color: #F8F9F9;
   border-radius: 10px;
