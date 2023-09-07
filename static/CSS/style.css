@@ -4,7 +4,9 @@
 @import 'components/social-login-buttons.css';
 
 /* view */
+@import 'new-plan.css';
 @import 'popular.css';
+
 * {
     font-family: 'Noto Sans KR', sans-serif;
     box-sizing: border-box;

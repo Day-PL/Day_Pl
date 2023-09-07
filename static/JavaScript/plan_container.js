@@ -41,16 +41,18 @@ function addPlaceItem(placeName, placeId) {
   placeBox.setAttribute('data-id', uuid);
   placeBox.setAttribute('data-place', placeId);
   placeBox.setAttribute('data-blank', uuid);
-  placeBox.innerHTML = `
-    <div class="place__item">
+
+  const div = document.createElement('div')
+  div.setAttribute('class', 'place__item')
+  div.innerHTML = `
       <span class="place__name">${placeName}</span>
       <button class="plan-blank__btn" data-blank=${uuid} data-state="filled">비워두기</button>
       <button class="place-remove__btn">
         <i class="fa-solid fa-xmark" data-id=${uuid}></i>
       </button>
-    </div>
     `
-  printPlaceLikeBtn(placeId, placeBox)
+  placeBox.appendChild(div)
+  printPlaceLikeBtn(placeId, div)
   return placeBox
 }
 
@@ -113,7 +115,8 @@ function printSelectedPlace(placeName, placeId) {
 
     if (blankStatus.dataset.state === 'filled' && !dataPlace && !foundEmptySlot) {
       foundEmptySlot = true;
-      printPlaceLikeBtn(placeId, list)
+      const placeItem = list.querySelector('.place__item')
+      printPlaceLikeBtn(placeId, placeItem)
       list.dataset.place = placeId
       const newPlaceName = list.querySelector('.place__name')
       newPlaceName.innerText = placeName

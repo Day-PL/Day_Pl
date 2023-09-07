@@ -1,9 +1,9 @@
-<div>
+<div class="search_place__section">
 	<select name="search_place_filter" id="search_place_filter" class="search_place_filter">
 		<option value="0" selected>전체</option>
 		{% for placetype in placetypes %}
 			<option value="{{ placetype.id }}">{{ placetype.name }}</option>
 		{% endfor %}
 	</select>
-	<div class="place_container" style="overflow:scroll; height: 500px; width:300px"></div>
+	<div class="place_container"></div>
 </div>
