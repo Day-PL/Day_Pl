@@ -112,6 +112,7 @@ function printPlanPlaceList(planPlaces) {
       span.innerText = name;
       if (planPlaces.indexOf(place) !== planPlaces.length - 1) {
         aTag.setAttribute('href', roadUrl);
+        aTag.setAttribute('class', 'find_road_btn');
         aTag.innerText = '길찾기';
       }
     }
@@ -167,14 +168,16 @@ function printPopularPlanList(plan) {
   list.innerHTML = `
                 <div class="popular-plan__detail">
                   <div class="popular-plan__title">${title}</div>
-                  <span class="popular-plan__like">
-                    <i class="fa-solid fa-heart"></i>
-                    <span class="popular-plan__like-count">${count}</span>
-                  </span>
-                  <span class="popular-plan__nickname">${nickname}</span>
-                  <span class="popular-plan__hash area">${hashtagArea}</span>
-                  <span class="popular-plan__hash type">${hashtagType}</span>
-                  <span class="popular-plan__hash pick">${hashtagPick}</span>
+                  <div class="popular-plan__more">
+                    <span class="popular-plan__like">
+                      <i class="fa-solid fa-heart"></i>
+                      <span class="popular-plan__like-count">${count}</span>
+                    </span>
+                    <span class="popular-plan__nickname">${nickname}</span>
+                    <span class="popular-plan__hash area">${hashtagType}</span>
+                    <span class="popular-plan__hash type">${hashtagType}</span>
+                    <span class="popular-plan__hash pick">${hashtagPick}</span>
+                  </div>
                 </div>
                 `;
   return list;
