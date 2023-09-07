@@ -1,17 +1,17 @@
-name,type,star_rating,review_sum,address,contact,url
-보드게임카페 주사위왕국,보드카페,4.41,221,서울 종로구 우정국로2길 42 5층 주사위왕국,0507-1330-4562,https://pcmap.place.naver.com/place/1987435465/home?entry=bmp&from=PLACE_AD&n_ad_group_type=10&n_query=%EC%A2%85%EB%A1%9C%EB%B3%B4%EB%93%9C%EA%B2%8C%EC%9E%84%EC%B9%B4%ED%8E%98&from=map&fromPanelNum=1&ts=1693142879893
-보드게임카페 레드버튼 대학로점,보드카페,4.41,221,서울 종로구 대명길 9 4층,02-763-3799,https://pcmap.place.naver.com/place/1806183610/home?entry=bmp&from=map&fromPanelNum=1&ts=1693142889025
-퍼스트보드게임카페 대학로점,보드카페,4.93,정보 없음,서울 종로구 대학로 130 3층,0507-1482-1259,https://pcmap.place.naver.com/place/1518228901/home?entry=bmp&from=map&fromPanelNum=1&ts=1693142898357
-보드게임카페 주사위왕국,보드카페,4.93,정보 없음,서울 종로구 우정국로2길 42 5층 주사위왕국,0507-1330-4562,https://pcmap.place.naver.com/place/1987435465/home?entry=bmp&from=map&fromPanelNum=1&ts=1693142907867
-보드게임카페 보드스토리,보드카페,4.41,221,서울 종로구 종로12길 16 대성빌딩,02-732-5400,https://pcmap.place.naver.com/place/33410043/home?entry=bmp&from=map&fromPanelNum=1&ts=1693142916993
-플렉스 보드게임카페,보드카페,4.4,409,서울 종로구 종로 119 3층 FLEX 보드게임카페,0507-1485-0369,https://pcmap.place.naver.com/place/1731558575/home?entry=bmp&from=map&fromPanelNum=1&ts=1693142926271
-인생이 보드게임,보드카페,4.67,297,서울 종로구 수표로 107 2층,0507-1366-0997,https://pcmap.place.naver.com/place/1050017666/home?entry=bmp&from=map&fromPanelNum=1&ts=1693142935454
-블랙조커 동묘점,보드카페,정보 없음,3,서울 종로구 종로 336 2층,0507-1432-9077,https://pcmap.place.naver.com/place/1695028416/home?entry=bmp&from=map&fromPanelNum=1&ts=1693142944632
-히어로보드게임카페 대학로점,보드카페,정보 없음,443,서울 종로구 대학로10길 12 2층 히어로보드게임카페,0507-1393-2901,https://pcmap.place.naver.com/place/1868073958/home?entry=bmp&from=map&fromPanelNum=1&ts=1693142955622
-펀타임 대학로점,보드카페,4.16,171,서울 종로구 대명길 24 5층,070-7568-0327,https://pcmap.place.naver.com/place/33907132/home?entry=bmp&from=map&fromPanelNum=1&ts=1693142966493
-블랙문,보드카페,4.16,171,서울 서대문구 통일로 105 2층 블랙문,010-5291-2114,https://pcmap.place.naver.com/place/1020105286/home?entry=bmp&from=map&fromPanelNum=1&ts=1693142976629
-모나코,보드카페,정보 없음,8,서울 중구 명동길 38 7층,0507-1413-8188,https://pcmap.place.naver.com/place/1038810896/home?entry=bmp&from=map&fromPanelNum=1&ts=1693142985632
-보드게임 101,보드카페,4.24,197,서울 종로구 새문안로3길 23 경희궁의아침4단지 B2 107호,0507-1393-0688,https://pcmap.place.naver.com/place/1975804552/home?entry=bmp&from=map&fromPanelNum=1&ts=1693142996528
-레드다이스,보드카페,4.24,197,서울 종로구 창경궁로29길 25 명륜빌딩 명륜빌딩 2층 202호,02-765-7455,https://pcmap.place.naver.com/place/35608499/home?entry=bmp&from=map&fromPanelNum=1&ts=1693143006272
-동대문 홀덤,보드카페,4.22,42,서울 중구 다산로47길 15 7층 711-1호,0507-1494-1252,https://pcmap.place.naver.com/place/1428465543/home?entry=bmp&from=map&fromPanelNum=1&ts=1693143015574
-플레이보드카페,보드카페,정보 없음,0,서울 중구 필동로 31 2층,0507-1379-3135,https://pcmap.place.naver.com/place/1793763614/home?entry=bmp&from=map&fromPanelNum=1&ts=1693143024541
+name,type,star_rating,review_sum,address,contact,url,create_time
+보드게임카페 주사위왕국,보드카페,4.41,221,서울 종로구 우정국로2길 42 5층 주사위왕국,0507-1330-4562,https://pcmap.place.naver.com/place/1987435465/home?entry=bmp&from=PLACE_AD&n_ad_group_type=10&n_query=%EC%A2%85%EB%A1%9C%EB%B3%B4%EB%93%9C%EA%B2%8C%EC%9E%84%EC%B9%B4%ED%8E%98&from=map&fromPanelNum=2&x=126.98538857845901&y=37.56941750703431&timestamp=202309071827,2023-09-07 18:27:03
+퍼스트보드게임카페 대학로점,보드카페,4.93,정보 없음,서울 종로구 대학로 130 3층,0507-1482-1259,https://pcmap.place.naver.com/place/1518228901/home?entry=bmp&from=map&fromPanelNum=2&x=127.0021374&y=37.582893&timestamp=202309071827,2023-09-07 18:27:03
+보드게임카페 레드버튼 대학로점,보드카페,정보 없음,정보 없음,서울 종로구 대명길 9 4층,02-763-3799,https://pcmap.place.naver.com/place/1806183610/home?entry=bmp&from=map&fromPanelNum=2&x=127.00098711510178&y=37.583286089241945&timestamp=202309071827,2023-09-07 18:27:03
+보드게임카페 주사위왕국,보드카페,4.41,221,서울 종로구 우정국로2길 42 5층 주사위왕국,0507-1330-4562,https://pcmap.place.naver.com/place/1987435465/home?entry=bmp&from=map&fromPanelNum=2&x=126.98538857845901&y=37.56941750703431&timestamp=202309071827,2023-09-07 18:27:03
+플렉스 보드게임카페,보드카페,4.67,302,서울 종로구 종로 119 3층 FLEX 보드게임카페,0507-1485-0369,https://pcmap.place.naver.com/place/1731558575/home?entry=bmp&from=map&fromPanelNum=2&x=126.9908641&y=37.5705766&timestamp=202309071827,2023-09-07 18:27:03
+보드게임카페 보드스토리,보드카페,4.4,410,서울 종로구 종로12길 16 대성빌딩,02-732-5400,https://pcmap.place.naver.com/place/33410043/home?entry=bmp&from=map&fromPanelNum=2&x=126.9855816&y=37.569343399999994&timestamp=202309071827,2023-09-07 18:27:03
+인생이 보드게임,보드카페,정보 없음,53,서울 종로구 수표로 107 2층,0507-1366-0997,https://pcmap.place.naver.com/place/1050017666/home?entry=bmp&from=map&fromPanelNum=2&x=126.9892169&y=37.5707949&timestamp=202309071827,2023-09-07 18:27:03
+펀타임 대학로점,보드카페,4.16,171,서울 종로구 대명길 24 5층,070-7568-0327,https://pcmap.place.naver.com/place/33907132/home?entry=bmp&from=map&fromPanelNum=2&x=127.00025470000001&y=37.58344609999999&timestamp=202309071827,2023-09-07 18:27:03
+블랙문,보드카페,정보 없음,21,서울 서대문구 통일로 105 2층 블랙문,010-5291-2114,https://pcmap.place.naver.com/place/1020105286/home?entry=bmp&from=map&fromPanelNum=2&x=126.9675889&y=37.5643583&timestamp=202309071828,2023-09-07 18:27:03
+히어로보드게임카페 대학로점,보드카페,정보 없음,481,서울 종로구 대학로10길 12 2층 히어로보드게임카페,0507-1393-2901,https://pcmap.place.naver.com/place/1868073958/home?entry=bmp&from=map&fromPanelNum=2&x=127.0027888&y=37.5816693&timestamp=202309071828,2023-09-07 18:27:03
+블랙조커 동묘점,보드카페,정보 없음,3,서울 종로구 종로 336 2층,0507-1432-9077,https://pcmap.place.naver.com/place/1695028416/home?entry=bmp&from=map&fromPanelNum=2&x=127.0150048&y=37.5726259&timestamp=202309071828,2023-09-07 18:27:03
+모나코,보드카페,정보 없음,9,서울 중구 명동길 38 7층,0507-1413-8188,https://pcmap.place.naver.com/place/1038810896/home?entry=bmp&from=map&fromPanelNum=2&x=126.9844144&y=37.5636223&timestamp=202309071828,2023-09-07 18:27:03
+레드다이스,보드카페,4.22,41,서울 종로구 창경궁로29길 25 명륜빌딩 명륜빌딩 2층 202호,02-765-7455,https://pcmap.place.naver.com/place/35608499/home?entry=bmp&from=map&fromPanelNum=2&x=126.9974041&y=37.5837121&timestamp=202309071828,2023-09-07 18:27:03
+보드게임 101,보드카페,4.24,200,서울 종로구 새문안로3길 23 경희궁의아침4단지 B2 107호,0507-1393-0688,https://pcmap.place.naver.com/place/1975804552/home?entry=bmp&from=map&fromPanelNum=2&x=126.9724575&y=37.5724333&timestamp=202309071828,2023-09-07 18:27:03
+동대문 홀덤,보드카페,정보 없음,0,서울 중구 다산로47길 15 7층 711-1호,0507-1494-1252,https://pcmap.place.naver.com/place/1428465543/home?entry=bmp&from=map&fromPanelNum=2&x=127.0151137&y=37.5665317&timestamp=202309071828,2023-09-07 18:27:03
+플레이보드카페,보드카페,정보 없음,0,서울 중구 필동로 31 2층,0507-1379-3135,https://pcmap.place.naver.com/place/1793763614/home?entry=bmp&from=map&fromPanelNum=2&x=126.9963695&y=37.5588368&timestamp=202309071828,2023-09-07 18:27:03
