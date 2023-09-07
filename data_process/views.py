@@ -6,9 +6,10 @@ from .exhibit_crawler.interpark_crawler import interpark_crawler
 from .exhibit_crawler.data_save_to import save_to_db
 from .api.naver_api_test import naver_api_search_info
 from Day_Pl.models import Place
+from datetime import date
 
 def index(request):
-    return render(request, 'data_process/data_process.html')
+    return render(request, 'data_process/data_process.html', context={ 'date': date.today() })
 
 def naver_place_crawler(request):
     machine = Data_Crawl_and_Process()

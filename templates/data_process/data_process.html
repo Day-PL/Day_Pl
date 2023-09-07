@@ -22,7 +22,7 @@
         <a href="{% url 'data_process:exhibit_crawler' %}" class="d-flex justify-content-center">
             <button type="button" class="btn btn-warning mb-3" id="exhibit_crawler">인터파크 전시회 크롤링</button>
         </a>
-        <a href="" class="d-flex justify-content-center">
+        <a href="{% url 'data_process:exhibit_save_to_db' date=date %}" class="d-flex justify-content-center">
             <button type="button" class="btn btn-warning mb-3" id="exhibit_save_to_db">인터파크 전시회 -> db 저장</button>
         </a>
     </div>
