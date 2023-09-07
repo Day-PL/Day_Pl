@@ -1,0 +1,3 @@
+name,type_code,type,star_rating,review_total,address_si,address_gu,address_lo,address_detail,area,contact,url,create_time,lat,lng,naver_place_id
+미어캣파크,C2,애견카페,4.13,605,서울,종로구,대학로10길,"12 , 6층",jongno,0507-1429-7201,https://pcmap.place.naver.com/place/341493456/home?entry=bmp&from=map&fromPanelNum=2&x=127.0028255&y=37.5816161&timestamp=202309071826,2023-09-07 18:25:53,127.0028255,37.5816161,341493456
+강아지대학로,C2,애견카페,4.42,209,서울,종로구,대학로12길,92 지하1층,jongno,010-6899-2004,https://pcmap.place.naver.com/place/1777602086/home?entry=bmp&from=map&fromPanelNum=2&x=127.0037015&y=37.5800995&timestamp=202309071826,2023-09-07 18:25:53,127.0037015,37.5800995,1777602086
