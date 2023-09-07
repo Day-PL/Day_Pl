@@ -181,7 +181,7 @@ function getFilteredPlace(){
             let addressGu = data[i]['fields']['address_gu']
             let addressLo = data[i]['fields']['address_lo']
             
-            let url = `https://map.naver.com/v5/search/${addressGu} ${name}/place`;
+            let url = data[i]['fields']['url'];
             let lng = data[i]['fields']['lng'];
             let lat = data[i]['fields']['lat'];
             let latlng = new naver.maps.LatLng(lng, lat);
@@ -254,6 +254,8 @@ function showPlace(place){ //! 이름 변경
     const addressGu     = placeInfo['address_gu'];
     const addressLo     = placeInfo['address_lo'];
     const addressDetail = placeInfo['address_detail'];
+    const placeUrl      = placeInfo['url'];
+    const naverPlaceId  = placeInfo['naver_place_id'];
     
     const div = document.createElement('div');
     div.setAttribute('class', 'card');
@@ -266,11 +268,12 @@ function showPlace(place){ //! 이름 변경
                         <font size=2>${name}</font>
                     </span>
                     &nbsp;
-                    <a href="https://map.naver.com/v5/search/${addressGu} ${name}/place" target="_blank">
+                    <a href="${placeUrl}" target="_blank">
                         <font size=1>네이버플레이스</font>
                     </a>
                     &nbsp;
-                    <a href="https://map.naver.com/v5/directions/-/14129228.684381623,4517601.068035996,${addressGu} ${name},1151030658,PLACE_POI/-/transit?c=15,0,0,0,dh&isCorrectAnswer=true" target="_blank">
+                    
+                    <a href="https://map.naver.com/p/directions/-/,,,${naverPlaceId},PLACE_POI/-/walk?c=13.00,0,0,0,dh" target="_blank">
                         <font size=1>길찾기</font>
                     </a>
                 </h6>   

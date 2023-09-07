@@ -5,7 +5,7 @@ from ..api.naver_api_test import naver_map_LatLng
 
 def processed_data_to_csv(area_Eng, type_code, before_file, after_file):
     processed_data = []
-    create_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    # create_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     #? csv 파일 불러와서 영업시간 데이터 전처리
     with open(before_file, "r", encoding="UTF-8") as file:
@@ -18,6 +18,7 @@ def processed_data_to_csv(area_Eng, type_code, before_file, after_file):
             address      = shop["address"]
             contact      = shop["contact"]
             url          = shop["url"]
+            create_time  = shop["create_time"] 
             latlng       = naver_map_LatLng(address)
             lat          = latlng[0]
             lng          = latlng[1]
@@ -39,7 +40,7 @@ def processed_data_to_csv(area_Eng, type_code, before_file, after_file):
             if url == NULL:
                 naver_place_id = NULL
             else:
-                naver_place_id = url.replace('https://pcmap.place.naver.com/place/','').split('/')[0]
+                naver_place_id = url.replace('https://pcmap.place.naver.com/', '').split('/')[1]
 
 
             keys = [
