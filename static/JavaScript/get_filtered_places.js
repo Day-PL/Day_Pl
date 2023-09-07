@@ -248,6 +248,7 @@ function getFilteredPlace(){
 function showPlace(place){ //! 이름 변경
     const placeInfo     = place['fields'];
     const placeId       = place['pk'];
+    const typeCode      = placeInfo['type_code'];
     const name          = placeInfo['name'];
     const rating        = placeInfo['rating'];
     const reviewTotal   = placeInfo['review_total'];
@@ -259,7 +260,71 @@ function showPlace(place){ //! 이름 변경
     
     const div = document.createElement('div');
     div.setAttribute('class', 'card');
-    div.innerHTML = 
+    if (typeCode === 21) {
+        if (name.includes("]")) {
+            const nameSplit = name.split("]")
+            const nameFirst = nameSplit[0] + "]"
+            const nameRest = nameSplit.slice(1).join(" ")
+            div.innerHTML = 
+            `
+            <div id="place_${placeId}" class="card">
+                <div class="card-body">
+                    <h6 class="card-title">
+                        <span class="placeName" id="${placeId}">
+                            <font size=2>${nameFirst}</font></br>
+                            <font size=2>${nameRest}</font>
+                        </span>
+                        &nbsp;
+                        <a href="${placeUrl}" target="_blank">
+                            <font size=1>예매하기</font>
+                        </a>
+                        &nbsp;
+                        
+                        <a href="https://map.naver.com/p/directions/-/,,,${naverPlaceId},PLACE_POI/-/walk?c=13.00,0,0,0,dh" target="_blank">
+                            <font size=1>길찾기</font>
+                        </a>
+                    </h6>   
+                    <font size=1>
+                    <font size=1>
+                        <p class="card-text">
+                            ${addressGu} ${addressLo} ${addressDetail}
+                        </p>
+                    </font>
+                    <button data-place="${placeId}">플랜에 추가</button>
+                </div>
+            </div>
+        `;
+        } else {
+        div.innerHTML = 
+        `
+        <div id="place_${placeId}" class="card">
+            <div class="card-body">
+                <h6 class="card-title">
+                    <span class="placeName" id="${placeId}">
+                        <font size=2>${name}</font>
+                    </span>
+                    &nbsp;
+                    <a href="${placeUrl}" target="_blank">
+                        <font size=1>예매하기</font>
+                    </a>
+                    &nbsp;
+                    
+                    <a href="https://map.naver.com/p/directions/-/,,,${naverPlaceId},PLACE_POI/-/walk?c=13.00,0,0,0,dh" target="_blank">
+                        <font size=1>길찾기</font>
+                    </a>
+                </h6>   
+                <font size=1>
+                <font size=1>
+                    <p class="card-text">
+                        ${addressGu} ${addressLo} ${addressDetail}
+                    </p>
+                </font>
+                <button data-place="${placeId}">플랜에 추가</button>
+            </div>
+        </div>
+    `;}
+    } else {
+        div.innerHTML = 
     `
         <div id="place_${placeId}" class="card">
             <div class="card-body">
@@ -291,5 +356,6 @@ function showPlace(place){ //! 이름 변경
             </div>
         </div>
     `;
+    }
     return div;
 }
