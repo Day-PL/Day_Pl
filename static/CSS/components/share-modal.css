@@ -1,0 +1,14 @@
+.share__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.share__icon {
+  font-size: 30px;
+}
+
+.plan-share__btn {
+  padding: 0.5rem 1rem;
+}
