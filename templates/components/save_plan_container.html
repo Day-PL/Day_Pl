@@ -1,48 +1,96 @@
 <div>
-    <ul class="nav nav-tabs" id="myTab" role="tablist" style="width: 14rem;">
+    <ul class="nav nav-tabs" id="myTab" role="tablist" style="width: 20rem;">
         <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="like-tab1" data-bs-toggle="tab" data-bs-target="#like-tab2" type="button" role="tab" aria-controls="like-tab" aria-selected="true" style="width: 7rem; font-size:0.8rem;">내가 좋아하는</button>
+            <button class="nav-link active" id="like-tab1" data-bs-toggle="tab" data-bs-target="#like-tab2" type="button" role="tab" aria-controls="like-tab" aria-selected="true" style="width: 6.66rem; font-size:0.8rem;">I Like</button>
         </li>
         <li class="nav-item" role="presentation" >
-            <button class="nav-link" id="view-tab1" data-bs-toggle="tab" data-bs-target="#view-tab2" type="button" role="tab" aria-controls="view-tab" aria-selected="false" style="width: 7rem; font-size:0.8rem;">내가 본</button>
+            <button class="nav-link" id="view-tab1" data-bs-toggle="tab" data-bs-target="#view-tab2" type="button" role="tab" aria-controls="view-tab" aria-selected="false" style="width: 6.66rem; font-size:0.8rem;">I Saw</button>
+        </li>
+        <li class="nav-item" role="presentation" >
+            <button class="nav-link" id="my-tab1" data-bs-toggle="tab" data-bs-target="#my-tab2" type="button" role="tab" aria-controls="my-tab" aria-selected="false" style="width: 6.66rem; font-size:0.8rem;">I Made</button>
         </li>
     </ul>
     
-    <div class="tab-content" id="myTabContent" style="width: 14rem; overflow:scroll; height:30rem;">
+    <div class="tab-content" id="myTabContent" style="width: 20rem; overflow:scroll; height:30rem;">
         <div class="tab-pane fade show active" id="like-tab2" role="tabpanel" aria-labelledby="like-tab1" tabindex="0">
-            {% for plan in like_plans %}
-                <div class="card">
-                    <div class="card-body">
-                        <h6 class="card-title">
-                            <span class="planName" id="{{ plan.id }}">
-                                <font size=2>{{ plan.title }}</font>
-                            </span>
-                            &nbsp;
-                        </h6>   
-                        <font size=1>
+            {% for plan in like_plans_processed %}
+                {% if plan.public %}
+                    <div class="card" style="width: 20rem;">
+                        <div class="card-body">
+                            <h6 class="card-title">
+                                <i class="fa-solid fa-heart" data-planType="like"></i>
+                                <span class="planName" id="{{ plan.id }}">
+                                    <font size=2>{{ plan.title }}</font>
+                                </span>
+                                &nbsp;
+                            </h6>
                             <p class="card-text">
-                                좋아요수 : {{ plan.like_users.count }}
+                                <font size=1>
+                                    좋아요 수 : {{ plan.like_count }}
+                                </font>
                             </p>
-                        </font>
+                        </div>
                     </div>
-                </div>
+                {% endif %}
             {% endfor %}
         </div>
+
         <div class="tab-pane fade" id="view-tab2" role="tabpanel" aria-labelledby="view-tab1" tabindex="0">
-            {% for plan in view_plans %}
-                <div class="card">
+            {% for plan in view_plans_processed %}
+                {% if plan.public %}
+                    <div class="card" style="width: 20rem;">
+                        <div class="card-body">
+                            <h6 class="card-title">
+                                {% if plan.islike %}
+                                    <i class="fa-solid fa-heart" data-planType="view"></i>
+                                {% else %}
+                                    <i class="fa-regular fa-heart" data-planType="view"></i>
+                                {% endif %}
+                                <span class="planName" id="{{ plan.id }}">
+                                    <font size=2>{{ plan.title }}</font>
+                                </span>
+                                &nbsp;
+                            </h6>
+                            <p class="card-text">
+                                <font size=1>
+                                    좋아요 수 : {{ plan.like_count }}
+                                </font>
+                            </p>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <div class="tab-pane fade" id="my-tab2" role="tabpanel" aria-labelledby="my-tab1" tabindex="0">
+            {% for plan in my_plans_processed %}
+                <div class="card" style="width: 20rem;">
                     <div class="card-body">
                         <h6 class="card-title">
-                            <span class="planName" id="{{ plan.id }}">
+                            {% if plan.islike %}
+                                <i class="fa-solid fa-heart" data-planType="my"></i>
+                            {% else %}
+                                <i class="fa-regular fa-heart" data-planType="my"></i>
+                            {% endif %}
+                            <span class="planName" id="{{ plan.id }}" data-planTitle="{{ plan.title }}">
                                 <font size=2>{{ plan.title }}</font>
                             </span>
-                            &nbsp;
+
+                            <font size=2 style="float: right;">
+                                {% if plan.public %}
+                                    <span style="color: blueviolet;">공개</span>
+                                {% else %}
+                                    <span style="color: rgb(42, 15, 56);">비공개</span>
+                                {% endif %}
+                            </font>
                         </h6>   
-                        <font size=1>
-                            <p class="card-text">
-                                좋아요수 : {{ plan.like_users.count }}
-                            </p>
-                        </font>
+                        <p class="card-text">
+                            <font size=1>좋아요 수 : {{ plan.like_count }}</font>
+                            <font size=1 style="float: right;">
+                                <button id="modifyPlan">수정</button>
+                                <button id="removePlan">Delete</button>
+                            </font>
+                        </p>
                     </div>
                 </div>
             {% endfor %}
