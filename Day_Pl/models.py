@@ -5,6 +5,9 @@ import uuid
 class PlaceType(models.Model):
     code = models.CharField(max_length=32, default='Z0', unique=True)
     name = models.CharField(max_length=32, null=False)
+    
+    def __str__(self):
+        return self.name
 
 class Place(models.Model):
     uuid                  = models.UUIDField(max_length=128, default=uuid.uuid4)
@@ -27,6 +30,9 @@ class Place(models.Model):
     lng                   = models.FloatField(null=True)
     naver_place_id        = models.CharField(max_length=32, null=True)
 
+    def __str__(self):
+        return self.name
+
 class Plan(models.Model):
     uuid         = models.UUIDField(max_length=128, default=uuid.uuid4)
     created_at   = models.DateTimeField(auto_now_add=True)
@@ -42,6 +48,9 @@ class Plan(models.Model):
     public       = models.BooleanField(null=False, default=True)
     removed_at   = models.DateTimeField(blank=True, null=True)
     total_time   = models.CharField(max_length=64, blank=True, null=True)
+
+    def __str__(self):
+        return self.title
 
 class UserPlanView(models.Model):
     user         = models.ForeignKey(User, on_delete=models.CASCADE)

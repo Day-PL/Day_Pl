@@ -49,4 +49,5 @@ def save_to_db(file_path):
                     created_at = row['created_at'],
                     lat = row['lat'],
                     lng = row['lng'],
+                    naver_place_id = row['naver_place_id'],
                 )
