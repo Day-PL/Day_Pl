@@ -68,3 +68,15 @@ class PlanPlace(models.Model):
     order                   = models.IntegerField()
     expected_time_from_this = models.IntegerField(blank=True, null=True)
     road_url                = models.CharField(max_length=256, blank=True, null=True)
+
+class PlaceComment(models.Model):
+    place       = models.ForeignKey(Place, on_delete=models.CASCADE)
+    user        = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    created_at  = models.DateTimeField(auto_now_add=True) #! 최초 생성시 바뀜
+    modified_at = models.DateTimeField(auto_now=True) #! 수정되면 같이 바뀜
+
+class PlanComment(models.Model):
+    place       = models.ForeignKey(Plan, on_delete=models.CASCADE)
+    user        = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    created_at  = models.DateTimeField(auto_now_add=True) #! 최초 생성시 바뀜
+    modified_at = models.DateTimeField(auto_now=True) #! 수정되면 같이 바뀜
