@@ -10,6 +10,7 @@ class Place(models.Model):
     uuid                  = models.UUIDField(max_length=128, default=uuid.uuid4)
     name                  = models.CharField(max_length=64, blank=False)
     type_code             = models.ForeignKey(PlaceType, on_delete=models.SET_NULL, null=True)
+    type_code_big         = models.CharField(max_length=32, null=True) #! 대분류
     rating                = models.CharField(null=True, max_length=16)
     review_total          = models.IntegerField(null=True, blank=True)
     address_si            = models.CharField(max_length=32, blank=False)
