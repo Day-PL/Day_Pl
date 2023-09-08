@@ -68,10 +68,17 @@ def naver_place_csv_to_db(area_kor, place_type_code):
                     lng = row['lng'],
                     naver_place_id = row['naver_place_id']
                 )
-    #! 일회용 : db에 naver_place_id 가 https:인거 찾아서 다시 고치는 ORM
-    places = Place.objects.filter(naver_place_id='https:')
-    for place in places:
-        url = place.url
-        naver_place_id = url.replace('https://pcmap.place.naver.com/', '').split('/')[1]
-        place.naver_place_id = naver_place_id
-        place.save()
+    # #! 일회용 : db에 naver_place_id 가 https:인거 찾아서 다시 고치는 ORM
+    # places = Place.objects.filter(naver_place_id='https:')
+    # for place in places:
+    #     url = place.url
+    #     naver_place_id = url.replace('https://pcmap.place.naver.com/', '').split('/')[1]
+    #     place.naver_place_id = naver_place_id
+    #     place.save()
+
+    # #! 일회용 : code_big 입력
+    # places = Place.objects.all()[1:]
+    # for place in places:
+    #     print(place.type_code.code[0])
+    #     place.type_code_big = place.type_code.code[0]
+    #     place.save()
