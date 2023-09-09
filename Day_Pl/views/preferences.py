@@ -22,6 +22,6 @@ def index(request):
         'preference_choices' : preference_choices,
         'user_preference_ids'   : user_preference_ids,
         'code_alphabets' : {'A': '먹거리',
-                            'B': '일상 데이트', 'C':'이색카페', 'D':'실내스포츠', 'E':'실외스포츠', 'F':'볼거리', 'G':'특별 데아트'}
+                            'B': '일상 데이트', 'C':'이색카페', 'D':'실내스포츠', 'E':'실외스포츠', 'F':'볼거리', 'G':'특별 데이트'}
         }
     return render(request, 'preferences.html' , context = context)
