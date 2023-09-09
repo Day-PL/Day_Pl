@@ -45,6 +45,11 @@ ul {
     padding: 0;
 }
 
+.navbar__logo {
+    width: 150px;
+    margin-right: 10px;
+}
+
 .hide-plan {
     display: none;
 }
