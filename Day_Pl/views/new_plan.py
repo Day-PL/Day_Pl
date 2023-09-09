@@ -83,6 +83,7 @@ def index(request):
                     'status': 'success',
                 }
             except Exception:
+                # 로그
                 transaction.set_rollback(True)
                 response = {
                     'status': 'fail',

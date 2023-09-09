@@ -24,13 +24,16 @@ function updatePlaceLike(PlaceId) {
     .then((data) => {
       const placeLikeBtn = document.querySelectorAll(`.place-like__btn[data-placelike="${PlaceId}"]`)
       placeLikeBtn.forEach(btn => {
-        if (data.isliked === true) {
-          btn.innerHTML = `<i data-placelike="${PlaceId}" class="fa-solid fa-star"></i>`
+        if (data.login === false) {
+          window.location = `${FULL_PATH}/users/login`
         } else {
-          btn.innerHTML = `<i data-placelike="${PlaceId}" class="fa-regular fa-star"></i>`
+          if (data.isliked === true) {
+          btn.innerHTML = `<i data-planlike="${planId}" class="fa-solid fa-heart"></i>`
+        } else {
+          btn.innerHTML = `<i data-planlike="${planId}" class="fa-regular fa-heart"></i>`
+        }
         }
       })
-
     })
   }
 }
@@ -89,13 +92,16 @@ function updatePlanLike(planId) {
     .then((data) => {
       const planLikeBtn = document.querySelectorAll(`.plan-like__btn[data-planlike="${planId}"]`)
       planLikeBtn.forEach(btn => {
-        if (data.isliked === true) {
+        if (data.login === false) {
+          window.location = `${FULL_PATH}/users/login`
+        } else {
+          if (data.isliked === true) {
           btn.innerHTML = `<i data-planlike="${planId}" class="fa-solid fa-heart"></i>`
         } else {
           btn.innerHTML = `<i data-planlike="${planId}" class="fa-regular fa-heart"></i>`
         }
+        }
       })
-
     })
   }
 }
