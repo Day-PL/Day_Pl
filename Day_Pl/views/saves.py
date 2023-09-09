@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, HttpResponse, HttpResponseRedirect
-from ..models import Plan, PlanPlace 
+from ..models import Plan, PlanPlace , Place, PlaceType
 from django.core import serializers
 from django.urls import reverse
 import json
+from datetime import date
 
 
 def index(request):
@@ -112,13 +113,27 @@ def modify_plan(request, plan_id):
     user = request.user
     plan = Plan.objects.get(id=plan_id)
     print(f'{plan.title} 수정')
-    places = PlanPlace.objects.filter(plan = plan).order_by('order')
-    plan_dict = {
-            'id' : plan.id,
+    plan_places = PlanPlace.objects.filter(plan = plan).order_by('order')
+    places = Place.objects.all()[1:]
+    placetypes = PlaceType.objects.all()
+    current_date = date.today()
+
+    context = {
+        'id' : plan.id,
             'uuid' : plan.uuid,
             'title' : plan.title,
-            'like_count' : plan.like_users.count(),
+            'created_at' : plan.created_at,
+            'modified_at' : plan.modified_at,
+            'hashtag_area' : plan.hashtag_area,
+            'hashtag_type' : plan.hashtag_type,
+            'hashtag_pick' : plan.hashtag_pick,
+            'memo' : plan.memo,
+            'total_time' : plan.total_time,
             'public' : plan.public,
+            'like_count' : plan.like_users.count(),
+            'plan_places' : plan_places,
             'places' : places,
+            'placetypes' : placetypes,
+            'current_date' : current_date,
     }
-    return HttpResponseRedirect(reverse('Day_Pl:browse'))
+    return render(request, 'modify_plan.html', context=context)

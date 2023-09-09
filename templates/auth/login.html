@@ -4,8 +4,28 @@
 {% block title %}로그인{% endblock %}
 
 {% block contents %}
-	<form action="#" method="post">
+	<form method="post" action="{% url 'common:login' %}">
 		{% csrf_token %}
+		{% if form.errors %}
+
+			{% for field in form %}
+				{% for error in field.errors %}
+					<!-- 필드 오류를 출력한다. -->
+					<div>
+						<strong>{{ field.label }}</strong>
+						{{ error }}
+					</div>
+				{% endfor %}
+			{% endfor %}
+			
+			{% for error in form.non_field_errors %}
+				<!-- 넌필드 오류를 출력한다. -->
+				<div>
+					<strong>{{ error }}</strong>
+				</div>
+			{% endfor %}
+
+		{% endif %}
 		<div class="form-floating mb-3">
 			<input type="id" name="username" class="form-control" id="username" placeholder="아이디를 입력하세요">
 			<label for="floatingInput">Id</label>
@@ -24,4 +44,10 @@
 			<img class="social_login_img" src="{% static 'IMG/kakao_login_button.png' %}"  alt="">
 			<img class="social_login_img" src="{% static 'IMG/naver_login_button.png' %}"  alt="">
     </div>
+{% endblock %}
+
+{% block scripts %}
+	<script>
+
+	</script>
 {% endblock %}

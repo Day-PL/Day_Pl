@@ -32,6 +32,14 @@ planNames.forEach(function(planName) {
                         position: naver.maps.Position.TOP_RIGHT
                     }
                 });
+                
+                var polyline = new naver.maps.Polyline({
+                    map: map,
+                    path: [],
+                    strokeColor: '#5347AA',
+                    strokeWeight: 2
+                });
+                
                 // let markerList = new Array();
                 let labels = planDiv.querySelectorAll('label');
 
@@ -45,13 +53,23 @@ planNames.forEach(function(planName) {
                     latAvg += lat;
                     lngAvg += lng;
 
+                    var point = new naver.maps.LatLng(lng, lat);
+
+                    var path = polyline.getPath();
+                    path.push(point);
+
                     let marker = new naver.maps.Marker({
                         position: new naver.maps.LatLng(lng, lat),
                         map: map,
-                        title: 1
+                        title: 1,
+                        // icon: {
+                        //     url   : '../img/purple_marker.png',
+                        //     size  : new naver.maps.Size(50, 52),
+                        //     origin: new naver.maps.Point(0, 0),
+                        //     anchor: new naver.maps.Point(25, 26)
+                        // }
                     });
                     
-
                     marker = null;
                 })
                 lngAvg /= len;
@@ -120,7 +138,7 @@ hearts.forEach(function(heart){
             fetch(`${planId}/modify`, {
                 method : 'get',
             })
-            .then(window.location.href = '/')
+            .then(window.location.href = `/saves/${planId}/modify`)
         });
         removePlan[0].addEventListener('click', function(){
             fetch(`${planId}/remove`, {

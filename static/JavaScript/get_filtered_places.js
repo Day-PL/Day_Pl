@@ -139,7 +139,7 @@ function getFilteredPlace(){
     const placeContainer = document.querySelector('.place_container');
     placeContainer.innerHTML = '';
     const selectedPlace = selectElement.options[selectElement.selectedIndex].value;
-    fetch(`get-filter/${selectedPlace}/`, {
+    fetch(`/new-plan/get-filter/${selectedPlace}/`, {
         method : "get",
     })
     .then((response) => response.json())
