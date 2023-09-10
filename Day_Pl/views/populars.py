@@ -133,7 +133,7 @@ def detail(request, plan_id):
     if request.user.is_authenticated: 
         user = request.user
         control_user_plan_view(user, plan)
-    print(response)
+
     return JsonResponse(response)
 
 def control_user_plan_view(user, plan):

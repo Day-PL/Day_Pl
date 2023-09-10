@@ -2,18 +2,17 @@ import json
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from Day_Pl.models import Place, PlaceType, Plan, PlanPlace, PlaceTypeCategory
+from Day_Pl.models import Place, Plan, PlanPlace, PlaceTypeCategory, PlaceComment
 from django.http import HttpResponse
 from django.core import serializers
-from django.db.models import Q
+from django.db.models import Q, F
 from django.db import transaction
 from datetime import datetime, date
 
 @login_required
 def index(request):
-    places = Place.objects.all()[1:]
+    places = Place.objects.exclude(id=0)
     placetype_categories = PlaceTypeCategory.objects.all()
-    placetypes = PlaceType.objects.all()
     current_date = date.today()
 
     context = {
@@ -107,3 +106,36 @@ def get_filter(request, placetype_id, search_keyword):
 
 def get_naver_map(request):
     return render(request, 'components/naver_map_container.html')
+
+def place_comment(request, place_id):
+    comments = PlaceComment.objects.filter(place_id = place_id)\
+                                    .annotate(comment_author = F('user__profile__nickname'))\
+                                    .order_by('-created_at')\
+                                    .values('id', 'comment_author', 'place_id', 'comment', 'created_at')
+    for comment in comments:
+        comment['created_at'] = comment['created_at'].strftime('%Y-%m-%d')
+
+    comments_list = list(comments)
+
+    return JsonResponse(comments_list, safe=False)
+
+def create_comment(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        place_id = data.get('place_id')
+        comment = data.get('comment')
+
+        place_obj = Place.objects.get(id = place_id)
+        PlaceComment.objects.create(
+            place = place_obj,
+            user = request.user,
+            comment = comment,
+        )
+
+        response = {
+            'status' : 'success',
+        }
+    return JsonResponse(response)
+
+
+

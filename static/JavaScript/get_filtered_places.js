@@ -1,3 +1,6 @@
+const newPlanPlaceContainer = document.querySelector('.place_container');
+const placeSearchInput = document.querySelector('.new-plan-place-search__input')
+
 getUserAddress()
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -139,7 +142,6 @@ function hasAddition (addition) {
     return !!(addition && addition.value);
 }
 
-const placeSearchInput = document.querySelector('.new-plan-place-search__input')
 placeSearchInput.addEventListener('keyup', () => {
     getFilteredPlace(placeSearchInput.value)
 })
@@ -149,8 +151,7 @@ function getFilteredPlace(placeSearchKeyword){
         placeSearchKeyword = 'none'
     }
     console.log('getFilteredPlace 실행');
-    const placeContainer = document.querySelector('.place_container');
-    placeContainer.innerHTML = '';
+    newPlanPlaceContainer.innerHTML = '';
     const encodedKeyword = encodeURIComponent(placeSearchKeyword)
     const selectedPlace = selectElement.options[selectElement.selectedIndex].value;
     fetch(`get-filter/${selectedPlace}/${encodedKeyword}/`, {
@@ -162,7 +163,7 @@ function getFilteredPlace(placeSearchKeyword){
         if (!data.length) {
             const div = document.createElement('div');
             div.innerText = '해당하는 정보가 없습니다'
-            placeContainer.appendChild(div)
+            newPlanPlaceContainer.appendChild(div)
         }
 
         //! 네이버 지도에 마커 찍기
@@ -194,7 +195,7 @@ function getFilteredPlace(placeSearchKeyword){
         //! 위도,경도 어레이(latlngs)로 넣기
         for (let i=0; i<data.length; i++) {
             let placeBox = showPlace(data[i]);
-            placeContainer.appendChild(placeBox);
+            newPlanPlaceContainer.appendChild(placeBox);
 
             let name = data[i]['fields']['name'];
             let addressGu = data[i]['fields']['address_gu']
@@ -243,14 +244,12 @@ function getFilteredPlace(placeSearchKeyword){
                 placeNames.forEach(place => {
                     var placeId = place.id
                     document.getElementById('detail_' + placeId).style.display='none';
-                    console.log(place, '닫기');
                 });
                 //! 클릭한 것만 보이게 하기
                 var place_id = placeName.id
                 document.getElementById('div3').style.display='none';
                 document.getElementById('div4').style.display='block';
                 document.getElementById('detail_' + place_id).style.display='block';
-                console.log(place_id, '열기')
         
             });
         });
@@ -289,10 +288,7 @@ function showPlace(place){ //! 이름 변경
             <div id="place_${placeId}" class="card">
                 <div class="card-body">
                     <h6 class="card-title">
-                        <span class="placeName" id="${placeId}">
-                            <font size=2>${nameFirst}</font></br>
-                            <font size=2>${nameRest}</font>
-                        </span>
+                        <a class="placeName" id="${placeId}" data-placename="${placeId}">${nameFirst}</br>${nameRest}</a>
                         &nbsp;
                         <a href="${placeUrl}" target="_blank">
                             <font size=1>예매하기</font>
@@ -319,9 +315,7 @@ function showPlace(place){ //! 이름 변경
         <div id="place_${placeId}" class="card">
             <div class="card-body">
                 <h6 class="card-title">
-                    <span class="placeName" id="${placeId}">
-                        <font size=2>${name}</font>
-                    </span>
+                    <a class="placeName" id="${placeId}" data-placename="${placeId}">${name}</a>
                     &nbsp;
                     <a href="${placeUrl}" target="_blank">
                         <font size=1>예매하기</font>
@@ -348,9 +342,7 @@ function showPlace(place){ //! 이름 변경
         <div id="place_${placeId}" class="card">
             <div class="card-body">
                 <h6 class="card-title">
-                    <span class="placeName" id="${placeId}">
-                        <font size=2>${name}</font>
-                    </span>
+                    <a class="placeName" id="${placeId}" data-placename="${placeId}">${name}</a>
                     &nbsp;
                     <a href="${placeUrl}" target="_blank">
                         <font size=1>네이버플레이스</font>

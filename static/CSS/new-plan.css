@@ -18,7 +18,7 @@
 }
 
 .place_container {
-  height: 550px;
+  height: 500px;
   overflow-y: scroll;
 }
 
@@ -150,4 +150,39 @@
   padding-left: 30px;
   border: 1px solid #D6DBDF;
   border-radius: 10px;
+}
+
+.place-comments__list {
+  height: 400px;
+  overflow-y: scroll;
+}
+
+.place-comments__list::-webkit-scrollbar {
+  width: 20px;
+}
+
+.place-comments__list::-webkit-scrollbar-thumb {
+  background: #EBDEF0;
+  background-clip: padding-box;
+  border-radius: 10px;
+  border: 5px solid white;
+}
+
+.place-comments__list::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0);
+}
+
+.place-comment {
+  margin-bottom: 2rem;
+}
+
+.comment_author {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.comment_date {
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  color: rgba(0, 0, 0, 0.8)
 }
