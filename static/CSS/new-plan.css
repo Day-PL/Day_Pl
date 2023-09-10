@@ -23,7 +23,18 @@
 }
 
 .place_container::-webkit-scrollbar {
-  display: none;
+  width: 20px;
+}
+
+.place_container::-webkit-scrollbar-thumb {
+  background: #EBDEF0;
+  background-clip: padding-box;
+  border-radius: 10px;
+  border: 5px solid white;
+}
+
+.place_container::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0);
 }
 
 .plan-submit__box {
@@ -76,7 +87,18 @@
 }
 
 .selected-place__container::-webkit-scrollbar {
-  display: none;
+  width: 20px;
+}
+
+.selected-place__container::-webkit-scrollbar-thumb {
+  background: #EBDEF0;
+  background-clip: padding-box;
+  border-radius: 10px;
+  border: 5px solid white;
+}
+
+.selected-place__container::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0);
 }
 
 .place__box {

@@ -4,5 +4,16 @@
 }
 
 .tab-content::-webkit-scrollbar {
-  display: none;
+  width: 20px;
+}
+
+.tab-content::-webkit-scrollbar-thumb {
+  background: #EBDEF0;
+  background-clip: padding-box;
+  border-radius: 10px;
+  border: 5px solid white;
+}
+
+.tab-content::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0);
 }

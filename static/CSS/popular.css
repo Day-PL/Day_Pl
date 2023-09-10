@@ -13,7 +13,18 @@
 }
 
 .popular-plans__list::-webkit-scrollbar {
-  display: none;
+  width: 20px;
+}
+
+.popular-plans__list::-webkit-scrollbar-thumb {
+  background: #EBDEF0;
+  background-clip: padding-box;
+  border-radius: 10px;
+  border: 5px solid white;
+}
+
+.popular-plans__list::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0);
 }
 
 .popular-plan__box {
@@ -80,7 +91,18 @@
 }
 
 .popular-plan-place__list::-webkit-scrollbar {
-  display: none;
+  width: 20px;
+}
+
+.popular-plan-place__list::-webkit-scrollbar-thumb {
+  background: #EBDEF0;
+  background-clip: padding-box;
+  border-radius: 10px;
+  border: 5px solid white;
+}
+
+.popular-plan-place__list::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0);
 }
 
 .popular-plan-detail__container {
