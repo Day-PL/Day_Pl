@@ -2,9 +2,17 @@ from django.db import models
 from django.contrib.auth.models import User
 import uuid
 
-class PlaceType(models.Model):
-    code = models.CharField(max_length=32, default='Z0', unique=True)
+class PlaceTypeCategory(models.Model):
+    code = models.CharField(max_length=32, default='Z', unique=True)
     name = models.CharField(max_length=32, null=False)
+
+    def __str__(self) :
+        return self.name
+
+class PlaceType(models.Model):
+    category = models.ForeignKey(PlaceTypeCategory, on_delete=models.SET_NULL, null=True)
+    code           = models.CharField(max_length=32, default='Z0', unique=True)
+    name           = models.CharField(max_length=32, null=False)
     
     def __str__(self):
         return self.name

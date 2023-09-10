@@ -10,11 +10,11 @@
 	<form method="post" action="{% url 'Day_Pl:preferences' %}">
 		{% csrf_token %}
 		<!-- TODO python에서 자동화 처리 해줘서 넘기기 -->
-		{% for typecode, typename in code_alphabets.items %}
-			<label>{{ typename }}</label>
+		{% for code_alphabet in code_alphabets %}
+			<label>{{ code_alphabet.name }}</label>
 			<div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
 				{% for preference_item in preference_choices %}
-					{% if typecode in preference_item.code %}
+					{% if code_alphabet.code in preference_item.code %}
 						{% if preference_item.id in user_preference_ids %}
 							<input type="checkbox" class="btn-check" name="{{ preference_item.code }}" id="{{ preference_item.code }}" autocomplete="off" checked>
 						{% else %}

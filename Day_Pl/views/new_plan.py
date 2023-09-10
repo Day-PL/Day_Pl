@@ -2,21 +2,23 @@ import json
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from Day_Pl.models import Place, PlaceType, Plan, PlanPlace
+from Day_Pl.models import Place, PlaceType, Plan, PlanPlace, PlaceTypeCategory
 from django.http import HttpResponse
 from django.core import serializers
+from django.db.models import Q
 from django.db import transaction
 from datetime import datetime, date
 
 @login_required
 def index(request):
     places = Place.objects.all()[1:]
+    placetype_categories = PlaceTypeCategory.objects.all()
     placetypes = PlaceType.objects.all()
     current_date = date.today()
 
     context = {
         'places' : places,
-        'placetypes' : placetypes,
+        'placetype_categories' : placetype_categories,
         'current_date' : current_date,
     }
 
@@ -91,11 +93,13 @@ def index(request):
         return JsonResponse(response)
     return render(request, 'new_plan.html', context=context)
 
-def get_filter(request, placetype_id):
+def get_filter(request, placetype_id, search_keyword):
+    places = Place.objects.exclude(id=0)
     if placetype_id:
-        places = Place.objects.filter(type_code_id = placetype_id) #! type_code 컬럼(object) : id
-    else:
-        places = Place.objects.all()[1:]
+        places = places.filter(type_code__category_id = placetype_id)
+    if search_keyword != 'none':
+        places = places.filter(Q(name__icontains=search_keyword)|
+                                Q(type_code__name__icontains=search_keyword))
 
     places_json = serializers.serialize('json', places)
 

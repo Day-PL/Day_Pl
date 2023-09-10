@@ -1,9 +1,13 @@
 getUserAddress()
 
-window.addEventListener('DOMContentLoaded', getFilteredPlace); //! 모두 로딩되고 보내준 장소 데이터들 가져와서 네이버 지도에 마커 표시 및 관련 기능(좋아요,추가)
+window.addEventListener('DOMContentLoaded', () => {
+    getFilteredPlace('')
+}); //! 모두 로딩되고 보내준 장소 데이터들 가져와서 네이버 지도에 마커 표시 및 관련 기능(좋아요,추가)
 
 const selectElement = document.querySelector('.search_place_filter'); 
-selectElement.addEventListener('change', getFilteredPlace); //! (필터가) 바뀔 때마다 장소 데이터들 가져와서 네이버 지도에 마커 표시 및 관련 기능(좋아요,추가)
+selectElement.addEventListener('change',  () => {
+    getFilteredPlace('')
+}); //! (필터가) 바뀔 때마다 장소 데이터들 가져와서 네이버 지도에 마커 표시 및 관련 기능(좋아요,추가)
 let userAddress = '';
 
 //! 사용자 위치 권한 사용가능한지 브라우저에게 물어보기 (가장 먼저 실행, 가장 마지막에 끝)
@@ -134,17 +138,32 @@ function checkLastString (word, lastString) {
 function hasAddition (addition) {
     return !!(addition && addition.value);
 }
-function getFilteredPlace(){
+
+const placeSearchInput = document.querySelector('.new-plan-place-search__input')
+placeSearchInput.addEventListener('keyup', () => {
+    getFilteredPlace(placeSearchInput.value)
+})
+
+function getFilteredPlace(placeSearchKeyword){
+    if (placeSearchKeyword === '') {
+        placeSearchKeyword = 'none'
+    }
     console.log('getFilteredPlace 실행');
     const placeContainer = document.querySelector('.place_container');
     placeContainer.innerHTML = '';
+    const encodedKeyword = encodeURIComponent(placeSearchKeyword)
     const selectedPlace = selectElement.options[selectElement.selectedIndex].value;
-    fetch(`get-filter/${selectedPlace}/`, {
-        method : "get",
+    fetch(`get-filter/${selectedPlace}/${encodedKeyword}/`, {
+        method : "GET",
     })
     .then((response) => response.json())
     .then((data) => {
         console.log('data 길이: ', data.length)
+        if (!data.length) {
+            const div = document.createElement('div');
+            div.innerText = '해당하는 정보가 없습니다'
+            placeContainer.appendChild(div)
+        }
 
         //! 네이버 지도에 마커 찍기
         var map = new naver.maps.Map(document.getElementById('map'), {

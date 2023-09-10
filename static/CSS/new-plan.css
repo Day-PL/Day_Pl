@@ -137,3 +137,17 @@
   color: #EBDEF0;
   font-weight: bold;
 }
+
+.new-plan-place-serch__box {
+  position: relative;
+  margin-bottom: 4px;
+}
+
+.new-plan-place-search__input {
+  width: 100%;
+  height: 100%;
+  padding: 5px;
+  padding-left: 30px;
+  border: 1px solid #D6DBDF;
+  border-radius: 10px;
+}
