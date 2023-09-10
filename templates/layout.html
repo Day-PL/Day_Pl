@@ -42,12 +42,12 @@
                 {% include 'components/navigation.html' %}
             </div>
         </header>
-        <div class="contents__box" style="height: 42rem;">
+        <div class="contents__box">
             {% block contents %}
                 기본 컨텐츠
             {% endblock %}
         </div>
-        <footer style="text-align:center;">
+        <footer class="footer">
             {% include 'components/footer.html' %}
         </footer> 
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"

@@ -1,0 +1,92 @@
+.signup__main {
+  width: 50%;
+}
+
+.signup__form {
+  gap: 1rem;
+}
+
+.signup__title {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+}
+
+.alert-info {
+  background-color: #EBDEF0;
+  border-color: inherit;
+  color: #8E44AD;
+}
+
+.signup.btn {
+  background-color: #EBDEF0;
+  color: #8E44AD;
+  border: none;
+  font-weight: bold;
+}
+
+.signup.btn:hover {
+  background-color: #8E44AD;
+  color: #EBDEF0;
+}
+
+.signup__title__name {
+  font-weight: bold;
+  color: #8E44AD;
+}
+
+.check__results {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.signup-item__title {
+  font-weight: bold;
+}
+
+.signup-gender__radios {
+  gap: 1.5rem;
+}
+
+input[type='date'] {
+  border: none;
+  position: relative;
+  width: 100%;
+  padding: 10px;
+  background-color: #ffffff;
+  border: 1px solid #CED4D9;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 100%;
+  margin-bottom: 20px;
+}
+
+
+input[type='date']::-webkit-calendar-picker-indicator {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  color: transparent;
+  cursor: pointer;
+}
+
+input[type='date']::before {
+  content: attr(placeholder);
+  width: 100%;
+  height: 100%;
+}
+
+input[type='date']:valid::before {
+  display: none;
+}
+
+.signup-submit__btn {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: 1rem;
+}

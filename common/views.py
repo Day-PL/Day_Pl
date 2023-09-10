@@ -1,9 +1,8 @@
 import re
 import json
 from django.http import JsonResponse
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import authenticate, login
+from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.contrib.auth.models import User
 from common.forms import UserForm, ProfileForm
 from datetime import datetime
@@ -17,16 +16,11 @@ def signup(request):
 
         if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save()
-            print('user 저장됨')
             profile = profile_form.save(commit=False)
             profile.user = user
             profile.save()
-            print('profile 저장됨')
+            return redirect(reverse('common:login'))
 
-            return redirect('Day_Pl:browse')
-        else:
-            print(user_form.errors)
-            print(profile_form.errors)
     else:
         user_form = UserForm()
         profile_form = ProfileForm()

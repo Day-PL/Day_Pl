@@ -31,6 +31,24 @@
   color: #EBDEF0;
 }
 
+.signup__btn {
+  display: block;
+  text-align: center;
+  width: 100%;
+  columns: #8E44AD;
+  background-color: #EBDEF0;
+  padding: 1.1rem 1rem;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.signup__btn:hover {
+  background-color: #8E44AD;
+  color: #EBDEF0;
+}
+
 .social_login_btns {
   width: 40%;
   align-items: center;
