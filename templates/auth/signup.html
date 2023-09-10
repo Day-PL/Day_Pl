@@ -54,6 +54,9 @@
         <input type="text" name="nickname" id="nickname" class="form-control" placeholder="닉네임" value="{{ profile_form.nickname.value|default_if_none:'' }}" required />
         <label for="floatingInput">닉네임</label>
       </div>
+      <div class="check__results">
+        <div class="check__result nickname-result"></div>
+      </div>
       <div class="signup-gender__radios d-flex flex-row">
         <span class="signup-item__title">성별</span>
         <div class="form-check">
