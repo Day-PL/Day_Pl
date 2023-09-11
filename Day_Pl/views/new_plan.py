@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from Day_Pl.models import Place, Plan, PlanPlace, PlaceTypeCategory, PlaceComment
 from django.http import HttpResponse
 from django.core import serializers
-from django.db.models import Q, F
+from django.db.models import Q, F, BooleanField, ExpressionWrapper, Case, When
 from django.db import transaction
 from datetime import datetime, date
 
@@ -108,10 +108,18 @@ def get_naver_map(request):
     return render(request, 'components/naver_map_container.html')
 
 def place_comment(request, place_id):
+    current_user = request.user.id
     comments = PlaceComment.objects.filter(place_id = place_id)\
-                                    .annotate(comment_author = F('user__profile__nickname'))\
+                                    .annotate(comment_author = F('user__profile__nickname'),
+                                            is_current_user_author=ExpressionWrapper(
+                                                Case(
+                                                    When(user_id=current_user, then=True),
+                                                    default=False,
+                                                    output_field=BooleanField(),
+                                                ),
+                                                output_field=BooleanField(),),)\
                                     .order_by('-created_at')\
-                                    .values('id', 'comment_author', 'place_id', 'comment', 'created_at')
+                                    .values('id', 'comment_author', 'place_id', 'comment', 'created_at', 'is_current_user_author')
     for comment in comments:
         comment['created_at'] = comment['created_at'].strftime('%Y-%m-%d')
 
@@ -119,7 +127,7 @@ def place_comment(request, place_id):
 
     return JsonResponse(comments_list, safe=False)
 
-def create_comment(request):
+def control_comment(request):
     if request.method == 'POST':
         data = json.loads(request.body)
         place_id = data.get('place_id')
@@ -135,7 +143,35 @@ def create_comment(request):
         response = {
             'status' : 'success',
         }
-    return JsonResponse(response)
+        return JsonResponse(response)
+    
+    if request.method == 'PUT':
+        data = json.loads(request.body)
+        comment_id = data.get('comment_id')
+        comment = data.get('comment')
+        created_at = datetime.now()
 
+        place_comment = PlaceComment.objects.get(id = comment_id)
 
+        place_comment.comment = comment
+        place_comment.created_at = created_at
+        place_comment.save()
 
+        response = {
+            'status' : 'success',
+        }
+
+        return JsonResponse(response)
+    
+    if request.method == 'DELETE':
+        data = json.loads(request.body)
+        comment_id = data.get('comment_id')
+
+        comment_to_delete = PlaceComment.objects.get(id=comment_id)
+        comment_to_delete.delete()
+
+        response = {
+            'status' : 'success',
+        }
+
+        return JsonResponse(response)
