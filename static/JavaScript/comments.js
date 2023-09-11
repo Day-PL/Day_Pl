@@ -145,11 +145,11 @@ function printComments(comment, placeId) {
   </div>
   `
   const div = document.createElement('div')
-  div.setAttribute('class', 'comment__btns d-flex flex-column')
+  div.setAttribute('class', 'comment__btns d-flex flex-column gap-1')
   if (isAuthor) {
     div.innerHTML = `
-    <button type="button" class="comment-modify__btn btn btn-outline-primary" data-modifycommentid=${commentId} data-modifyplaceid=${placeId}>수정</button>
-    <button type="button" class="comment-delete__btn btn btn-outline-primary" data-deletecommentid=${commentId} data-deleteplaceid=${placeId}>삭제</button>
+    <button type="button" class="comment-control__btn btn btn-outline-primary" data-modifycommentid=${commentId} data-modifyplaceid=${placeId}>수정</button>
+    <button type="button" class="comment-control__btn btn btn-outline-primary" data-deletecommentid=${commentId} data-deleteplaceid=${placeId}>삭제</button>
     `
     li.appendChild(div)
   }

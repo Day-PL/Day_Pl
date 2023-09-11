@@ -1,10 +1,10 @@
 {% load static %}
 <!-- 플랜만들기에서 장소 클릭시 뜨는 장소의 세부 정보 창 -->
-<div style="height: 30rem; width:30rem; margin: 0; padding: 0;">
+<div class="new-plan-place-detail__box">
     <!-- 댓글 기능!! -->
     {% for place in places %}
         <div id="detail_{{ place.id }}" style="display:none;">
-            <span class="place__name">{{ place.name }}</span>
+            <h1 class="place__name mb-3 fs-3 fst-italic">{{ place.name }}</h1>
             <form>
                 <div class="form-floating">
                     <textarea class="comment-content-{{ place.id }} form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>

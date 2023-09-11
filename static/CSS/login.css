@@ -17,7 +17,7 @@
 
 .login-submit__btn {
   width: 100%;
-  columns: var(--color-primary);
+  color: var(--color-primary);
   background-color: var(--color-primary-variant);
   padding: 1.1rem 1rem;
   margin: 1rem 0;
@@ -36,7 +36,7 @@
   display: block;
   text-align: center;
   width: 100%;
-  columns: var(--color-primary);
+  color: var(--color-primary);
   background-color: var(--color-primary-variant);
   padding: 1.1rem 1rem;
   margin-bottom: 1rem;
