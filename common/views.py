@@ -4,6 +4,8 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth.models import User
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
 from common.forms import UserForm, ProfileForm
 from datetime import datetime
 from .models import Profile
@@ -90,3 +92,37 @@ def check_nickname(request):
             'message': '사용 가능한 닉네임입니다.'
         }
     return JsonResponse(response)
+
+def find_id(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        email = data.get('email')
+
+        if Profile.objects.filter(mail=email).exists():
+            user = User.objects.get(profile__mail=email)
+            profile = Profile.objects.get(mail=email)
+            nickname = profile.nickname
+            username = user.username
+            send_email(nickname, username, email)
+            response = {
+                'status': 'success',
+            }
+        else:
+            response = {
+                'status': 'error',
+                'message': '존재하지 않는 사용자입니다.'
+            }
+        print(response)
+        return JsonResponse(response)
+    return render(request, 'auth/find_id.html')
+
+def send_email(nickname, username, mail):
+    subject = f"[Day'Pl] {nickname}님의 아이디를 보내드립니다."
+    message = render_to_string('find_id_mail.html', {
+    'name': nickname,
+    'username': username,
+	})
+    to_email = mail
+    send_email = EmailMessage(subject, message, to=[to_email])
+    send_email.content_subtype = "html"
+    send_email.send()

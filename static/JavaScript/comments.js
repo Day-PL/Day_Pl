@@ -39,6 +39,7 @@ commentLists.forEach(commentList => {
     const deleteCommentId = event.target.dataset.deletecommentid
     const deleteCommentPlaceId = event.target.dataset.deleteplaceid
     if (deleteCommentId) {
+      // TODO: 정말 삭제할 것인지 확인하는 창 띄우기
       deleteComment(deleteCommentId, deleteCommentPlaceId)
     }
   })

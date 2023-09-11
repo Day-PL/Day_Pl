@@ -1,4 +1,5 @@
 from django.urls import path
+from django.urls.base import reverse_lazy
 from django.contrib.auth import views as auth_views
 from . import views
 
@@ -12,5 +13,6 @@ urlpatterns = [
     path('new-user/check-username/', views.check_username, name='check-username'),
     path('new-user/check-mail/', views.check_mail, name='check-mail'),
     path('new-user/check-nickname/', views.check_nickname, name='check-nickname'),
+    path('find-id/', views.find_id, name='find-id'),
     # path('info/', views.info, name='info'), #! 회원정보 수정, 회원 탈퇴
 ]
