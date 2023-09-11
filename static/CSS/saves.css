@@ -8,10 +8,10 @@
 }
 
 .tab-content::-webkit-scrollbar-thumb {
-  background: #EBDEF0;
+  background: var(--color-primary-variant);
   background-clip: padding-box;
   border-radius: 10px;
-  border: 5px solid white;
+  border: 5px solid var(--color-white);
 }
 
 .tab-content::-webkit-scrollbar-track {

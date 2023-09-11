@@ -1,0 +1,18 @@
+:root {
+  /* App Colors */
+  --color-primary: var(--color-violet);
+  --color-primary-variant: var(--color-lavender);
+  --color-text: var(--color-black);
+
+  /* Colors */
+  --color-white: #ffffff;
+  --color-black: #050a13;
+  --color-violet: #8E44AD;
+  --color-lavender: #EBDEF0;
+  --color-red: #E74C3C;
+  --color-yellow: #F4D03F;
+  --color-light-yellow: #FDEBD0;
+  --color-grey: #CED4D9;
+  --color-light-grey: #f5f5f5;
+  --color-mint: #D1F2EB;
+}

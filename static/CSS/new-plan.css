@@ -27,10 +27,10 @@
 }
 
 .place_container::-webkit-scrollbar-thumb {
-  background: #EBDEF0;
+  background: var(--color-primary-variant);
   background-clip: padding-box;
   border-radius: 10px;
-  border: 5px solid white;
+  border: 5px solid var(--color-white);
 }
 
 .place_container::-webkit-scrollbar-track {
@@ -51,7 +51,7 @@
   height: 100%;
   padding: 8px;
   padding-left: 40px;
-  border: 1px solid #D6DBDF;
+  border: 1px solid var(--color-grey);
   border-radius: 10px;
 }
 
@@ -67,16 +67,17 @@
   top: 3px;
   right: 5px;
   border-radius: 50%;
-  background-color: #EBDEF0;
-  border-color: #EBDEF0;
-  color: #8E44AD;
+  background-color: var(--color-primary-variant);
+  border-color: var(--color-primary-variant);
+  color: var(--color-primary);
   font-weight: bold;
+  transition: all 0.3s ease-in;
 }
 
 .plan-submit__box > .plan-submit__btn:hover {
-  background-color: #8E44AD;
-  border-color: #8E44AD;
-  color: #EBDEF0;
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-primary-variant);
   font-weight: bold;
 }
 
@@ -91,10 +92,10 @@
 }
 
 .selected-place__container::-webkit-scrollbar-thumb {
-  background: #EBDEF0;
+  background: var(--color-primary-variant);
   background-clip: padding-box;
   border-radius: 10px;
-  border: 5px solid white;
+  border: 5px solid var(--color-white);
 }
 
 .selected-place__container::-webkit-scrollbar-track {
@@ -111,7 +112,7 @@
   margin: auto;
   margin-right: 0;
   margin-bottom: 2rem;
-  background-color: #F8F9F9;
+  background-color: var(--color-light-grey);
   border-radius: 10px;
 }
 
@@ -124,17 +125,18 @@
 
 .plan-blank__btn {
   padding: 0.3rem;
-  color: #8E44AD;
-  background-color: #EBDEF0;
+  color: var(--color-primary);
+  background-color: var(--color-primary-variant);
   border-radius: 10%;
   margin-top: 0.3rem;
   font-weight: bold;
+  transition: all 0.3s ease-in;
 }
 
 .plan-blank__btn:hover {
-  background-color: #8E44AD;
-  border-color: #8E44AD;
-  color: #EBDEF0;
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-primary-variant);
   font-weight: bold;
 }
 
@@ -148,7 +150,7 @@
   height: 100%;
   padding: 5px;
   padding-left: 30px;
-  border: 1px solid #D6DBDF;
+  border: 1px solid var(--color-grey);
   border-radius: 10px;
 }
 
@@ -162,10 +164,10 @@
 }
 
 .place-comments__list::-webkit-scrollbar-thumb {
-  background: #EBDEF0;
+  background: var(--color-primary-variant);
   background-clip: padding-box;
   border-radius: 10px;
-  border: 5px solid white;
+  border: 5px solid var(--color-white);
 }
 
 .place-comments__list::-webkit-scrollbar-track {

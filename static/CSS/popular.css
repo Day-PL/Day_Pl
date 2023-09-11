@@ -17,10 +17,10 @@
 }
 
 .popular-plans__list::-webkit-scrollbar-thumb {
-  background: #EBDEF0;
+  background: var(--color-primary-variant);
   background-clip: padding-box;
   border-radius: 10px;
-  border: 5px solid white;
+  border: 5px solid var(--color-white);
 }
 
 .popular-plans__list::-webkit-scrollbar-track {
@@ -48,15 +48,15 @@
 }
 
 .popular-plan__hash.area {
-  background-color: #EBDEF0;
+  background-color: var(--color-primary-variant);
 }
 
 .popular-plan__hash.type {
-  background-color: #D1F2EB;
+  background-color: var(--color-mint);
 }
 
 .popular-plan__hash.pick {
-  background-color: #FDEBD0;
+  background-color: var(--color-light-yellow);
 }
 
 .popular-plans-serch__box {
@@ -69,7 +69,7 @@
   height: 100%;
   padding: 5px;
   padding-left: 30px;
-  border: 1px solid #D6DBDF;
+  border: 1px solid var(--color-grey);
   border-radius: 10px;
 }
 
@@ -95,10 +95,10 @@
 }
 
 .popular-plan-place__list::-webkit-scrollbar-thumb {
-  background: #EBDEF0;
+  background: var(--color-primary-variant);
   background-clip: padding-box;
   border-radius: 10px;
-  border: 5px solid white;
+  border: 5px solid var(--color-white);
 }
 
 .popular-plan-place__list::-webkit-scrollbar-track {
@@ -140,7 +140,7 @@
   height: 5rem;
   border-radius: 5px;
   margin: 1rem;
-  background-color: #EBDEF0;
+  background-color: var(--color-primary-variant);
 }
 
 .place__name {

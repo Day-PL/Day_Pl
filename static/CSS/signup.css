@@ -13,26 +13,27 @@
 }
 
 .alert-info {
-  background-color: #EBDEF0;
+  background-color: var(--color-primary-variant);
   border-color: inherit;
-  color: #8E44AD;
+  color: var(--color-primary);
 }
 
 .signup.btn {
-  background-color: #EBDEF0;
-  color: #8E44AD;
+  background-color: var(--color-primary-variant);
+  color: var(--color-primary)D;
   border: none;
   font-weight: bold;
+  transition: color 0.3s ease-in;
 }
 
 .signup.btn:hover {
-  background-color: #8E44AD;
-  color: #EBDEF0;
+  background-color: var(--color-primary);
+  color: var(--color-primary-variant)0;
 }
 
 .signup__title__name {
   font-weight: bold;
-  color: #8E44AD;
+  color: var(--color-primary);
 }
 
 .check__results {

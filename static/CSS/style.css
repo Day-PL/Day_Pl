@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+@import 'variables.css';
 
 /* components */
 @import 'components/share-modal.css';
@@ -12,11 +13,12 @@
 @import 'saves.css';
 
 * {
-    font-family: 'Noto Sans KR', sans-serif;
     box-sizing: border-box;
+    color: var(--color-text);
 }
 
 body {
+    font-family: 'Noto Sans KR', sans-serif;
     font-size: 16px;
 }
 
@@ -27,12 +29,13 @@ main {
 
 a {
     text-decoration: none;
-    color:black;
+    color: var(--color-text);
+    transition: color 0.3s ease-in;
 }
 
 a:hover {
     cursor: pointer;
-    color: #8E44AD;
+    color: var(--color-primary);
 }
 
 button {
@@ -56,11 +59,11 @@ ul {
 }
 
 .fa-star {
-    color: #F4D03F;
+    color: var(--color-yellow);
 }
 
 .fa-heart {
-    color: #E74C3C;
+    color: var(--color-red);
 }
 
 button .fa-heart,
