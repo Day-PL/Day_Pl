@@ -1,4 +1,6 @@
 from django import forms
+from django.core.exceptions import ValidationError
+import django.contrib.auth.forms as auth_forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Profile
@@ -39,8 +41,29 @@ class ProfileForm(forms.ModelForm):
             raise forms.ValidationError('이미 사용 중인 이메일 주소입니다.')
         
         return mail
+    
+class PasswordResetForm(auth_forms.PasswordResetForm):
+    username = auth_forms.UsernameField()
 
+    def clean_username(self):
+        data = self.cleaned_data['username']
+        if not User.objects.filter(username=data).exists():
+            raise ValidationError('존재하지 않는 사용자입니다.')
+        return data
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        username = cleaned_data.get('username')
+        email = cleaned_data.get('email')
 
+        if username and email:
+            if User.objects.filter(username=username).exists():
+                user = User.objects.get(username=username)
+                profile = Profile.objects.get(user=user)
+                if profile.mail != email:
+                    raise ValidationError('유효하지 않은 이메일 주소입니다.')
+            else:
+                raise ValidationError('존재하지 않는 사용자입니다.')
 
 
 

@@ -2,11 +2,12 @@ import re
 import json
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
+from django.contrib.auth import views as auth_views
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
-from common.forms import UserForm, ProfileForm
+from common.forms import UserForm, ProfileForm, PasswordResetForm
 from datetime import datetime
 from .models import Profile
 
@@ -126,3 +127,16 @@ def send_email(nickname, username, mail):
     send_email = EmailMessage(subject, message, to=[to_email])
     send_email.content_subtype = "html"
     send_email.send()
+
+class PasswordResetView(auth_views.PasswordResetView):
+    template_name = 'auth/password_reset.html'
+    success_url = reverse_lazy('common:password_reset_done')
+    form_class = PasswordResetForm
+    email_template_name = 'auth/password_reset_email.html'
+
+class PasswordResetDoneView(auth_views.PasswordResetDoneView):
+    template_name = 'auth/password_reset_done.html'
+
+class PasswordResetConfirmView(auth_views.PasswordResetConfirmView):
+    template_name = 'auth/password_reset_confirm.html'
+    success_url = reverse_lazy('common:login')

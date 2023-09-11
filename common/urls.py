@@ -14,5 +14,8 @@ urlpatterns = [
     path('new-user/check-mail/', views.check_mail, name='check-mail'),
     path('new-user/check-nickname/', views.check_nickname, name='check-nickname'),
     path('find-id/', views.find_id, name='find-id'),
+    path('password_reset/', views.PasswordResetView.as_view(), name='password_reset'),
+	path('password_reset/done/', views.PasswordResetDoneView.as_view(), name='password_reset_done'),
+	path('reset/<uidb64>/<token>/', views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     # path('info/', views.info, name='info'), #! 회원정보 수정, 회원 탈퇴
 ]
