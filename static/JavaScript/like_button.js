@@ -10,27 +10,27 @@ function printPlaceLikeBtn(placeId, placeBoxBody) {
   });
 }
 
-function updatePlaceLike(PlaceId) {
-  if (PlaceId) {
+function updatePlaceLike(placeId) {
+  if (placeId) {
     fetch('', {
       method: 'PUT',
       headers: {
         'X-CSRFToken': csrfToken,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ placeid: PlaceId }),
+      body: JSON.stringify({ placeid: placeId }),
     })
     .then((response) => response.json())
     .then((data) => {
-      const placeLikeBtn = document.querySelectorAll(`.place-like__btn[data-placelike="${PlaceId}"]`)
+      const placeLikeBtn = document.querySelectorAll(`.place-like__btn[data-placelike="${placeId}"]`)
       placeLikeBtn.forEach(btn => {
         if (data.login === false) {
           window.location = `${FULL_PATH}/users/login`
         } else {
           if (data.isliked === true) {
-          btn.innerHTML = `<i data-planlike="${planId}" class="fa-solid fa-heart"></i>`
+          btn.innerHTML = `<i data-placelike="${placeId}" class="fa-solid fa-star"></i>`
         } else {
-          btn.innerHTML = `<i data-planlike="${planId}" class="fa-regular fa-heart"></i>`
+          btn.innerHTML = `<i data-placelike="${placeId}" class="fa-regular fa-star"></i>`
         }
         }
       })
