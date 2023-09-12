@@ -81,6 +81,11 @@ def index(request):
                             place = place_obj,
                             order = idx,
                         )
+                plan_places = PlanPlace.objects.filter(plan = new_plan).order_by('order')
+                for i in range(len(plan_places)-1):
+                    road_url = f"https://map.naver.com/p/directions/,,,{ plan_places[i].place.naver_place_id },PLACE_POI/,,,{ plan_places[i+1].place.naver_place_id },PLACE_POI/-/walk?c=13.00,0,0,0,dh"
+                    print(road_url)
+                    PlanPlace.objects.filter(id = plan_places[i].id).update(road_url=road_url)
                 response = {
                     'status': 'success',
                 }
@@ -90,6 +95,8 @@ def index(request):
                 response = {
                     'status': 'fail',
                 }
+            # !
+
         return JsonResponse(response)
     return render(request, 'new_plan.html', context=context)
 
