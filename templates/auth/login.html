@@ -5,8 +5,9 @@
 
 {% block contents %}
 	<main class="login__main">
-		<form class="login__form" action="#" method="post">
+		<form class="login__form" action="{% url 'common:login' %}" method="post">
 			{% csrf_token %}
+			{% include 'components/form_errors.html' %}
 			<div class="login__inputs">
 				<div class="form-floating mb-3">
 					<input type="id" name="username" class="form-control" id="username" placeholder="아이디를 입력하세요">
@@ -26,22 +27,6 @@
 			</div>
 			<div>
 				<a href="{% url 'common:signup' %}" class="signup__btn">회원가입하기</a>
-			</div>
-		</form>
-
-		<form method="post" action="{% url 'common:login' %}">
-			{% csrf_token %}
-			{% include 'components/form_errors.html' %}
-			<div class="form-floating mb-3">
-				<input type="id" name="username" class="form-control" id="username" placeholder="아이디를 입력하세요">
-				<label for="floatingInput">Id</label>
-			</div>
-			<div class="form-floating">
-				<input type="password" name="password" class="form-control" id="password" placeholder="비밀번호를 입력하세요">
-				<label for="floatingPassword">Password</label>
-			</div>
-			<div>
-				<input type="submit">
 			</div>
 		</form>
 	</main>
