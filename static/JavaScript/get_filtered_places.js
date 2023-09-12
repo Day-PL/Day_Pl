@@ -154,7 +154,7 @@ function getFilteredPlace(placeSearchKeyword){
     newPlanPlaceContainer.innerHTML = '';
     const encodedKeyword = encodeURIComponent(placeSearchKeyword)
     const selectedPlace = selectElement.options[selectElement.selectedIndex].value;
-    fetch(`get-filter/${selectedPlace}/${encodedKeyword}/`, {
+    fetch(`/get-filter/${selectedPlace}/${encodedKeyword}/`, {
         method : "GET",
     })
     .then((response) => response.json())
