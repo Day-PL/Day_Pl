@@ -39,14 +39,14 @@ def index(request):
         return JsonResponse(response)
 
     if request.method == 'POST':
-        data = json.loads(request.body)
-        title = data.get('plantitle')
-        place_ids = data.get('placeids')
-        is_liked = data.get('isliked')
+        data         = json.loads(request.body)
+        title        = data.get('plantitle')
+        place_ids    = data.get('placeids')
+        is_liked     = data.get('isliked')
         hashtag_area = data.get('hashtag_area')
         hashtag_type = data.get('hashtag_type')
         hashtag_pick = data.get('hashtag_pick')
-        is_public = data.get('ispublic')
+        is_public    = data.get('ispublic')
 
         user = request.user
         created_at = datetime.now()
@@ -79,7 +79,6 @@ def index(request):
                             place = place_obj,
                             order = idx,
                         )
-                
                 response = {
                     'status': 'success',
                 }

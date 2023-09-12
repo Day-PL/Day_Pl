@@ -12,15 +12,14 @@ let map = new naver.maps.Map(document.getElementById('map'), {
     }
 });
 
-const planNames = document.querySelectorAll('.planName');  //! 클릭할 부분들
- 
+const planNames = document.querySelectorAll('.popular-plan__title');  //! 클릭할 부분
 planNames.forEach(function(planName) {
-    planName.addEventListener('click', function(){   //! 클릭시 이벤트
+    const a_tag = planName.parentElement.parentElement;
+    a_tag.addEventListener('click', function(event){   //! 클릭시 이벤트
+        event.stopPropagation();
         let planId = planName.id;
         let planDivs = document.querySelectorAll('.plan');
-
         planDivs.forEach(function(planDiv) {
-
             if (planDiv.classList.contains('plan_' + planId) & planDiv.classList.contains('hide-plan')){  //! 클릭한 플랜의 장소들 토글하기
                 planDiv.classList.toggle('hide-plan');
                 map = new naver.maps.Map(document.getElementById('map'), {
@@ -32,6 +31,14 @@ planNames.forEach(function(planName) {
                         position: naver.maps.Position.TOP_RIGHT
                     }
                 });
+                
+                var polyline = new naver.maps.Polyline({
+                    map: map,
+                    path: [],
+                    strokeColor: '#5347AA',
+                    strokeWeight: 2
+                });
+                
                 // let markerList = new Array();
                 let labels = planDiv.querySelectorAll('label');
 
@@ -45,13 +52,23 @@ planNames.forEach(function(planName) {
                     latAvg += lat;
                     lngAvg += lng;
 
+                    var point = new naver.maps.LatLng(lng, lat);
+
+                    var path = polyline.getPath();
+                    path.push(point);
+
                     let marker = new naver.maps.Marker({
                         position: new naver.maps.LatLng(lng, lat),
                         map: map,
-                        title: 1
+                        title: 1,
+                        // icon: {
+                        //     url   : '../img/purple_marker.png',
+                        //     size  : new naver.maps.Size(50, 52),
+                        //     origin: new naver.maps.Point(0, 0),
+                        //     anchor: new naver.maps.Point(25, 26)
+                        // }
                     });
                     
-
                     marker = null;
                 })
                 lngAvg /= len;
@@ -77,9 +94,7 @@ planNames.forEach(function(planName) {
                     let lng = label.dataset.lng;
                     latAvg += lat;
                     lngAvg += lng;
-                    console.log(label.getAttribute('for'));
                     status1 = $('input:checkbox[id="' + label.getAttribute('for') + '"]').is(':checked');
-                    console.log(status1);
                 })
                 lngAvg /= len;
                 latAvg /= len;
@@ -91,16 +106,17 @@ planNames.forEach(function(planName) {
     });
 });
 
-const hearts = document.querySelectorAll('.fa-heart');
+const hearts = document.querySelectorAll('.heart'); //! 변경
 
 hearts.forEach(function(heart){
-    const planId = heart.nextElementSibling.id;
-    const planTitle = heart.nextElementSibling.dataset.plantitle;
-    const div = heart.parentElement.parentElement.parentElement;
+    const planId = heart.dataset.planid;
+    const planTitle = heart.dataset.plantitle;
+    const a = heart.parentElement.parentElement.parentElement;
     const planType = heart.dataset.plantype;
-    const modifyPlan = div.querySelectorAll('#modifyPlan');
-    const removePlan = div.querySelectorAll('#removePlan');
-    heart.addEventListener('click', function(){
+    const modifyPlan = a.querySelectorAll('#modifyPlan');
+    const removePlan = a.querySelectorAll('#removePlan');
+    heart.addEventListener('click', function(event){
+        event.stopPropagation();
         if (heart.classList.contains('fa-solid')) {
             heart.classList.remove('fa-solid');
             heart.classList.add('fa-regular');
@@ -116,13 +132,15 @@ hearts.forEach(function(heart){
         }
     });
     if (modifyPlan.length) {
-        modifyPlan[0].addEventListener('click', function(){
+        modifyPlan[0].addEventListener('click', function(event){
+            event.stopPropagation();
             fetch(`${planId}/modify`, {
                 method : 'get',
             })
-            .then(window.location.href = '/')
+            .then(window.location.href = `/saves/${planId}/modify`)
         });
-        removePlan[0].addEventListener('click', function(){
+        removePlan[0].addEventListener('click', function(event){
+            event.stopPropagation();
             fetch(`${planId}/remove`, {
                 method : 'get',
             })
