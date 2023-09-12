@@ -1,7 +1,7 @@
 import json
 from django.http import JsonResponse
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
+from django.urls import reverse
+from django.shortcuts import render, redirect
 from Day_Pl.models import Place, Plan, PlanPlace, PlaceTypeCategory, PlaceComment
 from django.http import HttpResponse
 from django.core import serializers
@@ -9,8 +9,10 @@ from django.db.models import Q, F, BooleanField, ExpressionWrapper, Case, When
 from django.db import transaction
 from datetime import datetime, date
 
-@login_required
 def index(request):
+    if not request.user.is_authenticated:
+        return redirect(reverse('common:login'))
+
     places = Place.objects.exclude(id=0)
     placetype_categories = PlaceTypeCategory.objects.all()
     current_date = date.today()

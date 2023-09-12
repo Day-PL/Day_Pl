@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
+from django.urls import reverse
 from ..models import Preference, PlaceType, PlaceTypeCategory
 
-@login_required
 def index(request):
+    if not request.user.is_authenticated:
+        return redirect(reverse('common:login'))
+    
     preference_choices = PlaceType.objects.all() #! preference_choices의 각 원소는 html 요소의 id값으로 쓰임
 
     user_preference_ids = [user_preference.prefer.pk for user_preference in  Preference.objects.filter(user = request.user)]

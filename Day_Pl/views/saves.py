@@ -7,6 +7,9 @@ from datetime import date
 
 
 def index(request):
+    if not request.user.is_authenticated:
+        return redirect(reverse('common:login'))
+    
     login_user = request.user
     like_plans = login_user.like_plans.all()
     view_plans = login_user.view_plans.all()
