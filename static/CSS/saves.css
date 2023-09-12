@@ -1,0 +1,19 @@
+.tab-content {
+  width: 100%;
+  overflow-y: scroll;
+}
+
+.tab-content::-webkit-scrollbar {
+  width: 20px;
+}
+
+.tab-content::-webkit-scrollbar-thumb {
+  background: var(--color-primary-variant);
+  background-clip: padding-box;
+  border-radius: 10px;
+  border: 5px solid var(--color-white);
+}
+
+.tab-content::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0);
+}

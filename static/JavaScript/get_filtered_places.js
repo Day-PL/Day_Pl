@@ -1,10 +1,21 @@
+const newPlanPlaceContainer = document.querySelector('.place_container');
+const placeSearchInput = document.querySelector('.new-plan-place-search__input')
+
 getUserAddress()
 
-window.addEventListener('DOMContentLoaded', getFilteredPlace); //! 모두 로딩되고 보내준 장소 데이터들 가져와서 네이버 지도에 마커 표시 및 관련 기능(좋아요,추가)
+window.addEventListener('DOMContentLoaded', () => {
+    getFilteredPlace('')
+}); //! 모두 로딩되고 보내준 장소 데이터들 가져와서 네이버 지도에 마커 표시 및 관련 기능(좋아요,추가)
 
 const selectElement = document.querySelector('.search_place_filter'); 
-selectElement.addEventListener('change', getFilteredPlace); //! (필터가) 바뀔 때마다 장소 데이터들 가져와서 네이버 지도에 마커 표시 및 관련 기능(좋아요,추가)
+selectElement.addEventListener('change',  () => {
+    getFilteredPlace('')
+}); //! (필터가) 바뀔 때마다 장소 데이터들 가져와서 네이버 지도에 마커 표시 및 관련 기능(좋아요,추가)
 let userAddress = '';
+
+placeSearchInput.addEventListener('keyup', () => {
+    getFilteredPlace(placeSearchInput.value)
+})
 
 //! 사용자 위치 권한 사용가능한지 브라우저에게 물어보기 (가장 먼저 실행, 가장 마지막에 끝)
 function getUserAddress(){
@@ -134,18 +145,26 @@ function checkLastString (word, lastString) {
 function hasAddition (addition) {
     return !!(addition && addition.value);
 }
-function getFilteredPlace(){
+
+function getFilteredPlace(placeSearchKeyword){
+    if (placeSearchKeyword === '') {
+        placeSearchKeyword = 'none'
+    }
     console.log('getFilteredPlace 실행');
-    const placeContainer = document.querySelector('.place_container');
-    placeContainer.innerHTML = '';
+    newPlanPlaceContainer.innerHTML = '';
+    const encodedKeyword = encodeURIComponent(placeSearchKeyword)
     const selectedPlace = selectElement.options[selectElement.selectedIndex].value;
-    fetch(`/new-plan/get-filter/${selectedPlace}/`, {
-        method : "get",
+    fetch(`/get-filter/${selectedPlace}/${encodedKeyword}/`, {
+        method : "GET",
     })
     .then((response) => response.json())
     .then((data) => {
         console.log('data 길이: ', data.length)
-
+        if (!data.length) {
+            const div = document.createElement('div');
+            div.innerText = '해당하는 정보가 없습니다'
+            newPlanPlaceContainer.appendChild(div)
+        }
         //! 네이버 지도에 마커 찍기
         var map = new naver.maps.Map(document.getElementById('map'), {
             zoom: 16,
@@ -174,8 +193,8 @@ function getFilteredPlace(){
         
         //! 위도,경도 어레이(latlngs)로 넣기
         for (let i=0; i<data.length; i++) {
-            let placeBox = showPlace(data[i]);
-            placeContainer.appendChild(placeBox);
+            let placeBox = printPlace(data[i]);
+            newPlanPlaceContainer.appendChild(placeBox);
 
             let name = data[i]['fields']['name'];
             let addressGu = data[i]['fields']['address_gu']
@@ -210,13 +229,13 @@ function getFilteredPlace(){
             naver.maps.Event.addListener(markerList[i], 'click', getClickHandler(i)); // 클릭한 마커 핸들러
             
 
-            let placeBoxBody = placeBox.querySelector('.card-body')
+            let placeBoxBody = placeBox.querySelector('.card-title')
 
             let placeId = data[i]['pk']
             printPlaceLikeBtn(placeId, placeBoxBody)
         }
 
-        const placeNames = document.querySelectorAll('.placeName');
+        const placeNames = document.querySelectorAll('.place_name');
         console.log('placeName 클래스 찾은 것: ', placeNames);
         placeNames.forEach(placeName => {
             placeName.addEventListener('click', function(){
@@ -224,14 +243,12 @@ function getFilteredPlace(){
                 placeNames.forEach(place => {
                     var placeId = place.id
                     document.getElementById('detail_' + placeId).style.display='none';
-                    console.log(place, '닫기');
                 });
                 //! 클릭한 것만 보이게 하기
                 var place_id = placeName.id
                 document.getElementById('div3').style.display='none';
                 document.getElementById('div4').style.display='block';
                 document.getElementById('detail_' + place_id).style.display='block';
-                console.log(place_id, '열기')
         
             });
         });
@@ -245,7 +262,7 @@ function getFilteredPlace(){
         });
     })
 }
-function showPlace(place){ //! 이름 변경
+function printPlace(place){
     const placeInfo     = place['fields'];
     const placeId       = place['pk'];
     const typeCode      = placeInfo['type_code'];
@@ -258,104 +275,65 @@ function showPlace(place){ //! 이름 변경
     const placeUrl      = placeInfo['url'];
     const naverPlaceId  = placeInfo['naver_place_id'];
     
-    const div = document.createElement('div');
-    div.setAttribute('class', 'card');
+    const cardBox = document.createElement('div');
+    cardBox.setAttribute('class', 'card p-3 mb-2');
+    cardBox.setAttribute('id', `place_${placeId}`)
     if (typeCode === 21) {
         if (name.includes("]")) {
             const nameSplit = name.split("]")
             const nameFirst = nameSplit[0] + "]"
             const nameRest = nameSplit.slice(1).join(" ")
-            div.innerHTML = 
+            cardBox.innerHTML = 
             `
-            <div id="place_${placeId}" class="card">
-                <div class="card-body">
-                    <h6 class="card-title">
-                        <span class="placeName" id="${placeId}">
-                            <font size=2>${nameFirst}</font></br>
-                            <font size=2>${nameRest}</font>
-                        </span>
-                        &nbsp;
-                        <a href="${placeUrl}" target="_blank">
-                            <font size=1>예매하기</font>
-                        </a>
-                        &nbsp;
-                        
-                        <a href="https://map.naver.com/p/directions/-/,,,${naverPlaceId},PLACE_POI/-/walk?c=13.00,0,0,0,dh" target="_blank">
-                            <font size=1>길찾기</font>
-                        </a>
-                    </h6>   
-                    <font size=1>
-                    <font size=1>
-                        <p class="card-text">
-                            ${addressGu} ${addressLo} ${addressDetail}
-                        </p>
-                    </font>
-                    <button data-place="${placeId}">플랜에 추가</button>
+            <div class="card-title">
+                <a class="place_name fs-5 fw-bold" id="${placeId}" data-placename="${placeId}">${nameFirst}</br>${nameRest}</a>
+            </div>
+            <div class="card-body p-0">
+                <div class="place__links py-2">
+                    <a href="${placeUrl}" target="_blank">예매하기</a>
+                    <a href="https://map.naver.com/p/directions/-/,,,${naverPlaceId},PLACE_POI/-/walk?c=13.00,0,0,0,dh" target="_blank">길찾기</a>   
+                </div>
+                <p class="card-text">${addressGu} ${addressLo} ${addressDetail}</p>
+                <div class="mt-2 text-center">
+                    <button class="add-plan__btn btn btn-primary btn-sm fw-bold" data-place="${placeId}">플랜에 추가하기</button>
                 </div>
             </div>
         `;
         } else {
-        div.innerHTML = 
+            cardBox.innerHTML = 
         `
-        <div id="place_${placeId}" class="card">
-            <div class="card-body">
-                <h6 class="card-title">
-                    <span class="placeName" id="${placeId}">
-                        <font size=2>${name}</font>
-                    </span>
-                    &nbsp;
-                    <a href="${placeUrl}" target="_blank">
-                        <font size=1>예매하기</font>
-                    </a>
-                    &nbsp;
-                    
-                    <a href="https://map.naver.com/p/directions/-/,,,${naverPlaceId},PLACE_POI/-/walk?c=13.00,0,0,0,dh" target="_blank">
-                        <font size=1>길찾기</font>
-                    </a>
-                </h6>   
-                <font size=1>
-                <font size=1>
-                    <p class="card-text">
-                        ${addressGu} ${addressLo} ${addressDetail}
-                    </p>
-                </font>
-                <button data-place="${placeId}">플랜에 추가</button>
+        <div class="card-title">
+            <a class="place_name fs-5 fw-bold" id="${placeId}" data-placename="${placeId}">${name}</a>
+        </div>
+        <div class="card-body p-0">
+            <div class="place__links py-2">
+                <a href="${placeUrl}" target="_blank">예매하기</a>
+                <a href="https://map.naver.com/p/directions/-/,,,${naverPlaceId},PLACE_POI/-/walk?c=13.00,0,0,0,dh" target="_blank">길찾기</a>
+            </div>
+            <p class="card-text">${addressGu} ${addressLo} ${addressDetail}</p>
+            <div class="mt-2 text-center">
+                <button class="add-plan__btn btn btn-primary btn-sm fw-bold" data-place="${placeId}">플랜에 추가하기</button>
             </div>
         </div>
     `;}
     } else {
-        div.innerHTML = 
+        cardBox.innerHTML = 
     `
-        <div id="place_${placeId}" class="card">
-            <div class="card-body">
-                <h6 class="card-title">
-                    <span class="placeName" id="${placeId}">
-                        <font size=2>${name}</font>
-                    </span>
-                    &nbsp;
-                    <a href="${placeUrl}" target="_blank">
-                        <font size=1>네이버플레이스</font>
-                    </a>
-                    &nbsp;
-                    
-                    <a href="https://map.naver.com/p/directions/-/,,,${naverPlaceId},PLACE_POI/-/walk?c=13.00,0,0,0,dh" target="_blank">
-                        <font size=1>길찾기</font>
-                    </a>
-                </h6>   
-                <font size=1>
-                    <p class="card-text">
-                        별점: ${rating}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;리뷰수: ${ reviewTotal }
-                    </p>
-                </font>
-                <font size=1>
-                    <p class="card-text">
-                        ${addressGu} ${addressLo} ${addressDetail}
-                    </p>
-                </font>
-                <button data-place="${placeId}">플랜에 추가</button>
+        <div class="card-title">
+            <a class="place_name fs-5 fw-bold" id="${placeId}" data-placename="${placeId}">${name}</a>
+        </div>
+        <div class="card-body p-0">
+            <div class="place__links py-2">
+                <a class="me-1 fs-6 fw-semibold" href="${placeUrl}" target="_blank">네이버플레이스</a>
+                <a class="fs-6 fw-semibold" href="https://map.naver.com/p/directions/-/,,,${naverPlaceId},PLACE_POI/-/walk?c=13.00,0,0,0,dh" target="_blank">길찾기</a>
+            </div>
+            <p class="card-text">별점: ${rating}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;리뷰수: ${ reviewTotal }</p>
+            <p class="card-text">${addressGu} ${addressLo} ${addressDetail}</p>
+            <div class="mt-2 text-center">
+                <button class="add-plan__btn btn btn-primary btn-sm fw-bold" data-place="${placeId}">플랜에 추가하기</button>
             </div>
         </div>
     `;
     }
-    return div;
+    return cardBox;
 }

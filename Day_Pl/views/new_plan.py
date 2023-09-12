@@ -1,22 +1,25 @@
 import json
 from django.http import JsonResponse
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
-from Day_Pl.models import Place, PlaceType, Plan, PlanPlace
+from django.urls import reverse
+from django.shortcuts import render, redirect
+from Day_Pl.models import Place, Plan, PlanPlace, PlaceTypeCategory, PlaceComment
 from django.http import HttpResponse
 from django.core import serializers
+from django.db.models import Q, F, BooleanField, ExpressionWrapper, Case, When
 from django.db import transaction
 from datetime import datetime, date
 
-@login_required
 def index(request):
-    places = Place.objects.all()[1:]
-    placetypes = PlaceType.objects.all()
+    if not request.user.is_authenticated:
+        return redirect(reverse('common:login'))
+
+    places = Place.objects.exclude(id=0)
+    placetype_categories = PlaceTypeCategory.objects.all()
     current_date = date.today()
 
     context = {
         'places' : places,
-        'placetypes' : placetypes,
+        'placetype_categories' : placetype_categories,
         'current_date' : current_date,
     }
 
@@ -78,22 +81,32 @@ def index(request):
                             place = place_obj,
                             order = idx,
                         )
+                plan_places = PlanPlace.objects.filter(plan = new_plan).order_by('order')
+                for i in range(len(plan_places)-1):
+                    road_url = f"https://map.naver.com/p/directions/,,,{ plan_places[i].place.naver_place_id },PLACE_POI/,,,{ plan_places[i+1].place.naver_place_id },PLACE_POI/-/walk?c=13.00,0,0,0,dh"
+                    print(road_url)
+                    PlanPlace.objects.filter(id = plan_places[i].id).update(road_url=road_url)
                 response = {
                     'status': 'success',
                 }
             except Exception:
+                # 로그
                 transaction.set_rollback(True)
                 response = {
                     'status': 'fail',
                 }
+            # !
+
         return JsonResponse(response)
     return render(request, 'new_plan.html', context=context)
 
-def get_filter(request, placetype_id):
+def get_filter(request, placetype_id, search_keyword):
+    places = Place.objects.exclude(id=0)
     if placetype_id:
-        places = Place.objects.filter(type_code_id = placetype_id) #! type_code 컬럼(object) : id
-    else:
-        places = Place.objects.all()[1:]
+        places = places.filter(type_code__category_id = placetype_id)
+    if search_keyword != 'none':
+        places = places.filter(Q(name__icontains=search_keyword)|
+                                Q(type_code__name__icontains=search_keyword))
 
     places_json = serializers.serialize('json', places)
 
@@ -101,3 +114,72 @@ def get_filter(request, placetype_id):
 
 def get_naver_map(request):
     return render(request, 'components/naver_map_container.html')
+
+def place_comment(request, place_id):
+    current_user = request.user.id
+    comments = PlaceComment.objects.filter(place_id = place_id)\
+                                    .annotate(comment_author = F('user__profile__nickname'),
+                                            is_current_user_author=ExpressionWrapper(
+                                                Case(
+                                                    When(user_id=current_user, then=True),
+                                                    default=False,
+                                                    output_field=BooleanField(),
+                                                ),
+                                                output_field=BooleanField(),),)\
+                                    .order_by('-created_at')\
+                                    .values('id', 'comment_author', 'place_id', 'comment', 'created_at', 'is_current_user_author')
+    for comment in comments:
+        comment['created_at'] = comment['created_at'].strftime('%Y-%m-%d')
+
+    comments_list = list(comments)
+
+    return JsonResponse(comments_list, safe=False)
+
+def control_comment(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        place_id = data.get('place_id')
+        comment = data.get('comment')
+
+        place_obj = Place.objects.get(id = place_id)
+        PlaceComment.objects.create(
+            place = place_obj,
+            user = request.user,
+            comment = comment,
+        )
+
+        response = {
+            'status' : 'success',
+        }
+        return JsonResponse(response)
+    
+    if request.method == 'PUT':
+        data = json.loads(request.body)
+        comment_id = data.get('comment_id')
+        comment = data.get('comment')
+        created_at = datetime.now()
+
+        place_comment = PlaceComment.objects.get(id = comment_id)
+
+        place_comment.comment = comment
+        place_comment.created_at = created_at
+        place_comment.save()
+
+        response = {
+            'status' : 'success',
+        }
+
+        return JsonResponse(response)
+    
+    if request.method == 'DELETE':
+        data = json.loads(request.body)
+        comment_id = data.get('comment_id')
+
+        comment_to_delete = PlaceComment.objects.get(id=comment_id)
+        comment_to_delete.delete()
+
+        response = {
+            'status' : 'success',
+        }
+
+        return JsonResponse(response)

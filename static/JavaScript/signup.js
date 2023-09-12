@@ -162,6 +162,3 @@ function checkPhoneValidate() {
 }
 
 phoneInput.addEventListener('blur', checkPhoneValidate);
-
-// TODO: 닉네임 중복 확인
-// TODO: 아이디와 이메일 주소가 readonly일 때만 회원가입 버튼 활성화

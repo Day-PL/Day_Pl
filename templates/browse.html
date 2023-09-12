@@ -1,7 +1,20 @@
 {% extends 'layout.html' %}
-
-{% block title %}홈{% endblock %}
+{% block title %}Day'Pl - Make Your Perfect Plan{% endblock %}
 
 {% block contents %}
-    
+<main class="browse__main">
+  <section class="mx-auto p-5">
+    <div>
+      <h1 class="browse__title fw-bold">Make Your Perfect Plan</h1>
+      <h2 class="fst-italic fs-5 mb-5">완벽한 플랜을 Day'Pl에서 만들어 보세요</h2>
+    </div>
+    {% if user.is_authenticated %}
+    <div>
+      <a class="browse-make-plan__btn btn btn-primary btn-lg" href="{% url 'Day_Pl:new_plan' %}">플랜 만들러 가기</a>
+      {% else %}
+      <a class="browse-make-plan__btn btn btn-primary btn-lg" href="{% url 'common:login' %}">플랜 만들러 가기</a>
+      {% endif %}
+    </div>
+  </section>
+</main>
 {% endblock %}

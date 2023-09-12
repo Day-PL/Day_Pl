@@ -11,9 +11,12 @@ class MyModelAdmin(admin.ModelAdmin):
 
     actions = [delete_selected]
 
+admin.site.register(PlaceTypeCategory)
 admin.site.register(PlaceType)
 admin.site.register(Place, MyModelAdmin)
 admin.site.register(Plan)
 admin.site.register(UserPlanView)
 admin.site.register(Preference)
 admin.site.register(PlanPlace)
+admin.site.register(PlaceComment)
+admin.site.register(PlanComment)

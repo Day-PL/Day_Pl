@@ -1,11 +1,13 @@
 import re
 import json
 from django.http import JsonResponse
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import authenticate, login
+from django.shortcuts import render, redirect
+from django.urls import reverse, reverse_lazy
+from django.contrib.auth import views as auth_views
 from django.contrib.auth.models import User
-from common.forms import UserForm, ProfileForm
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
+from common.forms import UserForm, ProfileForm, PasswordResetForm
 from datetime import datetime
 from .models import Profile
 
@@ -17,16 +19,11 @@ def signup(request):
 
         if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save()
-            print('user 저장됨')
             profile = profile_form.save(commit=False)
             profile.user = user
             profile.save()
-            print('profile 저장됨')
+            return redirect(reverse('common:login'))
 
-            return redirect('Day_Pl:browse')
-        else:
-            print(user_form.errors)
-            print(profile_form.errors)
     else:
         user_form = UserForm()
         profile_form = ProfileForm()
@@ -96,3 +93,50 @@ def check_nickname(request):
             'message': '사용 가능한 닉네임입니다.'
         }
     return JsonResponse(response)
+
+def find_id(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        email = data.get('email')
+
+        if Profile.objects.filter(mail=email).exists():
+            user = User.objects.get(profile__mail=email)
+            profile = Profile.objects.get(mail=email)
+            nickname = profile.nickname
+            username = user.username
+            send_email(nickname, username, email)
+            response = {
+                'status': 'success',
+            }
+        else:
+            response = {
+                'status': 'error',
+                'message': '존재하지 않는 사용자입니다.'
+            }
+        print(response)
+        return JsonResponse(response)
+    return render(request, 'auth/find_id.html')
+
+def send_email(nickname, username, mail):
+    subject = f"[Day'Pl] {nickname}님의 아이디를 보내드립니다."
+    message = render_to_string('find_id_mail.html', {
+    'name': nickname,
+    'username': username,
+	})
+    to_email = mail
+    send_email = EmailMessage(subject, message, to=[to_email])
+    send_email.content_subtype = "html"
+    send_email.send()
+
+class PasswordResetView(auth_views.PasswordResetView):
+    template_name = 'auth/password_reset.html'
+    success_url = reverse_lazy('common:password_reset_done')
+    form_class = PasswordResetForm
+    email_template_name = 'auth/password_reset_email.html'
+
+class PasswordResetDoneView(auth_views.PasswordResetDoneView):
+    template_name = 'auth/password_reset_done.html'
+
+class PasswordResetConfirmView(auth_views.PasswordResetConfirmView):
+    template_name = 'auth/password_reset_confirm.html'
+    success_url = reverse_lazy('common:login')

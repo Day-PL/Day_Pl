@@ -4,17 +4,19 @@
 {% block title %}나의 기록{% endblock %}
 
 {% block contents %}
-    <div class="d-flex">
-        <div style="width: 20rem;">
-            {% include 'components/save_plan_container.html' %}
+    <main>
+        <div class="d-flex justify-content-between" style="height:40rem;">
+            <div style="width: 30rem;">
+                {% include 'components/save_plan_container.html' %}
+            </div>
+            <div style="width: 30rem;">
+                {% include 'components/save_plan_place_container.html' %}
+            </div>
+            <div style="width: 30rem;"> 
+                {% include 'components/naver_map_container.html' %}
+            </div>
         </div>
-        <div class="p-2 flex-fill" style="width: 20rem;">
-            {% include 'components/save_plan_place_container.html' %}
-        </div>
-        <div class="p-2 flex-fill" style="margin-top: 2rem;"> 
-            {% include 'components/naver_map_container.html' %}
-        </div>
-    </div>
+    </main>
 {% endblock %}
 
 {% block scripts %}

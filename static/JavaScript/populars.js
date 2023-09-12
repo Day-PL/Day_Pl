@@ -174,7 +174,7 @@ function printPopularPlanList(plan) {
                       <span class="popular-plan__like-count">${count}</span>
                     </span>
                     <span class="popular-plan__nickname">${nickname}</span>
-                    <span class="popular-plan__hash area">${hashtagType}</span>
+                    <span class="popular-plan__hash area">${hashtagArea}</span>
                     <span class="popular-plan__hash type">${hashtagType}</span>
                     <span class="popular-plan__hash pick">${hashtagPick}</span>
                   </div>

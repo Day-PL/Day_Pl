@@ -5,17 +5,17 @@
 
 {% block contents %}
 {% csrf_token %}
-	<main class="new-plan__main d-flex">
-		<div id="div1"  class="new-plan-plan__container p-2 flex-fill">
+	<main class="new-plan__main d-flex justify-content-between">
+		<div id="div1"  class="new-plan-plan__container">
 			{% include 'components/plan_container.html' %}
 		</div>
-		<div id="div2"  class="new-plan-places__container p-2 flex-fill">
+		<div id="div2"  class="new-plan-places__container">
 			{% include 'components/search_place_container.html' %}
 		</div>
-		<div id="div3"  class="p-2 flex-fill">
+		<div id="div3">
 			{% include 'components/naver_map_container.html' %}
 		</div>
-		<div id="div4" style="display: none;" class="p-2 flex-fill">
+		<div id="div4" style="display: none;">
 			{% include 'components/search_place_click_info_container.html' %}
 		</div>
 	</main>
@@ -29,4 +29,5 @@
 <script src="{% static '/javascript/like_button.js' %}" ></script>
 <script src="{% static '/javascript/get_filtered_places.js' %}"></script>
 <script src="{% static '/javascript/plan_container.js' %}"></script>
+<script src="{% static '/javascript/comments.js' %}"></script>
 {% endblock %}

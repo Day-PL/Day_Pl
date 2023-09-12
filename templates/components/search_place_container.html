@@ -1,9 +1,16 @@
-<div class="search_place__section">
-	<select name="search_place_filter" id="search_place_filter" class="search_place_filter">
+<section class="search_place__section">
+	<select name="search_place_filter" id="search_place_filter" class="search_place_filter form-select mb-1">
 		<option value="0" selected>전체</option>
-		{% for placetype in placetypes %}
-			<option value="{{ placetype.id }}">{{ placetype.name }}</option>
+		{% for placetype_category in placetype_categories %}
+			<option value="{{ placetype_category.id }}">{{ placetype_category.name }}</option>
 		{% endfor %}
 	</select>
+	<div class="new-plan-place-serch__box">
+		<input type="text" class="new-plan-place-search__input">
+		<i class="fa-solid fa-magnifying-glass search__icon"></i>
+		<button class="search-clear__btn">
+			<i class="fa-solid fa-xmark search-clear__icon"></i>
+		</button>
+	</div>
 	<div class="place_container"></div>
-</div>
+</section>
