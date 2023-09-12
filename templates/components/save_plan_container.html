@@ -12,87 +12,84 @@
     </ul>
     
     <div class="tab-content" id="myTabContent" style="width: 20rem; overflow:scroll; height:30rem;">
-        <div class="tab-pane fade show active" id="like-tab2" role="tabpanel" aria-labelledby="like-tab1" tabindex="0">
+        <div class="tab-pane fade show active list-group popular-plans__list" id="like-tab2" role="tabpanel" aria-labelledby="like-tab1" tabindex="0">
             {% for plan in like_plans_processed %}
                 {% if plan.public %}
-                    <div class="card" style="width: 20rem;">
-                        <div class="card-body">
-                            <h6 class="card-title">
-                                <i class="fa-solid fa-heart" data-planType="like"></i>
-                                <span class="planName" id="{{ plan.id }}">
-                                    <font size=2>{{ plan.title }}</font>
+                    <a class='popular-plan__box list-group-item list-group-item-action' id="{{ plan.id }}" data-id="{{ plan.uuid }}" name="{{ plan.title }}">
+                        <div class="popular-plan__detail">
+                            <div class="popular-plan__title" id="{{ plan.id }}"><i class="heart fa-solid fa-heart" data-planType="like" data-planId="{{ plan.id }}"></i> {{ plan.title }}</div>
+                            <div class="popular-plan__more">
+                                <span class="popular-plan__like">
+                                    <i class="fa-solid fa-heart"></i>
+                                    <span class="popular-plan__like-count">{{ plan.like_count }}</span>
                                 </span>
-                                &nbsp;
-                            </h6>
-                            <p class="card-text">
-                                <font size=1>
-                                    좋아요 수 : {{ plan.like_count }}
-                                </font>
-                            </p>
+                                <span class="popular-plan__nickname">{{ plan.create_user.profile.nickname }}</span>
+                                <span class="popular-plan__hash area">{{ plan.hashtag_area }}</span>
+                                <span class="popular-plan__hash type">{{ plan.hashtag_type }}</span>
+                                <span class="popular-plan__hash pick">{{ plan.hashtag_pick }}</span>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 {% endif %}
             {% endfor %}
         </div>
 
-        <div class="tab-pane fade" id="view-tab2" role="tabpanel" aria-labelledby="view-tab1" tabindex="0">
+        <div class="tab-pane fade list-group popular-plans__list" id="view-tab2" role="tabpanel" aria-labelledby="view-tab1" tabindex="0">
             {% for plan in view_plans_processed %}
                 {% if plan.public %}
-                    <div class="card" style="width: 20rem;">
-                        <div class="card-body">
-                            <h6 class="card-title">
-                                {% if plan.islike %}
-                                    <i class="fa-solid fa-heart" data-planType="view"></i>
-                                {% else %}
-                                    <i class="fa-regular fa-heart" data-planType="view"></i>
-                                {% endif %}
-                                <span class="planName" id="{{ plan.id }}">
-                                    <font size=2>{{ plan.title }}</font>
+                    <a class='popular-plan__box list-group-item list-group-item-action' id="{{ plan.id }}" data-id="{{ plan.uuid }}" name="{{ plan.title }}">
+                        <div class="popular-plan__detail">
+                            <div class="popular-plan__title"  id="{{ plan.id }}"><i class="heart fa-solid fa-heart" data-planType="view" data-planId="{{ plan.id }}"></i> {{ plan.title }}</div>
+                            <div class="popular-plan__more">
+                                <span class="popular-plan__like">
+                                    <i class="fa-solid fa-heart"></i>
+                                    <span class="popular-plan__like-count">{{ plan.like_count }}</span>
                                 </span>
-                                &nbsp;
-                            </h6>
-                            <p class="card-text">
-                                <font size=1>
-                                    좋아요 수 : {{ plan.like_count }}
-                                </font>
-                            </p>
+                                <span class="popular-plan__nickname">{{ plan.create_user.profile.nickname }}</span>
+                                <span class="popular-plan__hash area">{{ plan.hashtag_area }}</span>
+                                <span class="popular-plan__hash type">{{ plan.hashtag_type }}</span>
+                                <span class="popular-plan__hash pick">{{ plan.hashtag_pick }}</span>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 {% endif %}
             {% endfor %}
         </div>
 
-        <div class="tab-pane fade" id="my-tab2" role="tabpanel" aria-labelledby="my-tab1" tabindex="0">
+        <div class="tab-pane fade list-group popular-plans__list" id="my-tab2" role="tabpanel" aria-labelledby="my-tab1" tabindex="0">
             {% for plan in my_plans_processed %}
-                <div class="card" style="width: 20rem;">
-                    <div class="card-body">
-                        <h6 class="card-title">
-                            {% if plan.islike %}
-                                <i class="fa-solid fa-heart" data-planType="my"></i>
-                            {% else %}
-                                <i class="fa-regular fa-heart" data-planType="my"></i>
-                            {% endif %}
-                            <span class="planName" id="{{ plan.id }}" data-planTitle="{{ plan.title }}">
-                                <font size=2>{{ plan.title }}</font>
-                            </span>
-
-                            <font size=2 style="float: right;">
+                <a class='popular-plan__box list-group-item list-group-item-action' id="{{ plan.id }}" data-id="{{ plan.uuid }}" name="{{ plan.title }}">
+                    <div class="popular-plan__detail">
+                        <div class="popular-plan__title"  id="{{ plan.id }}">
+                            <i class="heart fa-solid fa-heart" data-planType="my" data-planId="{{ plan.id }}" data-planTitle="{{ plan.title }}"></i> {{ plan.title }}
+                            <font size=2>
                                 {% if plan.public %}
-                                    <span style="color: blueviolet;">공개</span>
+                                    <span style="color: blueviolet;">(공개)</span>
                                 {% else %}
-                                    <span style="color: rgb(42, 15, 56);">비공개</span>
+                                    <span style="color: rgb(178, 29, 111);">(비공개)</span>
                                 {% endif %}
                             </font>
-                        </h6>   
-                        <p class="card-text">
-                            <font size=1>좋아요 수 : {{ plan.like_count }}</font>
-                            <font size=1 style="float: right;">
+                            <font size=1 style="float: right; margin-top:2px">
                                 <button id="modifyPlan">수정</button>
                                 <button id="removePlan">Delete</button>
                             </font>
-                        </p>
+                        </div>
+                        <div class="popular-plan__more">
+                            <span class="popular-plan__like">
+                                {% if plan.islike %}
+                                    <i class="fa-solid fa-heart" data-planType="my"></i>
+                                {% else %}
+                                    <i class="fa-regular fa-heart" data-planType="my"></i>
+                                {% endif %}
+                                <span class="popular-plan__like-count">{{ plan.like_count }}</span>
+                            </span>
+                            <span class="popular-plan__nickname">{{ plan.create_user.profile.nickname }}</span>
+                            <span class="popular-plan__hash area">{{ plan.hashtag_area }}</span>
+                            <span class="popular-plan__hash type">{{ plan.hashtag_type }}</span>
+                            <span class="popular-plan__hash pick">{{ plan.hashtag_pick }}</span>
+                        </div>
                     </div>
-                </div>
+                </a>
             {% endfor %}
         </div>
     </div>
