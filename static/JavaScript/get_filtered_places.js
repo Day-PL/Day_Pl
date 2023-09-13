@@ -1,5 +1,6 @@
 const newPlanPlaceContainer = document.querySelector('.place_container');
 const placeSearchInput = document.querySelector('.new-plan-place-search__input')
+const searchClearBtn = document.querySelector('.search-clear__btn');
 
 getUserAddress()
 
@@ -15,6 +16,12 @@ let userAddress = '';
 
 placeSearchInput.addEventListener('keyup', () => {
     getFilteredPlace(placeSearchInput.value)
+})
+
+searchClearBtn.addEventListener('click', () => {
+    placeSearchInput.value = '';
+    placeSearchInput.focus();
+    getFilteredPlace('');
 })
 
 //! 사용자 위치 권한 사용가능한지 브라우저에게 물어보기 (가장 먼저 실행, 가장 마지막에 끝)
@@ -161,10 +168,12 @@ function getFilteredPlace(placeSearchKeyword){
     .then((data) => {
         console.log('data 길이: ', data.length)
         if (!data.length) {
+            newPlanPlaceContainer.innerHTML = '';
             const div = document.createElement('div');
             div.innerText = '해당하는 정보가 없습니다'
             newPlanPlaceContainer.appendChild(div)
         }
+        newPlanPlaceContainer.innerHTML = '';
         //! 네이버 지도에 마커 찍기
         var map = new naver.maps.Map(document.getElementById('map'), {
             zoom: 16,
