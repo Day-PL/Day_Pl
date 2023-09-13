@@ -26,7 +26,7 @@ def modify_profile(request):
         )
         return redirect('Day_Pl:modify_profile')
 
-    user = {
+    user_info = {
         'is_authenticated' : request.user.is_authenticated,
         'fullname'         : request.user.profile.fullname,
         'birthdate'        : str(request.user.profile.birthdate).replace('년','-').replace('월','-').replace('일',''),
@@ -34,6 +34,6 @@ def modify_profile(request):
         'mail'             : request.user.profile.mail,
         'nickname'         : request.user.profile.nickname,
         }
-    print(user)
-    context = {'user' : user}
+    context = {'user_info' : user_info,
+                'user' : request.user,}
     return render(request, 'modify_profile.html', context=context)
