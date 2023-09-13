@@ -8,6 +8,11 @@
       <div class="modal-body">
         <div>
           <input name="hashtags" placeholder="해시태그는 최대 3가지만 입력 가능합니다.">
+          <div class="mb-2">
+            {% if plan.hashtags %}
+              이전 해시태그 : {{ plan.hashtags }} 
+            {% endif %}
+          </div>
         </div>
         <div class="form-check form-switch">
           <input class="new-plan__public form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>

@@ -131,6 +131,7 @@ def remove_plan(request, plan_id):
     plan.delete()
     return HttpResponseRedirect(reverse('Day_Pl:saves'))
 
+
 def modify_plan(request, plan_id):
     login_user = request.user
     plan_before = get_object_or_404(Plan, id = plan_id)
@@ -157,7 +158,8 @@ def modify_plan(request, plan_id):
                                     })
             plan = {
                 'title' : plan_before.title,
-                'isuserlike_plan': plan_before.like_users.filter(id=request.user.id).exists()
+                'isuserlike_plan': plan_before.like_users.filter(id=request.user.id).exists(),
+                'hashtags' : f'{plan_before.hashtag_area}, {plan_before.hashtag_pick}, {plan_before.hashtag_type}'
             }
 
     elif request.method == "POST":
