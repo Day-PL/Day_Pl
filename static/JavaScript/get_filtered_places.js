@@ -184,14 +184,16 @@ function getFilteredPlace(placeSearchKeyword){
                 position: naver.maps.Position.TOP_RIGHT
             }
         });
+
+        
         var markerList = new Array();
         var infoWindows = new Array();
         
         function getClickHandler(seq) {
             return function(e) {  // 마커를 클릭하는 부분
                 var marker = markerList[seq], // 클릭한 마커의 시퀀스로 찾는다.
-                    infoWindow = infoWindows[seq]; // 클릭한 마커의 시퀀스로 찾는다
-
+                infoWindow = infoWindows[seq]; // 클릭한 마커의 시퀀스로 찾는다
+                
                 if (infoWindow.getMap()) {
                     infoWindow.close();
                 } else {
@@ -222,11 +224,16 @@ function getFilteredPlace(placeSearchKeyword){
 
             let infoWindow = new naver.maps.InfoWindow({
                 content: 
-                `<div style="text-align:center;padding:10px;"><b><font size=2>
-                    <a href="${url}" target="_blank">
-                        ${name}
-                    </a>
-                </font></b></div>`
+                `
+                <div style="text-align:center;padding:10px;">
+                    <b>
+                        <font size=2>
+                            <a href="${url}" target="_blank">
+                                ${name}
+                            </a>
+                        </font>
+                    </b>
+                </div>`
             }); //! 클릭했을 때 띄워줄 정보 입력
             marker.set('seq', i);
 

@@ -1,0 +1,35 @@
+<section class="plan-container__section">
+  <div class="plan-submit__box">
+    {% csrf_token %}
+    <button class="heart__btn">
+      {% if plan.isuserlike_plan %}
+        <i class="fa-solid fa-heart"></i>
+      {% else %}
+        <i class="fa-regular fa-heart"></i>
+      {% endif %}
+    </button>
+    <input class="plan-title" type="text" name="plan_title" value="{{ plan.title }}">
+    <button type="button" class="plan-submit__btn btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      저장
+    </button>
+  </div>
+  <ul class="selected-place__container">
+
+    {% for plan_place in plan_places %}
+      <li class="place__box" draggable="true" data-id="{{ plan_place.place.uuid }}" data-blank="{{ plan_place.place.uuid }}" data-place="{{ plan_place.place.id }}">
+        <div class="place__item">
+            <button class="place-like__btn" data-placelike="{{ plan_place.place.id }}">
+              {% if plan_place.isuserlike_place %}
+                <i class="fa-solid fa-star" data-placelike="{{ plan_place.place.id }}"></i>
+              {% else %}
+                <i class="fa-regular fa-star" data-placelike="{{ plan_place.place.id }}"></i>
+              {% endif %}
+            </button>
+            <span class="place__name">{{ plan_place.place.name }}</span>
+            <button class="plan-blank__btn" data-blank="{{ plan_place.place.uuid }}" data-state="filled">비워두기</button>
+        </div>
+      </li>
+    {% endfor %}
+
+  </ul>
+</section>

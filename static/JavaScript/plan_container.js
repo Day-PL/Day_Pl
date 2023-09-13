@@ -1,19 +1,23 @@
-const planSubmitBtn = document.querySelector('.plan-submit__btn')
-const modalSubmitBtn = document.querySelector('.plan-modal-submit__btn')
-const selectedPlaceContainer = document.querySelector('.selected-place__container')
-const placeContainer = document.querySelector('.place_container')
-const heartBtn = document.querySelector('.heart__btn')
+const planSubmitBtn = document.querySelector('.plan-submit__btn');
+const modalSubmitBtn = document.querySelector('.plan-modal-submit__btn');
+const placeContainer = document.querySelector('.place_container');
+const heartBtn = document.querySelector('.heart__btn');
+const selectedPlaceContainer = document.querySelector('.selected-place__container');
 
-// uuid 기반으로 비워두기 실행하기 때문에 아무 정보도 없어도 비워두기 가능하도록 uuid 넣어줌
+
+// uuid 기반으로 비워두기 실행하기 때문에 아무 정보도 없어도 비워두기 가능하도록 uuid 넣어줌 
+//! url에 따라 처리
 window.addEventListener('DOMContentLoaded', () => {
   const planBoxes = selectedPlaceContainer.querySelectorAll('.place__box')
   planBoxes.forEach(box => {
-    const uuid = self.crypto.randomUUID();
-    const blankBtn = box.querySelector('.plan-blank__btn')
-    box.setAttribute('data-id', uuid)
-    box.setAttribute('data-blank', uuid)
-    box.setAttribute('data-place', '')
-    blankBtn.setAttribute('data-blank', uuid)
+    if (! box.dataset.place){
+      const uuid = self.crypto.randomUUID();
+      const blankBtn = box.querySelector('.plan-blank__btn');
+      box.setAttribute('data-id', uuid);
+      box.setAttribute('data-blank', uuid);
+      box.setAttribute('data-place', '');
+      blankBtn.setAttribute('data-blank', uuid);
+    }
   })
 })
 
@@ -67,7 +71,7 @@ selectedPlaceContainer.addEventListener('click', event => {
     place_current--;
     return;
   }
-
+  
   if (likePlaceId) {
     updatePlaceLike(likePlaceId);
     return;
@@ -115,18 +119,18 @@ function printSelectedPlace(placeName, placeId) {
 
     if (blankStatus.dataset.state === 'filled' && !dataPlace && !foundEmptySlot) {
       foundEmptySlot = true;
-      const placeItem = list.querySelector('.place__item')
-      printPlaceLikeBtn(placeId, placeItem)
-      list.dataset.place = placeId
-      const newPlaceName = list.querySelector('.place__name')
-      newPlaceName.innerText = placeName
+      const placeItem = list.querySelector('.place__item');
+      printPlaceLikeBtn(placeId, placeItem);
+      list.dataset.place = placeId;
+      const newPlaceName = list.querySelector('.place__name');
+      newPlaceName.innerText = placeName;
       return;
     }
   })
 
   if (!foundEmptySlot) {
     placeBox = addPlaceItem(placeName, placeId)
-    selectedPlaceContainer.appendChild(placeBox)
+    selectedPlaceContainer.appendChild(placeBox);
     place_current++;
   }
 }
@@ -176,6 +180,7 @@ if (modalSubmitBtn) {
     const planTitle = getPlanTitle()
     const placeBoxItems = selectedPlaceContainer.querySelectorAll('.place__box');
     const placeIds = Array.from(placeBoxItems).map(item => item.dataset.place);
+    console.log(placeIds);
     const hashtags = getHashtags()
     // 이 중 undefined 일 때도 처리해야 함
     const hashtagArea = hashtags[0]
