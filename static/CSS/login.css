@@ -8,6 +8,7 @@
 }
 
 .login__form {
+  margin-top: 8rem;
   width: 40%;
 }
 
@@ -54,4 +55,11 @@
 .social_login_btns {
   width: 40%;
   align-items: center;
+}
+
+.find-info__links {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
 }
