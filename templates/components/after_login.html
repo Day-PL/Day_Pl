@@ -11,7 +11,7 @@
 							{{ user.profile.nickname }}
 						</a>
 						<ul class="dropdown-menu">
-							<li><a class="dropdown-item" href="#">계정 관리</a></li>
+							<li><a class="dropdown-item" href="{% url 'Day_Pl:modify_profile' %}">계정 관리</a></li>
 							<li><a class="dropdown-item" href="{% url 'Day_Pl:preferences' %}">선호도 관리</a></li>
 							<li><hr class="dropdown-divider"></li>
 							<li><a class="dropdown-item" href="{% url 'common:logout' %}">로그아웃하기</a></li>

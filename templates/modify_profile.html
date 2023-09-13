@@ -1,0 +1,48 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %}
+    Day'Pl 회원 정보 수정
+{% endblock %}
+
+{% block contents %}
+    <main class="signup__main">
+        <h1 class="signup__title">
+            <span class="signup__title__name">Day'Pl</span>
+            <br><br>
+            회원정보 수정
+        </h1>
+        <form action="{% url 'Day_Pl:modify_profile' %}" method="POST" enctype="multipart/form-data" class="signup__form d-flex flex-column">
+            {% csrf_token %}
+            <div class="form-floating mb-3">
+                <input type="text" name="fullname" class="form-control" placeholder="이름" value="{{ user.fullname|default_if_none:'' }}" required />
+                <label for="floatingInput">이름</label>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input type="text" name="nickname" id="nickname" class="form-control" placeholder="닉네임" value="{{ user.nickname|default_if_none:'' }}" required />
+                <label for="floatingInput">닉네임</label>
+            </div>
+            
+            <div class="form-floating mb-3">
+                <input type="tel" name="phone" id="phone" class="form-control" placeholder="휴대전화번호" maxlength="13" value="{{ user.phone|default_if_none:'' }}" required />
+                <label for="floatingInput">휴대전화번호</label>
+                <p class="phone-result"></p>
+            </div>
+            
+            <div class="form-floating mb-3">
+                <input type="email" name="mail" class="form-control mail" placeholder="이메일" maxlength="100" value="{{ user.mail|default_if_none:'' }}" required />
+                <label for="floatingInput">이메일</label>
+            </div>
+
+            <div>
+                <label class="signup-item__title" for="birthdate">생년월일</label>
+                <input type="date" id="birthdate" name="birthdate" max="{{ current_date }}" value="{{ user.birthdate|default_if_none:'' }}"/>
+            </div>
+
+            <button type="submit" class="signup btn btn-primary btn-lg">
+                회원정보 수정
+            </button>
+        </form>
+    </main>
+{% endblock %}

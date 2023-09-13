@@ -114,9 +114,11 @@ def detail(request, plan_id):
                                         placeid = F('place__id'),
                                         place_name = F('place__name'),
                                         lat = F('place__lat'),
-                                        lng = F('place__lng'),)\
+                                        lng = F('place__lng'),
+                                        url = F('place__url')
+                                        )\
                                     .order_by('order')\
-                                    .values('placeid', 'place_name', 'expected_time_from_this', 'lat', 'lng', 'road_url')
+                                    .values('placeid', 'place_name', 'expected_time_from_this', 'lat', 'lng', 'road_url', 'url')
 
     plan_places_list = list(plan_places)
 
