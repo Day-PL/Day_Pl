@@ -1,3 +1,7 @@
+.browse__main {
+  margin-top: 8rem;
+}
+
 .browse-make-plan__btn {
   color: var(--color-primary-variant);
   border-color: var(--color-primary);

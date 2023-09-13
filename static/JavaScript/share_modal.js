@@ -41,7 +41,7 @@ function kakaoShareMessage(plantitle, url) {
       description: `${plantitle}`,
       imageUrl:
         // TODO: 이미지 추후 변경
-        'http://k.kakaocdn.net/dn/Q2iNx/btqgeRgV54P/VLdBs9cvyn8BJXB3o7N8UK/kakaolink40_original.png',
+        'https://postfiles.pstatic.net/MjAyMzA5MTNfNDEg/MDAxNjk0NjA0OTc2Nzcz.OzGmoj1JiWHxqcSlxMSERBfUNqNfxqsJQWIg_sFSwUog.qF5DXok7pS1I3K-xmXGVpBtuE2oX27UCRfAw3KeZdKAg.PNG.m0522j/DayPl_logo-removebg-preview.png?type=w773',
       link: {
         webUrl: url,
       },
