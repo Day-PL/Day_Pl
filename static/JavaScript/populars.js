@@ -1,8 +1,8 @@
-const searchInput = document.querySelector('.popular-plans-search__input');
-const searchClearBtn = document.querySelector('.search-clear__btn');
+const searchInput      = document.querySelector('.popular-plans-search__input');
+const searchClearBtn   = document.querySelector('.search-clear__btn');
 const popularPlansList = document.querySelector('.popular-plans__list');
-const planPlaceList = document.querySelector('.popular-plan-place__list');
-const planDetailBox = document.querySelector('.popular-plan-detail__box');
+const planPlaceList    = document.querySelector('.popular-plan-place__list');
+const planDetailBox    = document.querySelector('.popular-plan-detail__box');
 
 window.addEventListener('DOMContentLoaded', () => {
   getPlans('');
@@ -74,10 +74,10 @@ function printPlanDetail(plan) {
   const nickname = plan['plan']['user'];
 
   planDetailBox.innerHTML = `
-  <span class="popular-plan__title">${title}</span>
-  <button class="plan-share__btn btn" data-shareid="${planUuid}" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    <i class="fa-solid fa-share-nodes"></i>
-  </button>
+    <span class="popular-plan__title">${title}</span>
+    <button class="plan-share__btn btn" data-shareid="${planUuid}" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      <i class="fa-solid fa-share-nodes"></i>
+    </button>
   `
   printPlanLikeBtn(planId, planDetailBox)
   shareFunction(title)
@@ -94,11 +94,14 @@ function printPlanPlaceList(planPlaces) {
     let lng = place['lng'];
     let lat = place['lat'];
     let roadUrl = place['road_url'];
+    let url = place['url'];
 
     let li = document.createElement('li');
     li.setAttribute('class', 'place-list');
     li.setAttribute('data-lng', lng);
     li.setAttribute('data-lat', lat);
+    li.setAttribute('data-url', url);
+    li.setAttribute('data-name', name);
 
     let div = document.createElement('div');
     div.setAttribute('class', 'place-detail__div')

@@ -12,7 +12,8 @@ function printPlaceLikeBtn(placeId, placeBoxBody) {
 
 function updatePlaceLike(placeId) {
   if (placeId) {
-    fetch('', {
+    // TODO : new-plan
+    fetch('/new-plan/', {
       method: 'PUT',
       headers: {
         'X-CSRFToken': csrfToken,

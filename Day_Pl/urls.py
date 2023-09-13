@@ -1,12 +1,15 @@
-from .views import browse, preferences, saves, new_plan, populars
+from .views import browse, preferences, saves, new_plan, populars, modify_profile
 from .components import check_like
 from django.urls import path
+from django.conf.urls.static import static
+from django.conf import settings
 
 app_name = "Day_Pl"
 
 urlpatterns = [
     path("", browse.index, name = 'browse'), #! 메인 페이지
     path("preferences/", preferences.index, name = 'preferences'), #! 선호도 조사 페이지 (회원가입 이후 뜨는 창, 선호도 수정시 가는 창)
+    path('modify_profile/', modify_profile.modify_profile, name='modify_profile'),
     path("saves/", saves.index, name = 'saves'),    #! 기록 페이지
     path("saves/<int:plan_id>/like/remove", saves.remove_likeplan, name = 'remove-likeplan'),
     path("saves/<int:plan_id>/like/add",    saves.add_likeplan,    name = 'add-likeplan'),
@@ -26,3 +29,4 @@ urlpatterns = [
     path("populars/<str:plan_id>/", populars.detail, name='populars-detail'), #! 인기 많은 플랜들 / 플랜 하나
     path("populars/detail/<str:plan_id>/", populars.share_detail, name='populars-share-detail'), #! 인기 많은 플랜들 / 플랜 하나
 ]
+urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

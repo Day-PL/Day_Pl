@@ -4,6 +4,7 @@
 {% block contents %}
 <main class="populars__main d-flex justify-content-center">
   {% csrf_token %}
+  
     <section id="div1" class="popular-plans-list__container p-2 flex-fill">
       <div class="popular-plans-serch__box">
         <input type="text" class="popular-plans-search__input">
@@ -15,12 +16,14 @@
       <div class="list-group popular-plans__list">
       </div>
     </section>
+
     <section id="div2" class="popular-plan-detail__container share p-2 flex-fill" data-shareplanid="{{ plan_id }}">
       <div class="popular-plan-detail__box">
       </div>
       <ul class="popular-plan-place__list">
       </ul>
     </section>
+
     <section id="div3" class="map p-2 flex-fill">
       {% include 'components/naver_map_container.html' %}
     </section>

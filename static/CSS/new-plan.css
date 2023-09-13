@@ -81,24 +81,29 @@
   font-weight: bold;
 }
 
-.selected-place__container {
+.selected-place__container,
+.selected-place__container_modify {
   width: 100%;
   height: 550px;
   overflow-y: scroll;
 }
 
-.selected-place__container::-webkit-scrollbar {
+.selected-place__container::-webkit-scrollbar,
+.selected-place__container_modify::-webkit-scrollbar {
   width: 20px;
 }
 
-.selected-place__container::-webkit-scrollbar-thumb {
+.selected-place__container::-webkit-scrollbar-thumb
+.selected-place__container_modify::-webkit-scrollbar-thumb
+ {
   background: var(--color-primary-variant);
   background-clip: padding-box;
   border-radius: 10px;
   border: 5px solid var(--color-white);
 }
 
-.selected-place__container::-webkit-scrollbar-track {
+.selected-place__container::-webkit-scrollbar-track,
+.selected-place__container_modify::-webkit-scrollbar-track {
   background: rgba(0, 0, 0, 0);
 }
 

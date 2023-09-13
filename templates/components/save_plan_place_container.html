@@ -1,20 +1,55 @@
 
 {% for plan_places in plans_places %}
-    <div role="group" aria-label="Vertical radio toggle button group" class="plan plan_{{ plan_places.0.plan.id }} hide-plan" style="width: 15rem;">
-        <h6 style="text-align: center;">{{ plan_places.0.plan.title }}</h6>
-        {% for plan_place in plan_places %}
-            <div class="place d-flex">
-                <input type="radio" class="btn-check" name="plan_{{ plan_place.plan.id }}" id="place_{{ plan_place.place.id }}" autocomplete="off">
-                <label class="btn btn-outline-success" for="place_{{ plan_place.place.id }}" style="width: 10rem; height:2.5rem;" data-lat="{{ plan_place.place.lat }}" data-lng="{{ plan_place.place.lng }}">
-                    <h6><font size="2">{{ plan_place.place.name }} ({{ plan_place.order }})</font></h6>
-                </label>
-                <div>{{ plan_place.place.expected_time_during }}</div>
-            </div>
-            {% if forloop.counter < plan_places|length %}
-                <a href="{{ plan_place.road_url }}" target="_blank">
-                    <h6><font size="2">길찾기</font></h6>
-                </a>
-            {% endif %}
-        {% endfor %}
+    <div class="plan plan_{{ plan_places.0.plan.id }} hide-plan" style="width: 25rem;">
+        <div class="d-flex justify-content-center gap-2 align-items-center">
+            <button>
+                <i class="fa-solid fa-heart"></i>
+            </button>
+            <span class="popular-plan__title">{{ plan_places.0.plan.title }}</span>
+            <button class="plan-share__btn btn" data-shareid="f74f74af-9caf-41e8-9860-dc9c64abe405" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <i class="fa-solid fa-share-nodes"></i>
+            </button>
+        </div>
+        <ul class="d-flex flex-column align-items-center popular-plan-place__list">
+            {% for plan_place in plan_places %}
+                <div class="place d-flex place-detail__div">
+                    <button class="place-like_btn" data-placelike="{{ plan_place.place.id }}">
+                        <i class="fa-solid fa-star" data-placelike="{{ plan_place.place.id }}"></i>
+                    </button>
+                    <span class="place__name" id="place_{{ plan_place.place.id }}" data-lat="{{ plan_place.place.lat }}" data-lng="{{ plan_place.place.lng }}">
+                        {{ plan_place.place.name }}
+                    </span>
+                </div>
+                {% if forloop.counter < plan_places|length %}
+                <div class="d-flex justify-content-center">
+                    <a href="{{ plan_place.road_url }}" target="_blank" class="find_road_btn">
+                        길찾기
+                    </a>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </ul>
     </div>
 {% endfor %}
+{% include 'components/share_modal.html' %}
+<!-- {% for plan_places in plans_places %}
+    <div role="group" aria-label="Vertical radio toggle button group" class="plan plan_{{ plan_places.0.plan.id }} hide-plan" style="width: 15rem;">
+        <ul class="popular-plan-place__list">
+            {% for plan_place in plan_places %}
+                <li class="place-list" data-lng="{{ plan_place.place.lng }}" data-lat="{{ plan_place.place.lat }}" data-url="" data-name="{{ plan_places.0.plan.title }}">
+                    <div class="place-detail__div">
+                        <button class="place-like__btn" data-placelike="{{ plan_place.place.id }}">
+                            <i class="fa-solid fa-star" data-placelike="{{ plan_place.place.id }}"></i>
+                        </button>
+                        <span class="place__name">{{ plan_place.place.name }}</span>
+                    </div>
+                    {% if forloop.counter < plan_places|length %}
+                        <a href="{{ plan_place.road_url }}" target="_blank">
+                            <h6><font size="2">길찾기</font></h6>
+                        </a>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endfor %} -->
