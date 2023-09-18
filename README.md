@@ -1,5 +1,9 @@
 # Day_Pl   
 
+## Links
+<a href="https://hub.docker.com/r/minjoo522/day-pl/tags"><img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white"></a>
+<br />
+<a href="https://reminiscent-script-b95.notion.site/Day-Pl-4623df157c2344e8b976aafee6a57c33?pvs=4"><img src="https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=white"/></a>
 ## 프로젝트 소개
 > 서울을 중심으로 하루 플랜을 모아보고 계획하고 공유하는 서비스
 
