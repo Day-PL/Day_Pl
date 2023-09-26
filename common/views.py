@@ -60,7 +60,7 @@ def check_mail(request):
     mail = data.get('mail')
     reg = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
 
-    if Profile.objects.filter(mail=mail).exists():
+    if User.objects.filter(email=mail).exists():
         response = {
             'status': 'fail',
             'message': '이미 사용 중인 이메일입니다.'
@@ -99,9 +99,9 @@ def find_id(request):
         data = json.loads(request.body)
         email = data.get('email')
 
-        if Profile.objects.filter(mail=email).exists():
-            user = User.objects.get(profile__mail=email)
-            profile = Profile.objects.get(mail=email)
+        if User.objects.filter(email=email).exists():
+            user = User.objects.get(email=email)
+            profile = Profile.objects.get(user__email=email)
             nickname = profile.nickname
             username = user.username
             send_email(nickname, username, email)

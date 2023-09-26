@@ -11,7 +11,6 @@ class Profile(models.Model):
     gender     = models.CharField(max_length=64, blank=False)  
     birthdate  = models.DateField(max_length=64, blank=False)
     phone      = models.CharField(max_length=64, blank=False)
-    mail       = models.CharField(max_length=64, blank=False)
     rq_terms   = models.BooleanField(default=0)
     op_terms   = models.BooleanField(default=0)
     image      = models.ImageField(upload_to='photos/', null=True, default='static/img/profile_img.png')
