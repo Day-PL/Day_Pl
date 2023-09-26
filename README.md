@@ -35,4 +35,6 @@
 
 ## 시연 영상
 
-<iframe width="981" height="552" src="https://www.youtube.com/embed/tTFsOt7xbrY" title="Day Pl 시연 영상" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+https://github.com/Day-PL/Day_Pl/assets/131349867/7a5414ba-a3cf-45c5-b683-5fec3b84336e
+
+
