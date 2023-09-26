@@ -35,4 +35,4 @@
 
 ## 시연 영상
 
-<video src="img/daypl.mp4">
+<iframe width="981" height="552" src="https://www.youtube.com/embed/tTFsOt7xbrY" title="Day Pl 시연 영상" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
